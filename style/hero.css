@@ -47,6 +47,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  order: -1;  /* imagen arriba del texto */
 }
 
 /* Círculo debajo del icono */
@@ -80,5 +81,6 @@
   .hero__image {
     display: flex;
     justify-content: center;
+    order: 0; /* imagen a la derecha */
   }
 }
