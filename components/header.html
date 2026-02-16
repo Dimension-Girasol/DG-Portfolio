@@ -20,8 +20,14 @@
                     </li>
                 </ul>
                 <a href="#" class="button button-primary button-contacto">Contacto</a>
-                <button class="navbar__toggle-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú de navegación">
-                    <img src="/src/assets/images/menu-icon.png" alt="Botón menú de navegación">
+                <!-- Menu button: responsive and show X icon effect -->
+                <button
+                    class="navbar__toggle-btn"
+                    type="button"
+                    aria-controls="mobile-menu"
+                    data-open-icon="/src/assets/images/menu-icon.png"
+                    data-close-icon="/src/assets/images/close_menu-icon.png">
+                    <img class="navbar__toggle-icon" src="/src/assets/images/menu-icon.png" alt="Botón menú de navegación">
                 </button>
                 <div class="navbar__mobile-menu" id="mobile-menu">
                     <ul class="nav__list-mobile">

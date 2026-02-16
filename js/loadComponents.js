@@ -12,8 +12,10 @@ function loadScript(src) {
   document.body.appendChild(script);
 }
 
+// Register JSs functionality from html
 loadComponent("header", "components/header.html", () => {
   loadScript("js/header.js");
 });
 
+// Register HTMLs
 loadComponent("hero", "components/hero.html");
