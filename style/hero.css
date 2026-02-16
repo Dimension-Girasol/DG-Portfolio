@@ -1,0 +1,86 @@
+@import url(styles.css);
+
+/* ================= HERO ================= */
+
+.main {
+  margin-top: 20px; /* espacio debajo del header */
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero__container {
+  display: grid;
+  gap: 8px;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__title {
+  font-family: 'ArquitectaBold';
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--greyCustom);
+}
+
+.hero__tag {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blueCustom);
+}
+
+.hero__text {
+  font-size: 1.2rem;
+  max-width: 500px;
+  color: var(--greyCustom);
+}
+
+.hero__image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  order: -1;  /* imagen arriba del texto */
+}
+
+/* Círculo debajo del icono */
+.hero__image::before {
+  content: "";
+  position: absolute;
+ /* width: 400px;
+  height: 400px;
+  background-color: var(--lightYellowCustom);
+  border-radius: 50%;
+  z-index: 0;
+  bottom: 0; */
+}
+
+/* Círculo debajo del icono */
+.hero__image img {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  /* z-index: 1; */
+}
+
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .hero__container {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .hero__image {
+    display: flex;
+    justify-content: center;
+    order: 0; /* imagen a la derecha */
+  }
+}

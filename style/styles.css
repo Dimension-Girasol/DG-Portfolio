@@ -88,9 +88,56 @@
 /* --- COLORS --- */
 
 :root {
+  --white: #ffffff;
+  --backgroundCustom: #f7f2ed;
+  --black: #000;
 	--yellowCustom: #FCC96F;
+  --lightYellowCustom: #ffe1ad;
 	--orangeCustom: #FEA758;
 	--pinkCustom:   #B73271;
 	--blueCustom:   #0097B2;
 	--greyCustom:   #393938;
+  --lightGreyCustom: #999999;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arquitecta';
+  background-color: var(--backgroundCustom);
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1440px;
+    padding: 0 5%;
+    margin: 0 auto;
+}
+
+
+.button {
+  font-size: 1.1rem;
+  padding: 12px;
+  font-weight: 700px;
+  border-radius: 20px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.button-primary {
+    color: var(--greyCustom);
+    background-color: var(--yellowCustom);
+}
+
+.button-primary:hover {
+    color: var(--white);
+    background-color: var(--blueCustom);
+    transition: background-color 0.3s ease-in-out;
 }
