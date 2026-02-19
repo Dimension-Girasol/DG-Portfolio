@@ -166,19 +166,19 @@
 
 /** URLs **/
 .hero__card--one {
-  background-image: url("/src/assets/images/jack.jpg");
+  background-image: url("/src/assets/images/hero/jack.jpg");
 }
 
 .hero__card--two {
-  background-image: url("/src/assets/images/scar1.jpg");
+  background-image: url("/src/assets/images/hero/scar1.jpg");
 }
 
 .hero__card--three {
-  background-image: url("/src/assets/images/mononoke.jpg");
+  background-image: url("/src/assets/images/hero/mononoke.jpg");
 }
 
 .hero__card--four {
-  background-image: url("/src/assets/images/catilyn.jpg");
+  background-image: url("/src/assets/images/hero/catilyn.jpg");
 }
 
 /** Top collection small size **/

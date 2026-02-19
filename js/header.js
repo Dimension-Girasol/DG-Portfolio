@@ -9,8 +9,8 @@ function initHeader() {
 
   // Set menu images (Open/Close)
   // Get dataSet from HTML and set value for default
-  const openIcon = toggleBtn.dataset.openIcon || "/src/assets/images/menu-icon.png";
-  const closeIcon = toggleBtn.dataset.closeIcon || "/src/assets/images/close_menu-icon.png";
+  const openIcon = toggleBtn.dataset.openIcon || "/src/assets/images/header/menu-icon.png";
+  const closeIcon = toggleBtn.dataset.closeIcon || "/src/assets/images/header/close_menu-icon.png";
 
   const updateToggleIcon = (isOpen) => {
     if (!toggleIcon) return; // exists?
