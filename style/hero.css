@@ -1,7 +1,6 @@
 @import url(styles.css);
 
 /* ================= HERO ================= */
-
 .main {
   margin-top: 20px; /* espacio debajo del header */
 }
@@ -38,49 +37,273 @@
 
 .hero__text {
   font-size: 1.2rem;
-  max-width: 500px;
+  max-width: 50rem;
   color: var(--greyCustom);
 }
+
+/* .hero__metrics {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero__metrics li {
+  min-width: 126px;
+  border-radius: 14px;
+  border: 1px solid rgba(57, 57, 56, 0.14);
+  background: rgba(255, 255, 255, 0.86);
+  padding: 9px 12px;
+}
+
+.hero__metrics strong {
+  display: block;
+  color: var(--blueCustom);
+  font-family: "ArquitectaBlack";
+  font-size: 1.16rem;
+  line-height: 1.02;
+}
+
+.hero__metrics span {
+  color: var(--greyCustom);
+  font-size: 0.86rem;
+} */
+
+/**** Projects collection ****/
 
 .hero__image {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  order: -1;  /* imagen arriba del texto */
+  animation: heroInUp 0.95s ease both;
 }
 
-/* Círculo debajo del icono */
-.hero__image::before {
-  content: "";
-  position: absolute;
- /* width: 400px;
-  height: 400px;
-  background-color: var(--lightYellowCustom);
-  border-radius: 50%;
-  z-index: 0;
-  bottom: 0; */
-}
-
-/* Círculo debajo del icono */
-.hero__image img {
+.hero__gallery {
+  width: min(94vw, 620px);
+  height: min(70vh, 500px);
   position: relative;
-  width: 100%;
-  max-width: 450px;
-  /* z-index: 1; */
+  padding: 14px;
+  border-radius: 32px;
+  overflow: visible;
 }
 
+.hero__card {
+  position: absolute;
+  width: 42%;
+  height: 62%;
+  border-radius: 22px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1), filter 0.46s ease, box-shadow 0.46s ease;
+}
 
-/* Desktop layout */
-@media (min-width: 768px) {
-  .hero__container {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+.hero__card--one {
+  top: 2%;
+  left: 6%;
+  transform: rotate(-9deg);
+  z-index: 1;
+}
+
+.hero__card--two {
+  top: 14%;
+  left: 34%;
+  transform: rotate(7deg);
+  z-index: 3;
+}
+
+.hero__card--three {
+  top: 36%;
+  left: 12%;
+  transform: rotate(-4deg);
+  z-index: 4;
+}
+
+.hero__card--four {
+  top: 26%;
+  left: 54%;
+  transform: rotate(11deg);
+  z-index: 2;
+}
+
+.hero__gallery:hover .hero__card--one {
+  transform: translate(-30px, -22px) rotate(-14deg) scale(1.04);
+}
+
+.hero__gallery:hover .hero__card--two {
+  transform: translate(34px, -30px) rotate(11deg) scale(1.05);
+}
+
+.hero__gallery:hover .hero__card--three {
+  transform: translate(-36px, 28px) rotate(-8deg) scale(1.05);
+}
+
+.hero__gallery:hover .hero__card--four {
+  transform: translate(32px, 24px) rotate(16deg) scale(1.04);
+}
+
+.hero__gallery .hero__card:hover {
+  filter: saturate(1.05);
+  box-shadow: 0 20px 36px rgba(57, 57, 56, 0.3);
+  pointer-events: visible;
+  /* TODO: - navigate to selected project */
+  /* cursor: pointer; */
+}
+
+.hero__card-label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1;
+  color: var(--white);
+  font-family: "ArquitectaBold";
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+}
+
+/** URLs **/
+.hero__card--one {
+  background-image: url("/src/assets/images/jack.jpg");
+}
+
+.hero__card--two {
+  background-image: url("/src/assets/images/scar1.jpg");
+}
+
+.hero__card--three {
+  background-image: url("/src/assets/images/mononoke.jpg");
+}
+
+.hero__card--four {
+  background-image: url("/src/assets/images/catilyn.jpg");
+}
+
+@keyframes heroInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
 
-  .hero__image {
-    display: flex;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-11px);
+  }
+}
+
+@keyframes driftA {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(10px, 16px, 0);
+  }
+}
+
+@keyframes driftB {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-12px, -12px, 0);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero__container {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero__container {
+    gap: 20px;
+  }
+
+  .hero__content {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .hero__title {
+    max-width: 12ch;
+  }
+
+  .hero__text {
+    max-width: 42ch;
+  }
+
+  .hero__metrics {
     justify-content: center;
-    order: 0; /* imagen a la derecha */
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding-top: 26px;
+  }
+
+  .hero__content {
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .hero__actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__actions .button-primary,
+  .hero__secondary-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__gallery {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .hero__card {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 150px;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero__ambient,
+  .hero__content,
+  .hero__image,
+  .hero__card {
+    animation: none;
+    transition: none;
   }
 }
