@@ -181,56 +181,7 @@
   background-image: url("/src/assets/images/catilyn.jpg");
 }
 
-@keyframes heroInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-11px);
-  }
-}
-
-@keyframes driftA {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(10px, 16px, 0);
-  }
-}
-
-@keyframes driftB {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(-12px, -12px, 0);
-  }
-}
-
-@media (min-width: 900px) {
-  .hero__container {
-    grid-template-columns: 1.05fr 0.95fr;
-  }
-}
+/** Top collection small size **/
 
 @media (max-width: 899px) {
   .hero {
@@ -241,69 +192,36 @@
     gap: 20px;
   }
 
+  .hero__image {
+    order: 1;
+  }
+
   .hero__content {
+    order: 2;
     text-align: center;
-    justify-items: center;
-  }
-
-  .hero__title {
-    max-width: 12ch;
-  }
-
-  .hero__text {
-    max-width: 42ch;
-  }
-
-  .hero__metrics {
-    justify-content: center;
+    align-items: center;
+    padding: 20px;
   }
 }
 
-@media (max-width: 560px) {
-  .hero {
-    padding-top: 26px;
-  }
+/** Right collection big size **/
 
-  .hero__content {
-    border-radius: 22px;
-    padding: 18px;
-  }
-
-  .hero__actions {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero__actions .button-primary,
-  .hero__secondary-btn {
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero__gallery {
-    height: auto;
-    display: grid;
+@media (min-width: 900px) {
+  .hero__container {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 10px;
+    gap: 20px;
+    align-items: center;
   }
 
-  .hero__card {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: 150px;
-    transform: none !important;
+  .hero__content {
+    order: 1;
+    align-items: flex-start;
+    text-align: left;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-
-  .hero__ambient,
-  .hero__content,
-  .hero__image,
-  .hero__card {
-    animation: none;
-    transition: none;
+  .hero__image {
+    order: 2;
+    display: flex;
+    justify-content: center;
   }
 }
