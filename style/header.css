@@ -3,7 +3,7 @@
 /* ================= HEADER INFO ================= */
 /* Actualmente no se utiliza. Banner informativo */
 
-.header__info {
+/* .header__info {
     background-color: var(--blueCustom);
     text-align: end;
     overflow: hidden;
@@ -16,7 +16,7 @@
     white-space: nowrap;
     word-spacing: 10px;
     animation: moveText 30s linear infinite;
-}
+} */
 
 /* ================= NAVBAR ================= */
 

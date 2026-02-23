@@ -121,11 +121,10 @@ a {
     margin: 0 auto;
 }
 
-
 .button {
   font-size: 1.1rem;
   padding: 12px;
-  font-weight: 700px;
+  font-weight: 500;
   border-radius: 20px;
   display: inline-block;
   width: fit-content;

@@ -1,0 +1,274 @@
+@import url(styles.css);
+
+.section-space {
+  padding: clamp(54px, 8vw, 96px) 0;
+}
+
+.projects {
+  position: relative;
+  isolation: isolate;
+}
+
+.projects__container {
+  display: grid;
+  gap: 24px;
+}
+
+.projects__tag {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--pinkCustom);
+  font-family: "ArquitectaLight";
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.projects__content h2 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.projects__content p {
+  max-width: 50rem;
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-size: 1.2rem;
+}
+
+.projects__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  margin: 6px 0 8px;
+}
+
+.projects__filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(84px, 20vw, 160px);
+  height: clamp(84px, 20vw, 160px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.62;
+  transition: transform 0.12s ease-out, opacity 0.12s linear;
+}
+
+.projects__filter:hover {
+  transform: scale(1.06) translateY(-4px);
+  opacity: 1;
+}
+
+.projects__filter.is-active {
+  width: clamp(100px, 60vw, 200px);
+  height: clamp(100px, 60vw, 200px);
+  opacity: 1;
+}
+
+.projects__icon-wrap {
+  position: relative;
+  width: 88%;
+  height: 88%;
+  display: inline-block;
+}
+
+.projects__icon-wrap--yuna {
+  width: 92%;
+  height: 92%;
+}
+
+.projects__icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center;
+}
+
+.projects__icon--hover {
+  opacity: 0;
+}
+
+.projects__filter--author:hover .projects__icon--hover,
+.projects__filter--author.is-active .projects__icon--hover {
+  opacity: 1;
+}
+
+.projects__filter--author:hover .projects__icon--default,
+.projects__filter--author.is-active .projects__icon--default {
+  opacity: 0;
+}
+
+.projects__bubble {
+  position: absolute;
+  left: 50%;
+  bottom: 90%;
+  transform: translateX(-50%) translateY(8px) scale(0.92);
+  opacity: 0;
+  pointer-events: all;
+  white-space: nowrap;
+  border: 2px solid rgba(57, 57, 56, 0.18);
+  border-radius: 24px;
+  background: var(--white);
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 0.8rem;
+  padding: 6px 10px;
+  transition: opacity 0.12s linear, transform 0.12s ease-out;
+}
+
+.projects__bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid var(--white);
+}
+
+.projects__filter:hover .projects__bubble,
+.projects__filter:focus-visible .projects__bubble,
+.projects__filter.is-active .projects__bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.projects__loading {
+  min-height: 24px;
+  margin: 0;
+  text-align: center;
+  color: var(--blueCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.92rem;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.projects.is-loading .projects__loading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  transition: opacity 0.18s ease;
+}
+
+.projects.is-loading .projects__grid {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.project-card {
+  grid-column: span 6;
+  padding: 20px;
+  border: 1px solid rgba(57, 57, 56, 0.16);
+  border-radius: 22px;
+  background-color: var(--white);
+  transition: transform 0.24s ease, opacity 0.24s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+.project-card.is-hidden {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
+.project-card__badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--lightYellowCustom);
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.82rem;
+}
+
+.project-card h3 {
+  margin-bottom: 8px;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.26rem;
+}
+
+.project-card p {
+  margin-bottom: 12px;
+  color: var(--greyCustom);
+}
+
+.project-card ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--greyCustom);
+  font-size: 0.94rem;
+}
+
+.project-card li::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blueCustom);
+}
+
+@media (max-width: 900px) {
+  .project-card {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 620px) {
+  .projects__filters {
+    gap: 18px;
+  }
+
+  .projects__filter {
+    width: clamp(74px, 22vw, 120px);
+    height: clamp(74px, 22vw, 120px);
+  }
+
+  .projects__bubble {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__filter,
+  .projects__icon,
+  .projects__bubble,
+  .projects__loading,
+  .projects__grid,
+  .project-card {
+    transition: none;
+  }
+}

@@ -20,4 +20,7 @@ loadComponent("header", "components/header.html", () => {
 // Register HTMLs
 /**** INDEX ****/
 loadComponent("hero", "components/hero.html");
+loadComponent("projects", "components/projects.html", () => {
+  loadScript("js/projects.js");
+});
 loadComponent("footer", "components/footer.html");
