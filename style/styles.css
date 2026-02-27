@@ -89,6 +89,7 @@
 
 :root {
   --white: #ffffff;
+  --whiteOpacity8: rgba(255, 255, 255, 0.8);
   --backgroundCustom: #f7f2ed;
   --black: #000;
 	--yellowCustom: #FCC96F;
@@ -98,6 +99,11 @@
 	--blueCustom:   #0097B2;
 	--greyCustom:   #393938;
   --lightGreyCustom: #999999;
+  --greyOpacity35: rgba(0, 0, 0, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {
