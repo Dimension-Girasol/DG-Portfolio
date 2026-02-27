@@ -19,8 +19,16 @@ loadComponent("header", "components/header.html", () => {
 
 // Register HTMLs
 /**** INDEX ****/
-loadComponent("hero", "components/hero.html");
+loadComponent("hero", "components/hero/hero.html", () => {
+  loadComponent("card-hero", "components/hero/card-hero.html", () => {
+    loadScript("js/hero.js");
+  });
+});
+
+/**** PROJECTS ****/
 loadComponent("projects", "components/projects.html", () => {
   loadScript("js/projects.js");
 });
+
+/**** Footer ****/
 loadComponent("footer", "components/footer.html");
