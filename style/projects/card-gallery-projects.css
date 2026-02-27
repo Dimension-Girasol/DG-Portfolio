@@ -1,0 +1,93 @@
+@import url(../styles.css);
+
+.galleries {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.gallery {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid var(--lightGrey);
+    background: var(--white);
+    transition: all 0.3s ease;
+}
+
+.gallery:hover {
+    transform: scale(1.05) rotate(1.2deg) translate(0px, -2px) skewX(0deg);
+    cursor: pointer;
+}
+
+.gallery__images {
+    display: grid;
+    gap: 8px;
+}
+
+.gallery__images-cover {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.gallery__images-more {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.gallery__thumb {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gallery__images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery__thumb--more::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.gallery__more-badge {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--white);
+    font-family: "ArquitectaBold";
+    font-size: 0.9rem;
+}
+
+.gallery__more-badge img {
+    width: 24px;
+    height: 24px;
+}
+
+.gallery__info p {
+    margin: 0;
+    color: var(--greyCustom);
+    font-family: "ArquitectaBold";
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+@media (max-width: 980px) {
+    .galleries {
+        grid-template-columns: 1fr;
+    }
+}
