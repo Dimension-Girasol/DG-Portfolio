@@ -1,12 +1,13 @@
 function initProjectsFilter() {
   const section = document.querySelector("#projects");
 
-  if (!section) return;
-  const filters = section.querySelectorAll(".projects__filter");
-  const cards = section.querySelectorAll(".project-card");
-  const loading = section.querySelector(".projects__loading");
+  if (!section || section.dataset.filterReady === "true") return;
+  section.dataset.filterReady = "true";
 
-  // TODO: - Get dynamic data from database
+  const filters = section.querySelectorAll(".projects__filter");
+  const cards = section.querySelectorAll(".gallery");
+  const loading = section.querySelector(".projects__loading");
+  if (!filters.length || !cards.length) return;
 
   const LOADING_TIME_MS = 350;
   let loadingTimerId;
@@ -21,8 +22,13 @@ function initProjectsFilter() {
 
   const updateCards = (selected) => {
     cards.forEach((card) => {
-      const owner = card.dataset.owner;
-      const show = selected === "all" || owner === selected;
+      const creators = Array.from(
+        card.querySelectorAll(".gallery__tag-creator")
+      )
+        .map((tag) => tag.textContent.trim().toLowerCase())
+        .filter(Boolean);
+
+      const show = selected === "all" || creators.includes(selected);
       card.classList.toggle("is-hidden", !show);
     });
   };
@@ -44,7 +50,7 @@ function initProjectsFilter() {
     filter.addEventListener("click", () => {
       if (section.classList.contains("is-loading")) return;
 
-      const selected = filter.dataset.filter;
+      const selected = (filter.dataset.filter || "all").toLowerCase();
       const alreadyActive = filter.classList.contains("is-active");
       if (alreadyActive) return;
 
@@ -58,6 +64,12 @@ function initProjectsFilter() {
       }, LOADING_TIME_MS);
     });
   });
+
+  const initialActive = section.querySelector(".projects__filter.is-active");
+  const initialSelected = (initialActive?.dataset.filter || "all").toLowerCase();
+  updateActiveFilter(initialSelected);
+  updateCards(initialSelected);
+  setLoading(false);
 }
 
 initProjectsFilter();

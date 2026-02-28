@@ -21,6 +21,10 @@
     cursor: pointer;
 }
 
+.gallery.is-hidden {
+    display: none;
+}
+
 .gallery__images {
     display: grid;
     gap: 8px;
@@ -52,7 +56,7 @@
     display: block;
 }
 
-.gallery__thumb--more::after {
+.gallery__thumb-more::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -84,6 +88,42 @@
     font-family: "ArquitectaBold";
     font-size: 1rem;
     line-height: 1.25;
+}
+
+.gallery__creator,
+.gallery__types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.gallery__creator {
+    margin-top: 8px;
+}
+
+.gallery__types {
+    margin-top: 6px;
+}
+
+.gallery__tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-family: "ArquitectaBold";
+    font-size: 0.72rem;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
+
+.gallery__tag-creator {
+    color: var(--greyCustom);
+    background: var(--lightYellowCustom);
+}
+
+.gallery__tag-type {
+    color: var(--blueCustom);
 }
 
 @media (max-width: 980px) {
