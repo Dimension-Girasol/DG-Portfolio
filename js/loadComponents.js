@@ -28,7 +28,9 @@ loadComponent("hero", "components/hero/hero.html", () => {
 /**** PROJECTS ****/
 loadComponent("projects", "components/projects/projects.html", () => {
   loadComponent("card-gallery-projects", "components/projects/card-gallery-projects.html", () => {
-    loadScript("js/projects.js");
+    loadComponent("modal-detail-project", "components/projects/modal-detail-project.html", () => {
+      loadScript("js/projects.js");
+    });
   });
 });
 
