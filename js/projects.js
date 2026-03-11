@@ -108,6 +108,39 @@ function initProjectsModal() {
   let currentIndex = 0;
   const folderCache = new Map();
 
+  const modalStage = section.querySelector(".projects__modal-stage");
+  const canHoverFinePointer =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+  const resetZoomPosition = () => {
+    if (!canHoverFinePointer || !modalStage) return;
+    modalStage.style.setProperty("--zoom-x", "50%");
+    modalStage.style.setProperty("--zoom-y", "50%");
+  };
+
+  const updateZoomPositionFromPointerEvent = (event) => {
+    if (!canHoverFinePointer || !modalStage) return;
+    if (!modal.classList.contains("is-open")) return;
+
+    const rect = modalStage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    const x = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+    const y = clamp((event.clientY - rect.top) / rect.height, 0, 1);
+
+    modalStage.style.setProperty("--zoom-x", `${x * 100}%`);
+    modalStage.style.setProperty("--zoom-y", `${y * 100}%`);
+  };
+
+  if (canHoverFinePointer && modalStage) {
+    modalStage.addEventListener("pointerenter", resetZoomPosition);
+    modalStage.addEventListener("pointermove", updateZoomPositionFromPointerEvent);
+    modalStage.addEventListener("pointerleave", resetZoomPosition);
+  }
+
   const FILE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
   const MAX_FILES_PER_FOLDER = 40;
 
@@ -124,6 +157,7 @@ function initProjectsModal() {
     modalImage.src = image.src;
     modalImage.alt = image.alt;
     modalCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+    resetZoomPosition();
 
     modalThumbs.querySelectorAll(".projects__modal-thumb, .projects-modal__thumb").forEach((thumb, index) => {
       thumb.classList.toggle("is-active", index === currentIndex);
@@ -210,6 +244,7 @@ function initProjectsModal() {
     modalCounter.textContent = "";
     currentImages = [];
     currentIndex = 0;
+    resetZoomPosition();
 
     if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
       lastFocusedElement.focus();

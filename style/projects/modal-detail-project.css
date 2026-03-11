@@ -72,7 +72,7 @@ body.modal-open {
   overflow: hidden;
   border: 1px solid rgba(57, 57, 56, 0.12);
   background: var(--backgroundCustom);
-  min-height: min(66vh, 620px);
+  height: min(66vh, 620px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,10 +81,16 @@ body.modal-open {
 .projects__modal-stage img {
   display: block;
   width: 100%;
-  height: min(66vh);
+  height: 100%;
   object-fit: contain;
+  object-position: center;
   background: var(--black);
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 220ms ease;
+  will-change: transform;
 }
+
 
 .projects__modal-nav {
   width: 42px;
@@ -138,6 +144,32 @@ body.modal-open {
   display: block;
 }
 
+
+@media (hover: hover) and (pointer: fine) {
+  .projects__modal-stage {
+    --zoom-scale: 1.2;
+    --zoom-x: 50%;
+    --zoom-y: 50%;
+    cursor: zoom-in;
+  }
+
+  .projects__modal-stage:hover {
+    cursor: zoom-out;
+  }
+
+  .projects__modal-stage:hover img {
+    object-fit: cover;
+    object-position: var(--zoom-x) var(--zoom-y);
+    transform: scale(var(--zoom-scale));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__modal-stage img {
+    transition: none;
+  }
+}
+
 @media (max-width: 620px) {
   .projects__modal {
     padding: 12px;
@@ -152,11 +184,11 @@ body.modal-open {
   }
 
   .projects__modal-stage {
-    min-height: 45vh;
+    height: 45vh;
   }
 
   .projects__modal-stage img {
-    height: 45vh;
+    height: 100%;
   }
 
   .projects__modal-nav {
