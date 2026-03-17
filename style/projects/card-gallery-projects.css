@@ -72,7 +72,7 @@
     align-items: center;
     justify-content: center;
     gap: 4px;
-    color: var(--white);
+    color: var(--frontProjectCardCustom);
     font-family: "ArquitectaBold";
     font-size: 0.9rem;
 }
@@ -118,7 +118,7 @@
 }
 
 .gallery__tag-creator {
-    color: var(--greyCustom);
+    color: var(--greyCustomBtn);
     background: var(--lightYellowCustom);
 }
 
