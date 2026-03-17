@@ -70,7 +70,7 @@ body.modal-open {
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(57, 57, 56, 0.12);
+  border: 1px solid var(--overlayBorder);
   background: var(--backgroundCustom);
   height: min(66vh, 620px);
   display: flex;
@@ -97,7 +97,7 @@ body.modal-open {
   height: 42px;
   border: 0;
   border-radius: 50%;
-  background: rgba(57, 57, 56, 0.1);
+  background: var(--overlaySoft);
   color: var(--greyCustom);
   font-size: 2rem;
   line-height: 1;

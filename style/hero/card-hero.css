@@ -52,9 +52,7 @@
 .hero__card-face {
   position: absolute;
   inset: 0;
-
   border-radius: 20px;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
   backface-visibility: hidden;
   overflow: hidden;
 }
@@ -78,7 +76,6 @@
   background:
     radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 40%),
     linear-gradient(140deg, #FEA758 0%, #ffe1ad 48%, #a16126 100%);
-  color: var(--greyCustom);
   text-align: center;
 }
 
@@ -113,14 +110,14 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  color: var(--white);
+  color: var(--frontProjectCardCustom);
   font-family: "ArquitectaBold";
   font-size: 0.95rem;
   letter-spacing: 0.4px;
 }
 
 .hero__card-face--back .hero__card-title {
-  color: var(--greyCustom);
+  color: var(--greyCustomBtn);
   z-index: 0;
 }
 

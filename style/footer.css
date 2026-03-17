@@ -80,7 +80,7 @@
     text-align: center;
     line-height: 40px;
     border-radius: 50%;
-    color: var(--greyCustom);
+    color: var(--greyCustomBtn);
     background-color: var(--yellowCustom);
     transition: all .5s ease;
 }
