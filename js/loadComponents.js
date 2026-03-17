@@ -35,4 +35,6 @@ loadComponent("projects", "components/projects/projects.html", () => {
 });
 
 /**** Footer ****/
-loadComponent("footer", "components/footer.html");
+loadComponent("footer", "components/footer.html", () => {
+  if (window.dgSyncThemeAssets) window.dgSyncThemeAssets();
+});
