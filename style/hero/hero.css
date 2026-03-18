@@ -1,0 +1,67 @@
+@import url(styles.css);
+
+/* ================= HERO ================= */
+.main {
+  margin-top: 20px; /* espacio debajo del header */
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero__container {
+  display: grid;
+  gap: 8px;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__title {
+  font-family: 'ArquitectaBold';
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--greyCustom);
+}
+
+.hero__tag {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blueCustom);
+}
+
+.hero__text {
+  font-size: 1.2rem;
+  max-width: 50rem;
+  color: var(--greyCustom);
+}
+
+
+
+/** Top collection small size **/
+
+@media (max-width: 899px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero__container {
+    gap: 20px;
+  }
+
+  #card-hero {
+    order: 1;
+  }
+
+  .hero__content {
+    order: 2;
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+  }
+}

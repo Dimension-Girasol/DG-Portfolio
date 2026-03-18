@@ -89,6 +89,7 @@
 
 :root {
   --white: #ffffff;
+  --whiteOpacity8: rgba(255, 255, 255, 0.8);
   --backgroundCustom: #f7f2ed;
   --black: #000;
 	--yellowCustom: #FCC96F;
@@ -97,7 +98,49 @@
 	--pinkCustom:   #B73271;
 	--blueCustom:   #0097B2;
 	--greyCustom:   #393938;
+	--greyCustomBtn:   #393938;
   --lightGreyCustom: #999999;
+  --frontProjectCardCustom: #ffff;
+  --greyOpacity35: rgba(0, 0, 0, 0.35);
+  --greyOpacity6: rgba(0, 0, 0, 0.06);
+  --strokeSubtle: rgba(57, 57, 56, 0.16);
+  --strokeBubble: rgba(57, 57, 56, 0.18);
+  --overlaySoft: rgba(57, 57, 56, 0.1);
+  --overlayBorder: rgba(57, 57, 56, 0.12);
+}
+
+html[data-theme="dark"] {
+  --white: #161a1d;
+  --whiteOpacity8: rgba(22, 26, 29, 0.86);
+  --backgroundCustom: #0f1214;
+  --black: #ffff;
+  --greyCustom: #f2f2f2;
+	--greyCustomBtn:   #393938;
+  --lightGreyCustom: #c7c7c7;
+  --greyOpacity35: rgba(255, 255, 255, 0.22);
+  --greyOpacity6:  rgba(255, 255, 255, 0.06);
+  --strokeSubtle: rgba(255, 255, 255, 0.14);
+  --strokeBubble: rgba(255, 255, 255, 0.18);
+  --overlaySoft: rgba(255, 255, 255, 0.08);
+  --overlayBorder: rgba(255, 255, 255, 0.12);
+}
+
+/* Animation change dark/light mode */
+.footer,
+.container-navbar,
+.project-card,
+.about__person,
+.about__highlight,
+.projects__bubble,
+.projects__modal-dialog {
+  transition: background-color 500ms ease, 
+              color 500ms ease, 
+              border-color 500ms ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light dark;
 }
 
 * {
@@ -109,6 +152,8 @@
 body {
   font-family: 'Arquitecta';
   background-color: var(--backgroundCustom);
+  color: var(--greyCustom);
+  transition: background-color 320ms ease, color 320ms ease;
 }
 
 a {
@@ -121,18 +166,17 @@ a {
     margin: 0 auto;
 }
 
-
 .button {
   font-size: 1.1rem;
   padding: 12px;
-  font-weight: 700px;
+  font-weight: 500;
   border-radius: 20px;
   display: inline-block;
   width: fit-content;
 }
 
 .button-primary {
-    color: var(--greyCustom);
+    color: var(--greyCustomBtn);
     background-color: var(--yellowCustom);
 }
 

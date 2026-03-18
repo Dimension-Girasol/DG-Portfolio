@@ -19,5 +19,22 @@ loadComponent("header", "components/header.html", () => {
 
 // Register HTMLs
 /**** INDEX ****/
-loadComponent("hero", "components/hero.html");
-loadComponent("footer", "components/footer.html");
+loadComponent("hero", "components/hero/hero.html", () => {
+  loadComponent("card-hero", "components/hero/card-hero.html", () => {
+    loadScript("js/hero.js");
+  });
+});
+
+/**** PROJECTS ****/
+loadComponent("projects", "components/projects/projects.html", () => {
+  loadComponent("card-gallery-projects", "components/projects/card-gallery-projects.html", () => {
+    loadComponent("modal-detail-project", "components/projects/modal-detail-project.html", () => {
+      loadScript("js/projects.js");
+    });
+  });
+});
+
+/**** Footer ****/
+loadComponent("footer", "components/footer.html", () => {
+  if (window.dgSyncThemeAssets) window.dgSyncThemeAssets();
+});

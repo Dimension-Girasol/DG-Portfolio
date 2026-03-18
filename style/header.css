@@ -3,7 +3,7 @@
 /* ================= HEADER INFO ================= */
 /* Actualmente no se utiliza. Banner informativo */
 
-.header__info {
+/* .header__info {
     background-color: var(--blueCustom);
     text-align: end;
     overflow: hidden;
@@ -16,7 +16,7 @@
     white-space: nowrap;
     word-spacing: 10px;
     animation: moveText 30s linear infinite;
-}
+} */
 
 /* ================= NAVBAR ================= */
 
@@ -45,6 +45,92 @@
     align-items: center;
     flex: 1;
     gap: 40px;
+}
+
+.theme-toggle {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    border: 1px solid transparent;
+    cursor: pointer;
+    color: var(--greyCustom);
+    transform: translateZ(0);
+    transition: background-color 500ms ease, 
+                transform 500ms ease,
+                border-color 500ms ease;
+    border-color: var(--strokeSubtle);
+}
+
+.theme-toggle:hover {
+    background-color: var(--greyOpacity6);
+    transform: translateY(-1px);
+}
+
+html[data-theme="dark"] .theme-toggle {
+    background-color: var(--greyOpacity6);
+}
+
+/* Accessibility */
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--blueCustom);
+    outline-offset: 2px;
+}
+
+
+.theme-toggle__bulb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: 50% 10%;
+}
+
+.theme-toggle__icon {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.theme-toggle.is-animating .theme-toggle__bulb {
+    animation: bulb-pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.theme-toggle::after {
+    position: absolute;
+    inset: 7px;
+    background: radial-gradient(circle at 50% 50%, rgba(252, 201, 111, 0.75), transparent 62%);
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.theme-toggle.is-animating::after {
+    animation: bulb-glow 520ms ease-out;
+}
+
+html[data-theme="dark"] .theme-toggle {
+    color: var(--yellowCustom);
+}
+
+@keyframes bulb-pop {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-12deg) scale(1.18); }
+    55% { transform: rotate(10deg) scale(0.98); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes bulb-glow {
+    0% { opacity: 0; transform: scale(0.65); }
+    38% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle,
+    .theme-toggle__bulb {
+        transition: none;
+        animation: none;
+    }
 }
 
 /*.navbar__nav>* {
@@ -91,6 +177,12 @@
     cursor: pointer;
     display: none;
     transition: transform 0.25s ease;
+}
+
+.navbar__toggle-icon {
+
+    width: 32px;
+    height: 32px;
 }
 
 .navbar__mobile-menu {
