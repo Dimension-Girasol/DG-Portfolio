@@ -20,7 +20,7 @@
 
 .how__content h2 {
   color: var(--greyCustom);
-  font-family: "ArquitectaBold";
+  font-family: "ArquitectaMedium";
   font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
@@ -28,7 +28,8 @@
   max-width: 50rem;
   margin-top: 10px;
   color: var(--greyCustom);
-  font-size: 1.2rem;
+  font-family: 'Arquitecta';
+  font-size: 1.3rem;
 }
 
 ul.infoGraphic {
@@ -42,12 +43,11 @@ ul.infoGraphic {
     position: relative;
     width: 100%;
     max-width: 25em;
-    background: var(--backgroundCustom);
     border-radius: 0.5em;
     padding: 0.5em;
     z-index: 1;
     transition: all 0.2s;
-    cursor: pointer;
+    cursor: default;
 
     &::after {
       content: "";
@@ -88,7 +88,6 @@ ul.infoGraphic {
       &.fontColor3 { color: var(--orangeCustom); }
       &.fontColor4 { color: var(--yellowCustom); }
       &.fontColor5 { color: var(--lightYellowCustom); }
-      &.fontColor6 { color: var(--orange); }
     }
     .coverWrap {
       transform: rotate(130deg);
@@ -104,21 +103,7 @@ ul.infoGraphic {
         width: 18em;
         height: 6em;
         border-radius: 50% 50% 0 0;
-        border-bottom: 3px solid var(--frontProjectCardCustom);
-
-        &::before {
-          bottom: 5px;
-          left: 4em;
-          right: 4em;
-          top: 5em;
-        }
-        &::after {
-          bottom: 0;
-          left: -10%;
-          width: 120%;
-          height: 150%;
-          z-index: 1;
-        }
+        border-bottom: 2px solid var(--frontProjectCardCustom);
       }
     }
     .content {
@@ -127,18 +112,56 @@ ul.infoGraphic {
       z-index: 3;
       color: inherit;
       h2 {
-        font-size: 1.5em;
+        font-size: 1.6em;
+        font-family: 'ArquitectaBold';
         font-weight: 500;
         text-align: center;
         margin-bottom: 10px;
         text-transform: uppercase;
       }
       p {
+        font-family: 'Arquitecta';
         text-align: center;
-        line-height: 1.5em;
+        font-size: 1.1rem;
+        line-height: 1.2;
       }
     }
   }
+}
+
+ul.infoGraphic li:hover .coverWrap .numberCover {
+  border-radius: 100%;
+  border-bottom-color: transparent;
+  background: transparent;
+}
+
+ul.infoGraphic li:hover .content {
+  color: var(--greyCustomBtn);
+}
+
+ul.infoGraphic li:hover::after {
+  opacity: 1;
+  clip-path: circle(150% at 7.2em 6.5em);
+  filter: blur(0);
+  animation: howBubblePop 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes howBubblePop {
+  0%    { transform: translate(-50%, -50%) scale(0.8); }
+  60%   { transform: translate(-50%, -50%) scale(1.02) }
+  100%  { transform: translate(-50%, -50%) scale(1); }
+}
+
+.icon {
+  position: absolute;
+  top: -3.5rem;
+  left: 50%;
+  transform: translatex(-50%);
+  width: 2.8rem;
+  height: 2.8rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 @media (max-width: 640px) {
@@ -188,83 +211,15 @@ ul.infoGraphic {
   }
 
   .icon {
-    font-size: 1.6rem;
-    top: -1.15em;
-  }
-}
-
-ul.infoGraphic li:hover .coverWrap .numberCover {
-  border-radius: 100%;
-  border-bottom-color: transparent;
-  background: transparent;
-}
-
-ul.infoGraphic li:hover .content {
-  color: var(--greyCustomBtn);
-}
-
-ul.infoGraphic li:hover::after {
-  opacity: 1;
-  clip-path: circle(150% at 7.2em 6.5em);
-  filter: blur(0);
-  animation: howBubblePop 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes howBubblePop {
-  0%    { transform: translate(-50%, -50%) scale(0.8); }
-  60%   { transform: translate(-50%, -50%) scale(1.02) }
-  100%  { transform: translate(-50%, -50%) scale(1); }
-}
-
-
-.icon {
-  position: absolute;
-  font-size: 2.4rem;
-  text-align: center;
-  top: -1.5em;
-  left: 50%;
-  transform: translatex(-50%);
-  &:before {
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
+    top: -2.4em;
+    width: 2rem;
+    height: 2rem;
   }
 }
 
 /* ICONS */
-.iconIdea {
-  &:before {
-    content: "\f0eb";
-  }
-}
-
-.iconMoney {
-  &:before {
-    content: "\f003";
-  }
-}
-
-.iconPrepare {
-  &:before {
-    content: "\f0ae";
-  }
-}
-
-.iconProject {
-  &:before {
-    content: "\f1ad";
-  }
-}
-
-.iconPaint {
-  &:before {
-    content: "\f085";
-  }
-}
-
-.iconSend {
-  &:before {
-    content: "\f1d8";
-  }
-}
+.iconIdea     { background-image: url("/src/assets/images/how/idea.png") }
+.iconMoney    { background-image: url("/src/assets/images/how/money.png"); }
+.iconPrepare  { background-image: url("/src/assets/images/how/print.png"); }
+.iconPaint    { background-image: url("/src/assets/images/how/paint.png"); }
+.iconSend     { background-image: url("/src/assets/images/how/send.png"); }
