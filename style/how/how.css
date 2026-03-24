@@ -1,6 +1,11 @@
 .how {
   position: relative;
   isolation: isolate;
+  --how-icon-filter: none;
+}
+
+html[data-theme="dark"] .how {
+  --how-icon-filter: brightness(0) invert(1);
 }
 
 .how__container {
@@ -139,6 +144,10 @@ ul.infoGraphic li:hover .content {
   color: var(--greyCustomBtn);
 }
 
+ul.infoGraphic li:hover .number {
+  opacity: 0.8;
+}
+
 ul.infoGraphic li:hover::after {
   opacity: 1;
   clip-path: circle(150% at 7.2em 6.5em);
@@ -162,6 +171,12 @@ ul.infoGraphic li:hover::after {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  filter: var(--how-icon-filter);
+  transition: filter 0.2s ease;
+}
+
+ul.infoGraphic li:hover .icon {
+  filter: var(--how-icon-filter-hover);
 }
 
 @media (max-width: 640px) {
