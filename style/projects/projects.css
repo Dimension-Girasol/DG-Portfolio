@@ -14,16 +14,6 @@
   gap: 24px;
 }
 
-.projects__tag {
-  display: inline-block;
-  margin-bottom: 10px;
-  color: var(--pinkCustom);
-  font-family: "ArquitectaLight";
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
 .projects__content h2 {
   color: var(--greyCustom);
   font-family: "ArquitectaBold";

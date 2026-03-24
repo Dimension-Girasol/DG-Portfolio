@@ -185,3 +185,13 @@ a {
     background-color: var(--blueCustom);
     transition: background-color 0.3s ease-in-out;
 }
+
+.section__tag {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--pinkCustom);
+  font-family: "ArquitectaLight";
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
