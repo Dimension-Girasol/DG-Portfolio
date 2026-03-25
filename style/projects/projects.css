@@ -7,6 +7,9 @@
 .projects {
   position: relative;
   isolation: isolate;
+  --projects-author-icon-ty: 14px;
+  --projects-author-icon-scale: 1.08;
+  --projects-author-icon-scale-active: 1.14;
 }
 
 .projects__container {
@@ -105,14 +108,15 @@
 
 .projects__filter-author:not([data-filter="all"]) .projects__icon {
   inset: auto 0 0 0;
-  transform: translateY(14px) scale(1.08);
+  transform: translateY(var(--projects-author-icon-ty))
+    scale(var(--projects-author-icon-scale));
   transform-origin: 50% bottom;
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease;
 }
 
 .projects__filter-author:not([data-filter="all"]):hover .projects__icon,
 .projects__filter-author:not([data-filter="all"]).is-active .projects__icon {
-  transform: translateY(0) scale(1.14);
+  transform: translateY(0) scale(var(--projects-author-icon-scale-active));
 }
 
 
@@ -194,6 +198,17 @@
   .projects__filter {
     width: clamp(74px, 22vw, 120px);
     height: clamp(74px, 22vw, 120px);
+  }
+
+  .projects__filter.is-active {
+    width: clamp(88px, 26vw, 140px);
+    height: clamp(88px, 26vw, 140px);
+  }
+
+  .projects {
+    --projects-author-icon-ty: 10px;
+    --projects-author-icon-scale: 1.05;
+    --projects-author-icon-scale-active: 1.1;
   }
 
   .projects__bubble {
