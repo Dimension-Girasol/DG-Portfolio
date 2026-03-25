@@ -1,10 +1,9 @@
 .how {
   position: relative;
   isolation: isolate;
-  --how-icon-filter: none;
 }
 
-html[data-theme="dark"] .how {
+html[data-theme="dark"] .icon {
   --how-icon-filter: brightness(0) invert(1);
 }
 
@@ -37,128 +36,205 @@ html[data-theme="dark"] .how {
   font-size: 1.3rem;
 }
 
-ul.infoGraphic {
+.infoGraphic {
   font-size: var(--font-size);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
   padding: 0 5vw;
-  li {
-    position: relative;
-    width: 100%;
-    max-width: 25em;
-    border-radius: 0.5em;
-    padding: 0.5em;
-    z-index: 1;
-    transition: all 0.2s;
-    cursor: default;
+}
 
-    &::after {
-      content: "";
-      position: absolute;
-      left: 58%;
-      top: 56%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: clamp(12em, 72%, 19em);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: var(--frontProjectCardCustom);
-      border: 1px solid var(--strokeBubble);
-      opacity: 0;
-      filter: blur(6px);
-      pointer-events: none;
-      -webkit-clip-path: circle(0 at 7.2em 6.5em);
-      clip-path: circle(0 at 7.2em 6.5em);
-      transition: opacity 0.18s ease, clip-path 0.42s ease,
-        -webkit-clip-path 0.42s ease;
-      will-change: transform, clip-path, opacity, filter;
-      z-index: 1;
-    }
-    
-    .numberWrap {
-      position: absolute;
-      z-index: 2;
-    }
-    .number {
-      position: relative;
-      z-index: 2;
-      font-family: "Bageo";
-      font-size: 14em;
-      font-weight: 400;
-      width: 0.9em;
-      text-align: center;
-      &.fontColor1 { color: var(--blueCustom); }
-      &.fontColor2 { color: var(--pinkCustom); }
-      &.fontColor3 { color: var(--orangeCustom); }
-      &.fontColor4 { color: var(--yellowCustom); }
-      &.fontColor5 { color: var(--lightYellowCustom); }
-    }
-    .coverWrap {
-      transform: rotate(130deg);
-      position: absolute;
-      z-index: 3;
-      width: 18em;
-      height: 15em;
-      left: -3em;
-      top: -1em;
-      .numberCover {
-        position: absolute;
-        background: var(--backgroundCustom);
-        width: 18em;
-        height: 6em;
-        border-radius: 50% 50% 0 0;
-        border-bottom: 2px solid var(--frontProjectCardCustom);
-      }
-    }
-    .content {
-      margin: 8em 3em 1em 7em;
-      position: relative;
-      z-index: 3;
-      color: inherit;
-      h2 {
-        font-size: 1.6em;
-        font-family: 'ArquitectaBold';
-        font-weight: 500;
-        text-align: center;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-      }
-      p {
-        font-family: 'Arquitecta';
-        text-align: center;
-        font-size: 1.1rem;
-        line-height: 1.2;
-      }
-    }
+.infoGraphic > li {
+  position: relative;
+  width: 100%;
+  max-width: 25em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  z-index: 1;
+  transition: all 0.2s;
+  cursor: default;
+  --how-circle-left: 58%;
+  --how-circle-top: 56%;
+  --how-circle-size: clamp(13em, 78%, 21em);
+  --how-circle-origin-x: 7.2em;
+  --how-circle-origin-y: 6.5em;
+  --how-circle-duration: 420ms;
+  --how-circle-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.infoGraphic > li::after {
+  content: "";
+  position: absolute;
+  left: var(--how-circle-left);
+  top: var(--how-circle-top);
+  transform: translate(-50%, -50%) scale(0.92);
+  width: var(--how-circle-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--frontProjectCardCustom);
+  border: 1px solid var(--strokeBubble);
+  opacity: 0;
+  pointer-events: none;
+  -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  transition: 
+    opacity 0.18s ease, 
+    transform 0.45s ease,
+    clip-path 0.45s ease, 
+    -webkit-clip-path 0.45s ease;
+  will-change: transform, clip-path, opacity, filter;
+  z-index: 1;
+}
+
+.infoGraphic > li .numberWrap {
+  position: absolute;
+  z-index: 2;
+}
+
+.infoGraphic > li .number {
+  position: relative;
+  z-index: 2;
+  font-family: "Bageo";
+  font-size: 14em;
+  font-weight: 400;
+  width: 0.9em;
+  text-align: center;
+}
+
+.infoGraphic > li .number.fontColor1 { color: var(--blueCustom); }
+.infoGraphic > li .number.fontColor2 { color: var(--pinkCustom); }
+.infoGraphic > li .number.fontColor3 { color: var(--orangeCustom); }
+.infoGraphic > li .number.fontColor4 { color: var(--yellowCustom); }
+.infoGraphic > li .number.fontColor5 { color: var(--lightYellowCustom); }
+
+.infoGraphic > li .coverWrap {
+  transform: rotate(130deg);
+  position: absolute;
+  z-index: 3;
+  width: 18em;
+  height: 15em;
+  left: -3em;
+  top: -1em;
+}
+
+.infoGraphic > li .coverWrap .numberCover {
+  position: absolute;
+  background: var(--backgroundCustom);
+  width: 18em;
+  height: 6em;
+  border-radius: 50% 50% 0 0;
+  border-bottom: 2px solid var(--frontProjectCardCustom);
+}
+
+.infoGraphic > li .content {
+  margin: 8em 3em 1em 7em;
+  position: relative;
+  z-index: 3;
+  color: inherit;
+}
+
+.infoGraphic > li .content h2 {
+  font-size: 1.6em;
+  font-family: "ArquitectaBold";
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.infoGraphic > li .content p {
+  font-family: "Arquitecta";
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .infoGraphic > li:hover .coverWrap .numberCover {
+    border-radius: 100%;
+    border-bottom-color: transparent;
+    background: transparent;
+  }
+
+  .infoGraphic > li:hover .content {
+    color: var(--greyCustomBtn);
+  }
+
+  .infoGraphic > li:hover .number {
+    opacity: 1;
+  }
+
+  .infoGraphic > li:hover::after {
+    opacity: 1;
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    filter: blur(0);
+    animation: howCircleReveal var(--how-circle-duration) var(--how-circle-ease) both;
   }
 }
 
-ul.infoGraphic li:hover .coverWrap .numberCover {
-  border-radius: 100%;
-  border-bottom-color: transparent;
-  background: transparent;
+/* Mobile: reveal the circle on scroll (instead of hover) */
+@media (hover: none) and (pointer: coarse) {
+  /* Prevent "sticky hover" on mobile taps; use .is-inview only */
+  .infoGraphic > li:hover::after {
+    opacity: 0;
+    filter: blur(6px);
+    -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    animation: none;
+  }
+
+  .infoGraphic > li.is-inview::after {
+    opacity: 1;
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    filter: blur(0);
+    animation: howCircleReveal var(--how-circle-duration) var(--how-circle-ease) both;
+  }
+
+  .infoGraphic > li.is-inview .coverWrap .numberCover {
+    border-radius: 100%;
+    border-bottom-color: transparent;
+    background: transparent;
+  }
+
+  .infoGraphic > li.is-inview .content {
+    color: var(--greyCustomBtn);
+  }
+
+  .infoGraphic > li.is-inview .icon {
+    filter: none;
+  }
 }
 
-ul.infoGraphic li:hover .content {
-  color: var(--greyCustomBtn);
+@keyframes howCircleReveal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+    filter: blur(10px);
+    -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  }
 }
 
-ul.infoGraphic li:hover .number {
-  opacity: 0.8;
-}
+@media (prefers-reduced-motion: reduce) {
+  .infoGraphic > li::after {
+    transition: none;
+    filter: none;
+  }
 
-ul.infoGraphic li:hover::after {
-  opacity: 1;
-  clip-path: circle(150% at 7.2em 6.5em);
-  filter: blur(0);
-  animation: howBubblePop 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes howBubblePop {
-  0%    { transform: translate(-50%, -50%) scale(0.8); }
-  60%   { transform: translate(-50%, -50%) scale(1.02) }
-  100%  { transform: translate(-50%, -50%) scale(1); }
+  .infoGraphic > li:hover::after,
+  .infoGraphic > li.is-inview::after {
+    animation: none;
+  }
 }
 
 .icon {
@@ -175,54 +251,48 @@ ul.infoGraphic li:hover::after {
   transition: filter 0.2s ease;
 }
 
-ul.infoGraphic li:hover .icon {
-  filter: var(--how-icon-filter-hover);
+@media (hover: hover) and (pointer: fine) {
+  .infoGraphic > li:hover .icon {
+    filter: var(--how-icon-filter-hover);
+  }
 }
 
 @media (max-width: 640px) {
-  ul.infoGraphic {
+  .infoGraphic {
     padding: 0 4vw;
   }
 
-  ul.infoGraphic li {
+  .infoGraphic > li {
     max-width: 22em;
+    --how-circle-left: 60%;
+    --how-circle-top: 54%;
+    --how-circle-size: clamp(11.5em, 70%, 16em);
+    --how-circle-origin-x: 6.0em;
+    --how-circle-origin-y: 5.4em;
   }
 
-  ul.infoGraphic li .number {
+  .infoGraphic > li .number {
     font-size: 10em;
   }
 
-  ul.infoGraphic li .coverWrap {
+  .infoGraphic > li .coverWrap {
     width: 14.5em;
     height: 12.5em;
     left: -2.6em;
     top: -0.7em;
   }
 
-  ul.infoGraphic li .coverWrap .numberCover {
+  .infoGraphic > li .coverWrap .numberCover {
     width: 14em;
     height: 5em;
   }
 
-  ul.infoGraphic li .content {
+  .infoGraphic > li .content {
     margin: 6.4em 1.8em 1em 5.6em;
   }
 
-  ul.infoGraphic li .content h2 {
+  .infoGraphic > li .content h2 {
     font-size: 1.45em;
-  }
-
-  ul.infoGraphic li::after {
-    left: 60%;
-    top: 54%;
-    width: clamp(11.5em, 70%, 16em);
-    -webkit-clip-path: circle(0 at 6.0em 5.4em);
-    clip-path: circle(0 at 6.0em 5.4em);
-  }
-
-  ul.infoGraphic li:hover::after {
-    -webkit-clip-path: circle(150% at 6.0em 5.4em);
-    clip-path: circle(150% at 6.0em 5.4em);
   }
 
   .icon {

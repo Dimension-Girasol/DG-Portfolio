@@ -26,7 +26,9 @@ loadComponent("hero", "components/hero/hero.html", () => {
 });
 
 /**** HOW ****/
-loadComponent("how-root", "components/how/how.html");
+loadComponent("how-root", "components/how/how.html", () => {
+  loadScript("js/how.js");
+});
 
 /**** PROJECTS ****/
 loadComponent("projects", "components/projects/projects.html", () => {
