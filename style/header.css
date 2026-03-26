@@ -148,6 +148,7 @@ html[data-theme="dark"] .theme-toggle {
     margin-left: 40px;
     font-size: 1.1rem;
     font-weight: 500;
+    font-family: 'Bageo';
 }
 
 .nav__link a {

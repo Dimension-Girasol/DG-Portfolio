@@ -38,14 +38,16 @@
     font-family: 'Bageo';
     font-size: 20px;
     margin-bottom: 25px;
-    font-weight: 700;
     border-bottom: 2px solid var(--orangeCustom);
     padding-bottom: 10px;
     color: var(--greyCustom);
+    letter-spacing: 2px;
+    text-transform: uppercase;
     /* display: inline-block;*/ /* Corta la línea según el tamaño de la palabra */
 }
 
 .footer__links ul li a {
+    font-family: 'Arquitecta';
     font-size: 18px;
     text-decoration: none;
     color: var(--greyCustom);
@@ -57,18 +59,6 @@
 .footer__links ul li a:hover {
     color: var(--blueCustom);
     padding-left: 6px;
-}
-
-.footer__copy {
-    font-size: 1rem;
-    font-family: 'Arquitecta';
-    display: flex;
-    padding: 2rem;
-    margin: 0;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
 }
 
 .social-links a {
@@ -91,8 +81,8 @@
 }
 
 .email-link p {
-    font-family: 'Bageo';
-    font-weight: 500;
+    font-family: 'Arquitecta';
+    font-size: 18px;
     width: 100%;
     margin-bottom: 15px;
 }

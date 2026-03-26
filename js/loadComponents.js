@@ -25,6 +25,9 @@ loadComponent("hero", "components/hero/hero.html", () => {
   });
 });
 
+/**** HOW ****/
+loadComponent("how-root", "components/how/how.html");
+
 /**** PROJECTS ****/
 loadComponent("projects", "components/projects/projects.html", () => {
   loadComponent("card-gallery-projects", "components/projects/card-gallery-projects.html", () => {

@@ -23,7 +23,8 @@
 }
 
 .hero__title {
-  font-family: 'ArquitectaBold';
+  font-family: 'ArquitectaMedium';
+  font-weight: 900;
   font-size: clamp(2rem, 5vw, 3.5rem);
   color: var(--greyCustom);
 }
@@ -31,16 +32,17 @@
 .hero__tag {
   font-size: 0.9rem;
   letter-spacing: 2px;
+  font-family: "Bageo";
   text-transform: uppercase;
   color: var(--blueCustom);
 }
 
 .hero__text {
-  font-size: 1.2rem;
+  font-family: 'Arquitecta';
+  font-size: 1.3rem;
   max-width: 50rem;
   color: var(--greyCustom);
 }
-
 
 
 /** Top collection small size **/
