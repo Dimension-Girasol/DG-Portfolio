@@ -1,10 +1,18 @@
 .how {
   position: relative;
   isolation: isolate;
+  --how-icon-filter: none;
+  --how-circle-bg: var(--frontProjectCardCustom);
+  --how-circle-text: var(--greyCustomBtn);
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
-html[data-theme="dark"] .icon {
+html[data-theme="dark"] .how {
   --how-icon-filter: brightness(0) invert(1);
+  --how-icon-filter-hover: brightness(0) invert(1);
+  --how-circle-bg: var(--white);
+  --how-circle-text: var(--greyCustom);
 }
 
 .how__container {
@@ -72,7 +80,7 @@ html[data-theme="dark"] .icon {
   width: var(--how-circle-size);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--frontProjectCardCustom);
+  background: var(--how-circle-bg);
   border: 1px solid var(--strokeBubble);
   opacity: 0;
   pointer-events: none;
@@ -158,7 +166,7 @@ html[data-theme="dark"] .icon {
   }
 
   .infoGraphic > li:hover .content {
-    color: var(--greyCustomBtn);
+    color: var(--how-circle-text);
   }
 
   .infoGraphic > li:hover .number {
@@ -200,11 +208,11 @@ html[data-theme="dark"] .icon {
   }
 
   .infoGraphic > li.is-inview .content {
-    color: var(--greyCustomBtn);
+    color: var(--how-circle-text);
   }
 
   .infoGraphic > li.is-inview .icon {
-    filter: none;
+    filter: var(--how-icon-filter);
   }
 }
 
