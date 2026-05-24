@@ -168,20 +168,23 @@
   z-index: 2;
 }
 
-.hero__gallery:hover .hero__card--one {
-  transform: translate(-30px, -22px) rotate(-14deg) scale(1.04);
-}
+/* Disable hover "shuffle" animation (keep the base transforms) */
+@media (hover: hover) and (pointer: fine) {
+  .hero__gallery:hover .hero__card--one {
+    transform: translate(-30px, -22px) rotate(-14deg) scale(1.04);
+  }
 
-.hero__gallery:hover .hero__card--two {
-  transform: translate(34px, -30px) rotate(11deg) scale(1.05);
-}
+  .hero__gallery:hover .hero__card--two {
+    transform: translate(34px, -30px) rotate(11deg) scale(1.05);
+  }
 
-.hero__gallery:hover .hero__card--three {
-  transform: translate(-36px, 28px) rotate(-8deg) scale(1.05);
-}
+  .hero__gallery:hover .hero__card--three {
+    transform: translate(-36px, 28px) rotate(-8deg) scale(1.05);
+  }
 
-.hero__gallery:hover .hero__card--four {
-  transform: translate(32px, 24px) rotate(16deg) scale(1.04);
+  .hero__gallery:hover .hero__card--four {
+    transform: translate(32px, 24px) rotate(16deg) scale(1.04);
+  }
 }
 
 .hero__gallery .hero__card:hover {
