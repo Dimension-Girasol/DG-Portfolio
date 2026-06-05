@@ -141,6 +141,13 @@ html[data-theme="dark"] {
 html {
   scroll-behavior: smooth;
   color-scheme: light dark;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html {
+    overflow-x: clip;
+  }
 }
 
 * {
@@ -154,6 +161,7 @@ body {
   background-color: var(--backgroundCustom);
   color: var(--greyCustom);
   transition: background-color 320ms ease, color 320ms ease;
+  overflow-x: hidden;
 }
 
 a {

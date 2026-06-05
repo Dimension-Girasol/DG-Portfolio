@@ -107,6 +107,9 @@ function initProjectsModal() {
   let currentImages = [];
   let currentIndex = 0;
   const folderCache = new Map();
+  let modalRequestId = 0;
+  let isZoomActive = false;
+  const ZOOM_SCALE = 2.4;
 
   const modalStage = section.querySelector(".projects__modal-stage");
   const canHoverFinePointer =
@@ -119,10 +122,15 @@ function initProjectsModal() {
     if (!canHoverFinePointer || !modalStage) return;
     modalStage.style.setProperty("--zoom-x", "50%");
     modalStage.style.setProperty("--zoom-y", "50%");
+    isZoomActive = false;
+    modalStage.classList.remove("is-zoomed");
+    modalStage.style.cursor = "zoom-in";
+    modalImage.style.setProperty("transform", "scale(1)", "important");
+    modalImage.style.setProperty("transform-origin", "50% 50%", "important");
   };
 
   const updateZoomPositionFromPointerEvent = (event) => {
-    if (!canHoverFinePointer || !modalStage) return;
+    if (!canHoverFinePointer || !modalStage || !isZoomActive) return;
     if (!modal.classList.contains("is-open")) return;
 
     const rect = modalStage.getBoundingClientRect();
@@ -133,10 +141,26 @@ function initProjectsModal() {
 
     modalStage.style.setProperty("--zoom-x", `${x * 100}%`);
     modalStage.style.setProperty("--zoom-y", `${y * 100}%`);
+    modalImage.style.setProperty("transform-origin", `${x * 100}% ${y * 100}%`, "important");
+  };
+
+  const toggleZoom = (event) => {
+    if (!canHoverFinePointer || !modalStage) return;
+    isZoomActive = !isZoomActive;
+    if (isZoomActive) {
+      modalStage.classList.add("is-zoomed");
+      modalStage.style.cursor = "zoom-out";
+      modalImage.style.setProperty("transform", `scale(${ZOOM_SCALE})`, "important");
+      updateZoomPositionFromPointerEvent(event);
+    } else {
+      resetZoomPosition();
+    }
   };
 
   if (canHoverFinePointer && modalStage) {
-    modalStage.addEventListener("pointerenter", resetZoomPosition);
+    modalStage.style.cursor = "zoom-in";
+    modalImage.style.setProperty("transition", "transform 0.3s ease-out", "important");
+    modalStage.addEventListener("click", toggleZoom);
     modalStage.addEventListener("pointermove", updateZoomPositionFromPointerEvent);
     modalStage.addEventListener("pointerleave", resetZoomPosition);
   }
@@ -148,6 +172,7 @@ function initProjectsModal() {
     modal.classList.toggle("is-open", open);
     modal.setAttribute("aria-hidden", String(!open));
     document.body.classList.toggle("modal-open", open);
+    document.documentElement.classList.toggle("modal-open", open);
   };
 
   const renderActiveImage = () => {
@@ -188,11 +213,25 @@ function initProjectsModal() {
       .join("");
   };
 
+  // Diccionario Mock de datos.
+  // Añade aquí las rutas de tus proyectos y los nombres exactos de sus imágenes
+  // para que la carga sea instantánea en móviles y no haga peticiones a ciegas.
+  const PROJECTS_MOCK_DATA = {
+    "/src/assets/images/projects/gallery/ansiedad": ["1.png", "2.png", "3.png", "4.png"],
+    "/src/assets/images/projects/gallery/caitlyn": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg"],
+    "/src/assets/images/projects/gallery/hornet": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"],
+    "/src/assets/images/projects/gallery/katarina": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"],
+    "/src/assets/images/projects/gallery/mononoke": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg"],
+    "/src/assets/images/projects/gallery/pesadilla": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "9.jpg"],
+    "/src/assets/images/projects/gallery/scar": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg"],
+    "/src/assets/images/projects/gallery/tanjiro": ["0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]
+  };
+
   const checkImageExists = (src) =>
     new Promise((resolve) => {
       const probe = new Image();
-      probe.onload = () => resolve(true);
-      probe.onerror = () => resolve(false);
+      probe.onload = () => resolve(src);
+      probe.onerror = () => resolve(null);
       probe.src = src;
     });
 
@@ -201,33 +240,38 @@ function initProjectsModal() {
       return folderCache.get(folderPath);
     }
 
+    // 1. Carga instantánea si la carpeta está registrada en el mock
+    if (PROJECTS_MOCK_DATA[folderPath]) {
+      const mockImages = PROJECTS_MOCK_DATA[folderPath].map((filename, index) => ({
+        src: `${folderPath}/${filename}`,
+        alt: `${title} - imagen ${index + 1}`
+      }));
+      folderCache.set(folderPath, mockImages);
+      return mockImages;
+    }
+
+    // 2. Si no está en el mock, usamos la búsqueda en paralelo (mucho más rápida)
     const discovered = [];
     let missesInRow = 0;
 
     for (let index = 0; index <= MAX_FILES_PER_FOLDER; index += 1) {
-      let foundAtIndex = false;
+      // Disparamos la comprobación de todas las extensiones a la vez para este número
+      const promises = FILE_EXTENSIONS.map((ext) => checkImageExists(`${folderPath}/${index}.${ext}`));
+      const results = await Promise.all(promises);
+      const validSrc = results.find((src) => src !== null);
 
-      for (const ext of FILE_EXTENSIONS) {
-        const src = `${folderPath}/${index}.${ext}`;
-        // eslint-disable-next-line no-await-in-loop
-        const exists = await checkImageExists(src);
-        if (exists) {
-          discovered.push({
-            src,
-            alt: `${title} - imagen ${discovered.length + 1}`
-          });
-          foundAtIndex = true;
-          break;
-        }
-      }
-
-      if (foundAtIndex) {
+      if (validSrc) {
+        discovered.push({
+          src: validSrc,
+          alt: `${title} - imagen ${discovered.length + 1}`
+        });
         missesInRow = 0;
       } else {
         missesInRow += 1;
       }
 
-      if (discovered.length && missesInRow >= 6) {
+      // Abortamos muy rápido: si ya encontramos fotos y fallan 2 números seguidos, paramos
+      if (discovered.length && missesInRow >= 2) {
         break;
       }
     }
@@ -274,25 +318,40 @@ function initProjectsModal() {
     const title = card.querySelector(".gallery__info p")?.textContent?.trim() || "Proyecto";
     const folderPath = getFolderPathFromCard(card);
     const fallbackImages = getFallbackImagesFromCard(card, title);
-    const folderImages = folderPath ? await loadFolderImages(folderPath, title) : [];
-    const images = folderImages.length ? folderImages : fallbackImages;
+    const requestId = (modalRequestId += 1);
 
     modalTitle.textContent = title;
-    currentImages = images;
+    currentImages = fallbackImages;
     currentIndex = 0;
 
     buildThumbs();
     renderActiveImage();
 
     lastFocusedElement = document.activeElement;
-    setModalState(true);
-    modal.querySelector(".projects__modal-close, .projects-modal__close")?.focus();
+
+    requestAnimationFrame(() => {
+      setModalState(true);
+      modal.querySelector(".projects__modal-close, .projects-modal__close")?.focus({ preventScroll: true });
+    });
+
+    if (!folderPath) return;
+
+    const folderImages = await loadFolderImages(folderPath, title);
+    if (requestId !== modalRequestId) return;
+    if (!modal.classList.contains("is-open")) return;
+    if (!folderImages.length) return;
+
+    currentImages = folderImages;
+    currentIndex = 0;
+    buildThumbs();
+    renderActiveImage();
   };
 
   galleriesWrap.addEventListener("click", (event) => {
     if (event.target.closest(".projects__modal-thumb, .projects-modal__thumb")) return;
     const card = event.target.closest(".gallery");
     if (!card || !galleriesWrap.contains(card)) return;
+    event.preventDefault();
     openModalFromCard(card);
   });
 
