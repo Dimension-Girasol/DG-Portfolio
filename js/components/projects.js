@@ -286,6 +286,11 @@
       resetZoomPosition();
       setImageLoading(true);
 
+      // Assign aditional scr to prevent double animation to show modal
+      if (!modalImage.getAttribute("src")) {
+        modalImage.src = image.thumbSrc || image.src || nextSrc;
+      }
+
       preloadImage(nextSrc)
         .catch(() => nextSrc)
         .then((loadedSrc) => {
@@ -326,7 +331,7 @@
 
     const closeModal = () => {
       setModalState(false);
-      modalImage.src = "";
+      modalImage.removeAttribute("src");
       modalImage.alt = "";
       modalThumbs.innerHTML = "";
       modalCounter.textContent = "";
@@ -357,7 +362,7 @@
         setProjectInModal(cachedProject);
       } else {
         modalTitle.textContent = t("projects.modalTitle");
-        modalImage.src = "";
+        modalImage.removeAttribute("src");
         modalImage.alt = "";
         modalThumbs.innerHTML = "";
         modalCounter.textContent = "";
@@ -381,7 +386,15 @@
 
         const detailProject = window.DGProjectMapper.mapProject(dto);
         projectStore.set(String(detailProject.id), detailProject);
-        setProjectInModal(detailProject);
+        
+        // Prevent render if API return same data that saving on cache
+        const isSameData = cachedProject && 
+          cachedProject.images.length === detailProject.images.length &&
+          cachedProject.images.every((img, i) => img.id === detailProject.images[i]?.id);
+
+        if (!isSameData) {
+          setProjectInModal(detailProject);
+        }
       } catch (error) {
         console.error("No se pudo cargar el detalle del proyecto", error);
         setImageLoading(false);
