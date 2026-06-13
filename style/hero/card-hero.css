@@ -28,6 +28,10 @@
   transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.hero__card.card--flipping {
+  pointer-events: none;
+}
+
 .hero__card-inner {
   position: relative;
   width: 100%;
@@ -191,21 +195,10 @@
   pointer-events: auto;
 }
 
-/** URLs **/
-.hero__card--one {
-  --hero-card-image: url("/src/assets/images/hero/jack.jpg");
-}
-
-.hero__card--two {
-  --hero-card-image: url("/src/assets/images/hero/scar1.jpg");
-}
-
-.hero__card--three {
-  --hero-card-image: url("/src/assets/images/hero/mononoke.jpg");
-}
-
-.hero__card--four {
-  --hero-card-image: url("/src/assets/images/hero/catilyn.jpg");
+html.modal-open .hero__image,
+body.modal-open .hero__image {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /** Animations **/

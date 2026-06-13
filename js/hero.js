@@ -1,37 +1,32 @@
-/** Cards - MOCK  **/
-const HERO_CARDS = [
-  {
-    idCSS: 'hero__card--one',
-    title: 'Pesadilla antes de Navidad',
-    ariaLabel: 'Pesadilla antes de Navidad',
-    detailsHref: '#projects'
-  },
-  {
-    idCSS: 'hero__card--two',
-    title: 'Scar',
-    ariaLabel: 'Scar - El Rey Leon',
-    detailsHref: '#projects'
-  },
-  {
-    idCSS: 'hero__card--three',
-    title: 'Princesa Mononoke',
-    ariaLabel: 'Princesa Mononoke',
-    detailsHref: '#projects'
-  },
-  {
-    idCSS: 'hero__card--four',
-    title: 'Caitlyn - Arcane',
-    ariaLabel: 'Caitlyn - Arcane',
-    detailsHref: '#projects'
-  }
+(function () {
+const HERO_CARD_CLASSES = [
+  "hero__card--one",
+  "hero__card--two",
+  "hero__card--three",
+  "hero__card--four"
 ];
 
-/* Create card with mock data */
+const escapeCssUrl = (value) => String(value || "").replace(/["\\]/g, "\\$&");
+
+function preloadHeroImage(src) {
+  return new Promise((resolve) => {
+    if (!src) {
+      resolve();
+      return;
+    }
+
+    const image = new Image();
+    image.onload = resolve;
+    image.onerror = resolve;
+    image.src = src;
+  });
+}
 
 function createHeroCard(card) {
   const article = document.createElement('article');
   article.className = `hero__card ${card.idCSS}`;
   article.setAttribute('aria-label', card.ariaLabel);
+  article.style.setProperty("--hero-card-image", `url("${escapeCssUrl(card.imageSrc)}")`);
 
   const inner = document.createElement('div');
   inner.className = 'hero__card-inner';
@@ -50,7 +45,9 @@ function createHeroCard(card) {
   const detailsLink = document.createElement('a');
   detailsLink.className = 'hero__details-btn';
   detailsLink.href = card.detailsHref;
-  detailsLink.textContent = 'Mostrar detalles';
+  detailsLink.dataset.projectId = card.projectId;
+  detailsLink.dataset.i18n = "hero.cardDetails";
+  detailsLink.textContent = window.DGI18n?.t("hero.cardDetails") || 'Mostrar detalles';
 
   const front = document.createElement('div');
   front.className = 'hero__card-face hero__card-face--front';
@@ -72,42 +69,98 @@ function createHeroCard(card) {
   return article;
 }
 
-/* load cards */
-function loadHeroCards() {
+function loadHeroCards(cards) {
   const gallery = document.querySelector('.hero__gallery');
   if (!gallery) return;
 
   const fragment = document.createDocumentFragment();
-  HERO_CARDS.forEach((card) => {
+  cards.forEach((card) => {
     fragment.appendChild(createHeroCard(card));
   });
 
   gallery.replaceChildren(fragment);
 }
 
+function mapProjectToHeroCard(project, index) {
+  return {
+    idCSS: HERO_CARD_CLASSES[index],
+    title: project.name,
+    ariaLabel: project.name,
+    detailsHref: '#projects-modal',
+    projectId: project.id,
+    imageSrc: project.cover.src || project.cover.fullSrc
+  };
+}
+
+function openProjectDetail(projectId) {
+  if (window.DGProjectsModal?.open) {
+    window.DGProjectsModal.open(projectId);
+    return;
+  }
+
+  window.DGPendingProjectModalId = projectId;
+}
+
+async function loadHeroCardsFromApi() {
+  const gallery = document.querySelector('.hero__gallery');
+  if (!gallery || !window.DGProjectsService || !window.DGProjectMapper) return;
+
+  gallery.setAttribute("aria-busy", "true");
+
+  try {
+    const projectsDto = await window.DGProjectsService.getProjects();
+    const heroCards = window.DGProjectMapper.mapProjects(projectsDto)
+      .slice(0, HERO_CARD_CLASSES.length)
+      .map(mapProjectToHeroCard);
+
+    await Promise.all(heroCards.map((card) => preloadHeroImage(card.imageSrc)));
+    loadHeroCards(heroCards);
+    window.DGI18n?.apply(gallery);
+    initHeroCardFlip();
+  } catch (error) {
+    console.error("No se pudieron cargar las cartas del hero", error);
+  } finally {
+    gallery.removeAttribute("aria-busy");
+  }
+}
+
 function initHeroCardFlip() {
   const cards = document.querySelectorAll('.hero__card');
   if (!cards.length) return;
 
-  const closeCard = (card) => {
-    if (!card.classList.contains('card--flipped')) return;
+  const setFlipping = (card, state) => {
+    card.classList.toggle('card--flipping', state);
+  };
 
+  const closeCard = (card) => {
+    if (!card.classList.contains('card--flipped') || card.classList.contains('card--flipping')) return;
+
+    setFlipping(card, true);
     card.classList.remove('card--flipped');
     card.classList.add('card--unflip');
 
     window.setTimeout(() => {
       card.classList.remove('card--unflip');
+      setFlipping(card, false);
     }, 380);
   };
 
   const openCard = (card) => {
+    if (card.classList.contains('card--flipping')) return;
+
+    setFlipping(card, true);
     card.classList.remove('card--unflip');
     card.classList.add('card--flipped');
+
+    window.setTimeout(() => {
+      setFlipping(card, false);
+    }, 380);
   };
 
   cards.forEach((card) => {
     card.addEventListener('click', (event) => {
       event.stopPropagation();
+      if (card.classList.contains('card--flipping')) return;
 
       if (card.classList.contains('card--flipped')) {
         closeCard(card);
@@ -124,7 +177,9 @@ function initHeroCardFlip() {
     const detailsBtn = card.querySelector('.hero__details-btn');
     if (detailsBtn) {
       detailsBtn.addEventListener('click', (event) => {
+        event.preventDefault();
         event.stopPropagation();
+        openProjectDetail(detailsBtn.dataset.projectId);
       });
     }
   });
@@ -134,5 +189,5 @@ function initHeroCardFlip() {
   });
 }
 
-loadHeroCards();
-initHeroCardFlip();
+loadHeroCardsFromApi();
+})();

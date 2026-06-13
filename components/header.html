@@ -1,7 +1,4 @@
 <header class="header">
-    <!-- <section class="header__info">
-        <p>¡Descubre el arte digital llevado a la realidad! Impresión 3D en resina y filamento. Grabado y corte láser.</p>
-    </section> -->
     <section class="container-navbar">
         <nav class="navbar container">
             <a href="index.html" class="navbar__logo">
@@ -14,26 +11,23 @@
             </a>
             <div class="navbar__nav">
                 <ul class="nav__list">
-                    <li class="nav__link">
-                        <a href="index.html">Inicio</a>
-                    </li>
-                    <li class="nav__link">
-                        <a href="#projects">Proyectos</a>
-                    </li>
-                    <li class="nav__link">
-                        <a href="index.html">Conócenos</a>
-                    </li>
+                    <li class="nav__link"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
+                    <li class="nav__link"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                    <li class="nav__link"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
                 </ul>
-                <a href="#" class="button button-primary navbar__cta">Contacto</a>
-                <button
-                    class="theme-toggle"
-                    type="button"
-                    aria-pressed="false">
+                <a href="contact.html" class="button button-primary navbar__cta" data-i18n="nav.contact">Contacto</a>
+                <button class="theme-toggle" type="button" aria-pressed="false">
                     <span class="theme-toggle__bulb" aria-hidden="true">
                         <i class="fa-regular fa-lightbulb theme-toggle__icon"></i>
                     </span>
                 </button>
-                <!-- Menu button: responsive and show X icon effect -->
+                <button
+                    class="language-toggle"
+                    type="button"
+                    aria-label="Cambiar idioma"
+                    data-i18n-attr="aria-label:language.toggle">
+                    <span class="language-toggle__label" data-i18n="language.current">ES</span>
+                </button>
                 <button
                     class="navbar__toggle-btn"
                     type="button"
@@ -42,19 +36,14 @@
                     data-open-icon-dark="/src/assets/images/header/menu-icon-dark.svg"
                     data-close-icon-light="/src/assets/images/header/close_menu-icon-light.svg"
                     data-close-icon-dark="/src/assets/images/header/close_menu-icon_dark.svg">
-                    <img class="navbar__toggle-icon" src="/src/assets/images/header/menu-icon-light.svg" alt="Botón menú de navegación">
+                    <img class="navbar__toggle-icon" src="/src/assets/images/header/menu-icon-light.svg" alt="Boton menu de navegacion">
                 </button>
                 <div class="navbar__mobile-menu" id="mobile-menu">
                     <ul class="nav__list-mobile">
-                        <li class="nav__link-mobile">
-                            <a href="/index.html">Inicio</a>
-                        </li>
-                        <li class="nav__link-mobile">
-                            <a href="/projects.html">Proyectos</a>
-                        </li>
-                        <li class="nav__link-mobile">
-                            <a href="index.html">Conócenos</a>
-                        </li>
+                        <li class="nav__link-mobile"><a href="/index.html" data-i18n="nav.home">Inicio</a></li>
+                        <li class="nav__link-mobile"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                        <li class="nav__link-mobile"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
+                        <li class="nav__link-mobile"><a href="contact.html" data-i18n="nav.contact">Contacto</a></li>
                     </ul>
                 </div>
             </div>

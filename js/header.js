@@ -1,15 +1,16 @@
 function initHeader() {
-  // Element IDs
   const toggleBtn = document.querySelector(".navbar__toggle-btn");
   const toggleIcon = document.querySelector(".navbar__toggle-icon");
   const mobileMenu = document.querySelector(".navbar__mobile-menu");
   const mobileLinks = document.querySelectorAll(".nav__list-mobile a");
   const themeToggleBtn = document.querySelector(".theme-toggle");
   const themeToggleIcon = themeToggleBtn?.querySelector(".theme-toggle__icon");
+  const languageToggleBtn = document.querySelector(".language-toggle");
 
   if (!toggleBtn || !mobileMenu) return;
 
   const themeStorageKey = "dg-theme";
+  const text = (key, fallback) => window.DGI18n?.t(key) || fallback;
 
   const getTheme = () =>
     document.documentElement.dataset.theme === "dark" ? "dark" : "light";
@@ -21,6 +22,7 @@ function initHeader() {
     } catch {
       // ignore
     }
+
     const prefersDark =
       window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
     return prefersDark ? "dark" : "light";
@@ -28,10 +30,8 @@ function initHeader() {
 
   const resolveMenuIcon = (kind, theme) => {
     const isOpenIcon = kind === "open";
-
     const lightAttr = isOpenIcon ? "openIconLight" : "closeIconLight";
     const darkAttr = isOpenIcon ? "openIconDark" : "closeIconDark";
-
     const lightFallback = isOpenIcon
       ? "/src/assets/images/header/menu-icon-light.svg"
       : "/src/assets/images/header/close_menu-icon-light.svg";
@@ -76,7 +76,7 @@ function initHeader() {
       themeToggleBtn.setAttribute("aria-pressed", String(isDark));
       themeToggleBtn.setAttribute(
         "aria-label",
-        isDark ? "Activar modo claro" : "Activar modo oscuro"
+        isDark ? text("theme.light", "Activar modo claro") : text("theme.dark", "Activar modo oscuro")
       );
     }
 
@@ -94,6 +94,25 @@ function initHeader() {
     themeToggleBtn.classList.remove("is-animating");
     void themeToggleBtn.offsetWidth;
     themeToggleBtn.classList.add("is-animating");
+  };
+
+  const closeMenu = () => {
+    mobileMenu.classList.remove("active");
+    toggleBtn.classList.remove("active");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.setAttribute("aria-label", text("nav.openMenu", "Abrir menu de navegacion"));
+    updateToggleIcon(false);
+  };
+
+  const toggleMenu = () => {
+    const isOpen = mobileMenu.classList.toggle("active");
+    toggleBtn.classList.toggle("active", isOpen);
+    toggleBtn.setAttribute("aria-expanded", String(isOpen));
+    toggleBtn.setAttribute(
+      "aria-label",
+      isOpen ? text("nav.closeMenu", "Cerrar menu de navegacion") : text("nav.openMenu", "Abrir menu de navegacion")
+    );
+    updateToggleIcon(isOpen);
   };
 
   if (themeToggleBtn) {
@@ -116,44 +135,24 @@ function initHeader() {
     });
   }
 
-  // Navbar state for default <- CLOSED -> show: menu-icon
-  syncThemeAssets(getTheme());
+  if (languageToggleBtn) {
+    languageToggleBtn.addEventListener("click", () => {
+      window.DGI18n?.toggleLanguage();
+      applyTheme(getTheme());
+    });
+  }
 
-  const closeMenu = () => {
-    // Change state
-    mobileMenu.classList.remove("active");
-    toggleBtn.classList.remove("active");
-
-    // Accesibility
-    toggleBtn.setAttribute("aria-expanded", "false");
-    toggleBtn.setAttribute("aria-label", "Abrir menú de navegación");
-    updateToggleIcon(false);
-  };
-
-  const toggleMenu = () => {
-    // Flag
-    const isOpen = mobileMenu.classList.toggle("active");
-    toggleBtn.classList.toggle("active", isOpen);
-
-    // Accesbility
-    toggleBtn.setAttribute("aria-expanded", String(isOpen));
-    toggleBtn.setAttribute(
-      "aria-label",
-      isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
-    );
-    updateToggleIcon(isOpen); // set menu state to change icon
-  };
-
-  // Execute toggleMenu() -> set state 
-  // (open? -> close / close? -> open)
-  toggleBtn.addEventListener("click", toggleMenu);
-
-  // Get element of menu was clicked
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", closeMenu);
+  document.addEventListener("dg:languagechange", () => {
+    applyTheme(getTheme());
+    closeMenu();
   });
 
-  // Click outside? -> close menu
+  syncThemeAssets(getTheme());
+  closeMenu();
+
+  toggleBtn.addEventListener("click", toggleMenu);
+  mobileLinks.forEach((link) => link.addEventListener("click", closeMenu));
+
   document.addEventListener("click", (event) => {
     const clickedInsideMenu = mobileMenu.contains(event.target);
     const clickedToggle = toggleBtn.contains(event.target);
@@ -162,13 +161,6 @@ function initHeader() {
       closeMenu();
     }
   });
-
-  // Close menu press "Escape" keyboard
-  /* document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-  }); */
 }
 
 initHeader();

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
+    <title>Contacto - Dimension Girasol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/theme-init.js"></script>
+    <link rel="stylesheet" href="style/styles.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/contact/contact.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+  </head>
+  <body data-page="contact">
+    <div id="header"></div>
+
+    <main class="contact-page section-space">
+      <section class="contact-page__container container" aria-labelledby="contact-title">
+        <div class="contact-page__content">
+          <span class="section__tag" data-i18n="contact.tag">Contactanos</span>
+          <h1 id="contact-title" data-i18n="contact.title">Cuentanos tu idea</h1>
+          <p data-i18n="contact.text">
+            Rellena el formulario con una breve descripcion de lo que necesitas y un email de contacto. Te responderemos lo antes posible.
+          </p>
+          <div class="contact-page__quick">
+            <a href="mailto:info@dimensiongirasol.com">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <span>info@dimensiongirasol.com</span>
+            </a>
+            <a href="https://www.instagram.com/dimensiongirasol/" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+              <span>@dimensiongirasol</span>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" action="mailto:info@dimensiongirasol.com" method="post" enctype="text/plain">
+          <label class="contact-form__field">
+            <span data-i18n="contact.name">Nombre</span>
+            <input type="text" name="nombre" autocomplete="name" data-i18n-attr="placeholder:contact.namePlaceholder" placeholder="Tu nombre" />
+          </label>
+
+          <label class="contact-form__field">
+            <span data-i18n="contact.email">Email de contacto</span>
+            <input type="email" name="email" autocomplete="email" required data-i18n-attr="placeholder:contact.emailPlaceholder" placeholder="tu@email.com" />
+          </label>
+
+          <label class="contact-form__field">
+            <span data-i18n="contact.requestType">Tipo de peticion</span>
+            <select name="tipo-peticion" required>
+              <option value="" data-i18n="contact.requestPlaceholder">Selecciona una opcion</option>
+              <option value="impresion-3d" data-i18n="contact.request3d">Impresion 3D</option>
+              <option value="pintura" data-i18n="contact.requestPaint">Pintura de figura</option>
+              <option value="grabado-laser" data-i18n="contact.requestLaser">Grabado laser</option>
+              <option value="otro" data-i18n="contact.requestOther">Otro</option>
+            </select>
+          </label>
+
+          <label class="contact-form__field contact-form__field--full">
+            <span data-i18n="contact.message">Peticion</span>
+            <textarea name="peticion" rows="8" required data-i18n-attr="placeholder:contact.messagePlaceholder" placeholder="Cuanto mas detalle nos des, mejor podremos orientarte."></textarea>
+          </label>
+
+          <button class="button button-primary contact-form__submit" type="submit">
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            <span data-i18n="contact.submit">Enviar peticion</span>
+          </button>
+
+          <p class="contact-form__note" data-i18n="contact.note">
+            El formulario abrira tu cliente de correo para enviar la peticion.
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/loadComponents.js"></script>
+  </body>
+</html>

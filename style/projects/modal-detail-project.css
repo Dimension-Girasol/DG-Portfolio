@@ -6,7 +6,7 @@ body.modal-open {
 .projects__modal {
   position: fixed;
   inset: 0;
-  z-index: 1200;
+  z-index: 2147483000;
   display: none;
   align-items: center;
   justify-content: center;
@@ -68,6 +68,7 @@ body.modal-open {
 }
 
 .projects__modal-stage {
+  position: relative;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
@@ -77,6 +78,32 @@ body.modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.projects__modal-stage.is-loading .projects__modal-image {
+  opacity: 0.35;
+}
+
+.projects__modal-spinner {
+  position: absolute;
+  top: calc(50% - 22px);
+  left: calc(50% - 22px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.projects__modal-stage.is-loading .projects__modal-spinner {
+  opacity: 1;
+  transform: scale(1);
+  animation: projectsModalSpin 0.8s linear infinite;
 }
 
 .projects__modal-stage img {
@@ -89,6 +116,12 @@ body.modal-open {
   transform: scale(1);
   transform-origin: center;
   transition: transform 300ms ease-out;
+}
+
+@keyframes projectsModalSpin {
+  to {
+    transform: scale(1) rotate(360deg);
+  }
 }
 
 
@@ -144,31 +177,13 @@ body.modal-open {
   display: block;
 }
 
-
-/*@media (hover: hover) and (pointer: fine) {
-  .projects__modal-stage {
-    --zoom-scale: 1.2;
-    --zoom-x: 50%;
-    --zoom-y: 50%;
-    cursor: zoom-in;
-  }
-
-  .projects__modal-stage:hover {
-    cursor: zoom-out;
-  }
-
-  .projects__modal-stage:hover img {
-    object-fit: cover;
-    object-position: var(--zoom-x) var(--zoom-y);
-    transform: scale(var(--zoom-scale));
+@media (prefers-reduced-motion: reduce) {
+  .projects__modal-stage img,
+  .projects__modal-spinner {
+    transition: none;
+    animation: none;
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .projects__modal-stage img {
-    transition: none;
-  }
-} */
 
 @media (max-width: 620px) {
   .projects__modal {

@@ -2,20 +2,21 @@
   <div class="projects__modal-overlay" data-modal-close></div>
   <div class="projects__modal-dialog">
     <div class="projects__modal-dialog__header">
-      <button class="projects__modal-close" data-modal-close aria-label="Cerrar modal">
-        <span aria-hidden="true">×</span>
+      <button class="projects__modal-close" data-modal-close aria-label="Cerrar modal" data-i18n-attr="aria-label:projects.modalClose">
+        <span aria-hidden="true">x</span>
       </button>
-      <p class="projects__modal-title" id="projects__modal-title">Proyecto</p>
+      <p class="projects__modal-title" id="projects__modal-title" data-i18n="projects.modalTitle">Proyecto</p>
     </div>
     <div class="projects__modal-viewer">
-      <button class="projects__modal-nav projects__modal-nav--prev" id="projects-modal-prev" aria-label="Anterior imagen">
-        ‹
+      <button class="projects__modal-nav projects__modal-nav--prev" id="projects-modal-prev" aria-label="Anterior imagen" data-i18n-attr="aria-label:projects.modalPrev">
+        &lsaquo;
       </button>
       <figure class="projects__modal-stage">
-        <img id="projects__modal-image" class="projects__modal-image" />
+        <div class="projects__modal-spinner" role="status" aria-live="polite" aria-label="Cargando imagen" data-i18n-attr="aria-label:projects.modalLoadingImage"></div>
+        <img id="projects__modal-image" class="projects__modal-image" decoding="async" />
       </figure>
-      <button class="projects__modal-nav projects__modal-nav--next" id="projects-modal-next" aria-label="Siguiente imagen">
-        ›
+      <button class="projects__modal-nav projects__modal-nav--next" id="projects-modal-next" aria-label="Siguiente imagen" data-i18n-attr="aria-label:projects.modalNext">
+        &rsaquo;
       </button>
     </div>
     <p class="projects__modal-counter" id="projects-modal-counter"></p>

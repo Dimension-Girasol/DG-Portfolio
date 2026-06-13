@@ -179,9 +179,23 @@
   transition: opacity 0.18s ease;
 }
 
-.projects.is-loading .projects__grid {
+.projects.is-loading .projects__grid,
+.projects.is-loading .galleries {
   opacity: 0.55;
   pointer-events: none;
+}
+
+.projects__loading,
+.projects__empty,
+.projects__error {
+  min-height: 1.25rem;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  text-align: center;
+}
+
+.projects__error {
+  color: var(--orangeCustom);
 }
 
 @media (max-width: 900px) {

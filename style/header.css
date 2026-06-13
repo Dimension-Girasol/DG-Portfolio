@@ -54,7 +54,8 @@
     gap: 40px;
 }
 
-.theme-toggle {
+.theme-toggle,
+.language-toggle {
     background-color: transparent;
     position: relative;
     display: inline-grid;
@@ -72,17 +73,20 @@
     border-color: var(--strokeSubtle);
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.language-toggle:hover {
     background-color: var(--greyOpacity6);
     transform: translateY(-1px);
 }
 
-html[data-theme="dark"] .theme-toggle {
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .language-toggle {
     background-color: var(--greyOpacity6);
 }
 
 /* Accessibility */
-.theme-toggle:focus-visible {
+.theme-toggle:focus-visible,
+.language-toggle:focus-visible {
     outline: 3px solid var(--blueCustom);
     outline-offset: 2px;
 }
@@ -120,6 +124,16 @@ html[data-theme="dark"] .theme-toggle {
     color: var(--yellowCustom);
 }
 
+.language-toggle {
+    font-family: "Bageo";
+    font-size: 0.9rem;
+    color: var(--greyCustom);
+}
+
+.language-toggle__label {
+    line-height: 1;
+}
+
 @keyframes bulb-pop {
     0% { transform: rotate(0deg) scale(1); }
     25% { transform: rotate(-12deg) scale(1.18); }
@@ -135,6 +149,7 @@ html[data-theme="dark"] .theme-toggle {
 
 @media (prefers-reduced-motion: reduce) {
     .theme-toggle,
+    .language-toggle,
     .theme-toggle__bulb {
         transition: none;
         animation: none;
@@ -231,7 +246,8 @@ html[data-theme="dark"] .theme-toggle {
         white-space: nowrap;
     }
 
-    .theme-toggle {
+    .theme-toggle,
+    .language-toggle {
         width: 40px;
         height: 40px;
     }
@@ -294,6 +310,10 @@ html[data-theme="dark"] .theme-toggle {
         transition-delay: 0.16s;
     }
 
+    .navbar__mobile-menu.active .nav__link-mobile:nth-child(4) {
+        transition-delay: 0.22s;
+    }
+
     .nav__list-mobile {
         list-style: none;
         padding: 20px 22px 24px;
@@ -349,12 +369,13 @@ html[data-theme="dark"] .theme-toggle {
 
     .navbar__cta {
         min-height: 36px; /* same as .theme-toggle */
-        padding: 0 120px;
-        font-size: 0.2rem;
+        padding: 0 10px;
+        font-size: 0.85rem;
         border-radius: 16px;
     }
 
-    .theme-toggle {
+    .theme-toggle,
+    .language-toggle {
         width: 36px;
         height: 36px;
     }
