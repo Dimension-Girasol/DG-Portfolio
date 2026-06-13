@@ -33,11 +33,11 @@ function initHeader() {
     const lightAttr = isOpenIcon ? "openIconLight" : "closeIconLight";
     const darkAttr = isOpenIcon ? "openIconDark" : "closeIconDark";
     const lightFallback = isOpenIcon
-      ? "/src/assets/images/header/menu-icon-light.svg"
-      : "/src/assets/images/header/close_menu-icon-light.svg";
+      ? "src/assets/images/header/menu-icon-light.svg"
+      : "src/assets/images/header/close_menu-icon-light.svg";
     const darkFallback = isOpenIcon
-      ? "/src/assets/images/header/menu-icon-dark.svg"
-      : "/src/assets/images/header/close_menu-icon_dark.svg";
+      ? "src/assets/images/header/menu-icon-dark.svg"
+      : "src/assets/images/header/close_menu-icon_dark.svg";
 
     const legacyAttr = isOpenIcon ? "openIcon" : "closeIcon";
     const light = toggleBtn.dataset[lightAttr] || toggleBtn.dataset[legacyAttr] || lightFallback;

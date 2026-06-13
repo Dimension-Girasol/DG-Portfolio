@@ -34,7 +34,7 @@
         ${
           isMore
             ? `<span class="gallery__more-badge" aria-hidden="true">
-                <img src="/src/assets/images/projects/gallery/album-icon.svg" alt="" />
+                <img src="src/assets/images/projects/gallery/album-icon.svg" alt="" />
                 +${remaining}
               </span>`
             : ""

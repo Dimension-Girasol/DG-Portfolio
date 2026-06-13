@@ -36,7 +36,7 @@ function createHeroCard(card) {
 
   const backIcon = document.createElement('img');
   backIcon.className = 'hero__card-back-mark';
-  backIcon.src = '/src/assets/images/favicon.ico';
+  backIcon.src = 'src/assets/images/favicon.ico';
 
   const backTitle = document.createElement('span');
   backTitle.className = 'hero__card-title';

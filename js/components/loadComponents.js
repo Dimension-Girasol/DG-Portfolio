@@ -1,9 +1,9 @@
 const loadedScripts = new Map();
 const DG_SHARED_PROJECT_SCRIPTS = [
-  "js/apiConfig.js",
-  "js/projectModel.js",
-  "js/projectMapper.js",
-  "js/projectsService.js"
+  "server/api/apiConfig.js",
+  "server/api/projectModel.js",
+  "server/api/projectMapper.js",
+  "js/config/projectsService.js"
 ];
 
 async function loadComponent(id, file, callback) {
@@ -44,20 +44,20 @@ function loadScripts(srcs, callback) {
 
 // Register JSs functionality from html
 loadComponent("header", "components/header.html", () => {
-  loadScript("js/header.js");
+  loadScript("js/components/header.js");
 });
 
 // Register HTMLs
 /**** INDEX ****/
 loadComponent("hero", "components/hero/hero.html", () => {
   loadComponent("card-hero", "components/hero/card-hero.html", () => {
-    loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/hero.js"]);
+    loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/components/hero.js"]);
   });
 });
 
 /**** HOW ****/
 loadComponent("how-root", "components/how/how.html", () => {
-  loadScript("js/how.js");
+  loadScript("js/components/how.js");
 });
 
 /**** ABOUT ****/
@@ -67,7 +67,7 @@ loadComponent("about-root", "components/about/about.html");
 loadComponent("projects", "components/projects/projects.html", () => {
   loadComponent("card-gallery-projects", "components/projects/card-gallery-projects.html", () => {
     loadComponent("modal-detail-project", "components/projects/modal-detail-project.html", () => {
-      loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/projects.js"]);
+      loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/components/projects.js"]);
     });
   });
 });
