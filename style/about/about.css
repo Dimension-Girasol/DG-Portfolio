@@ -1,109 +1,167 @@
 @import url(../styles.css);
 
-.about {
-  position: relative;
-  overflow: hidden;
+/* ================= ABOUT / TIMELINE ================= */
+.about__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
 }
 
-.about__container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
-  gap: clamp(28px, 6vw, 72px);
+.about__top-section {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
 }
 
 .about__content {
   display: grid;
-  gap: 12px;
+  gap: 14px;
+  flex: 1 1 500px;
+}
+
+.about__image-container {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.about__image {
+  max-width: 100%;
+  height: auto;
+  max-height: 350px;
+  object-fit: contain;
 }
 
 .about__content h2 {
+  font-family: 'ArquitectaMedium';
   color: var(--greyCustom);
-  font-family: "ArquitectaMedium";
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 .about__content p {
-  max-width: 54rem;
+  max-width: 50rem;
+  margin-top: 10px;
   color: var(--greyCustom);
-  font-family: "Arquitecta";
+  font-family: 'Arquitecta';
   font-size: 1.3rem;
-  line-height: 1.45;
 }
 
-.about__social {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+.about__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0;
 }
 
-.about__social-link {
-  min-height: 128px;
+.about__timeline::before {
+  content: '';
+  position: absolute;
+  top: calc(2rem + 19px); /* Alineado al centro del año */
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: var(--yellowCustom);
+  z-index: 1;
+}
+
+.timeline__item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px;
-  border: 1px solid var(--overlayBorder);
-  border-radius: 8px;
-  background: var(--white);
-  color: var(--greyCustom);
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-.about__social-link:hover {
-  transform: translateY(-5px);
-  border-color: var(--orangeCustom);
-}
-
-.about__social-icon {
-  width: 52px;
-  height: 52px;
+.timeline__year {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: var(--lightYellowCustom);
+  height: 38px;
+  background: var(--yellowCustom);
   color: var(--greyCustomBtn);
-  font-size: 1.65rem;
+  font-family: 'Bageo';
+  font-size: 1.2rem;
+  padding: 0 1.2rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
 }
 
-.about__social-link--instagram:hover .about__social-icon {
-  background: var(--pinkCustom);
-  color: var(--frontProjectCardCustom);
+.timeline__content {
+  width: 100%;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--overlayBorder);
+  position: relative;
 }
 
-.about__social-link--whatsapp:hover .about__social-icon {
-  background: #25d366;
-  color: var(--frontProjectCardCustom);
+html[data-theme="dark"] .timeline__content {
+  background: var(--greyOpacity6);
 }
 
-.about__social-link--tiktok:hover .about__social-icon {
-  background: var(--greyCustomBtn);
-  color: var(--frontProjectCardCustom);
+.timeline__content h3 {
+  font-family: 'Arquitecta';
+  color: var(--blueCustom);
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
 }
 
-.about__social-link--mail:hover .about__social-icon {
-  background: var(--blueCustom);
-  color: var(--frontProjectCardCustom);
+.timeline__content p {
+  font-family: 'Arquitecta';
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
-.about__social-text {
-  display: grid;
-  gap: 3px;
-}
+@media (max-width: 900px) {
+  .about__timeline {
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-.about__social-text strong {
-  color: var(--greyCustom);
-  font-family: "ArquitectaBold";
-  font-size: 1.1rem;
-}
+  .about__timeline::before {
+    top: 2rem;
+    bottom: 2rem;
+    left: 20px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
 
-.about__social-text small {
-  color: var(--lightGreyCustom);
-  font-family: "Arquitecta";
-  font-size: 0.95rem;
-  overflow-wrap: anywhere;
+  .timeline__item {
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 70px;
+  }
+
+  .timeline__year {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    transform: translateX(-50%);
+    margin-bottom: 0;
+    padding: 0 0.8rem;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .about__image-container {
+    justify-content: center;
+  }
+
+  .timeline__content {
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 900px) {
