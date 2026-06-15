@@ -62,13 +62,12 @@
 }
 
 .social-links a {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 40px;
     min-width: 40px;
-    background-color: var(--greyCustom) 0.2;
     margin: 0 10px 10px 0;
-    text-align: center;
-    line-height: 40px;
     border-radius: 50%;
     color: var(--greyCustomBtn);
     background-color: var(--yellowCustom);
