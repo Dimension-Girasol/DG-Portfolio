@@ -1,0 +1,140 @@
+@import url(../styles.css);
+
+.contact-page {
+  min-height: calc(100vh - 5rem);
+  padding-top: clamp(72px, 9vw, 128px);
+}
+
+.contact-page__container {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1fr);
+  gap: clamp(28px, 6vw, 72px);
+  align-items: start;
+}
+
+.contact-page__content {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-page__content h1 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.contact-page__content p {
+  max-width: 44rem;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+.contact-page__quick {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.contact-page__quick a {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1rem;
+}
+
+.contact-page__quick i {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--lightYellowCustom);
+  color: var(--greyCustomBtn);
+}
+
+.contact-page__quick a:hover {
+  color: var(--blueCustom);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: clamp(18px, 4vw, 28px);
+  border: 1px solid var(--overlayBorder);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.contact-form__field {
+  display: grid;
+  gap: 8px;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.95rem;
+}
+
+.contact-form__field--full,
+.contact-form__submit,
+.contact-form__note {
+  grid-column: 1 / -1;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--overlayBorder);
+  border-radius: 8px;
+  background: var(--backgroundCustom);
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1rem;
+  padding: 12px 14px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: 3px solid rgba(0, 151, 178, 0.22);
+  border-color: var(--blueCustom);
+}
+
+.contact-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  cursor: pointer;
+}
+
+.contact-form__note {
+  color: var(--lightGreyCustom);
+  font-family: "Arquitecta";
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .contact-page__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+}

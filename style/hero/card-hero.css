@@ -1,0 +1,260 @@
+@import url(styles.css);
+
+.hero__image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: heroInUp 0.95s ease both;
+}
+
+.hero__gallery {
+  width: min(94vw, 620px);
+  height: min(70vh, 500px);
+  position: relative;
+  padding: 14px;
+  border-radius: 32px;
+  overflow: visible;
+}
+
+.hero__card {
+  position: absolute;
+  width: 42%;
+  height: 62%;
+  border-radius: 22px;
+  overflow: visible;
+  perspective: 1000px;
+  cursor: pointer;
+  transition: transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__card.card--flipping {
+  pointer-events: none;
+}
+
+.hero__card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(180deg);
+}
+
+.hero__card.card--flipped .hero__card-inner {
+  animation: heroCardFlip 0.36s forwards linear;
+}
+
+.hero__card.card--unflip .hero__card-inner {
+  animation: heroCardUnflip 0.36s forwards linear;
+}
+
+.hero__card.card--flipped,
+.hero__card.card--unflip {
+  z-index: 12;
+}
+
+.hero__card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.hero__card-face--front {
+  display: flex;
+  transform: rotateY(180deg);
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 44%, rgba(0, 0, 0, 0.72) 100%),
+    var(--hero-card-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__card-face--back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 40%),
+    linear-gradient(140deg, #FEA758 0%, #ffe1ad 48%, #a16126 100%);
+  text-align: center;
+}
+
+.hero__card-back-mark {
+  width: 10rem;
+  height: 10rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Bageo";
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.hero__card-face--back p {
+  font-family: "ArquitectaBold";
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero__card-front-content {
+  width: 100%;
+  margin-top: auto;
+  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero__card-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--frontProjectCardCustom);
+  font-family: "ArquitectaMedium";
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+}
+
+.hero__card-face--back .hero__card-title {
+  color: var(--greyCustomBtn);
+  z-index: 0;
+}
+
+.hero__details-btn {
+  border: 1px solid var(--whiteOpacity8);
+  border-radius: 20px;
+  background: var(--greyOpacity35);
+  color: var(--white);
+  font-family: "ArquitectaMedium";
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.hero__details-btn:hover {
+  background: var(--white);
+  color: var(--greyCustom);
+}
+
+.hero__card--one {
+  top: 2%;
+  left: 6%;
+  transform: rotate(-9deg);
+  z-index: 1;
+}
+
+.hero__card--two {
+  top: 14%;
+  left: 34%;
+  transform: rotate(7deg);
+  z-index: 3;
+}
+
+.hero__card--three {
+  top: 36%;
+  left: 12%;
+  transform: rotate(-4deg);
+  z-index: 4;
+}
+
+.hero__card--four {
+  top: 26%;
+  left: 54%;
+  transform: rotate(11deg);
+  z-index: 2;
+}
+
+/* Disable hover "shuffle" animation (keep the base transforms) */
+@media (hover: hover) and (pointer: fine) {
+  .hero__gallery:hover .hero__card--one {
+    transform: translate(-30px, -22px) rotate(-14deg) scale(1.04);
+  }
+
+  .hero__gallery:hover .hero__card--two {
+    transform: translate(34px, -30px) rotate(11deg) scale(1.05);
+  }
+
+  .hero__gallery:hover .hero__card--three {
+    transform: translate(-36px, 28px) rotate(-8deg) scale(1.05);
+  }
+
+  .hero__gallery:hover .hero__card--four {
+    transform: translate(32px, 24px) rotate(16deg) scale(1.04);
+  }
+}
+
+.hero__gallery .hero__card:hover {
+  pointer-events: auto;
+}
+
+html.modal-open .hero__image,
+body.modal-open .hero__image {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/** Animations **/
+
+@keyframes heroCardFlip {
+  0% {
+    transform: rotateZ(0deg) rotateY(180deg);
+  }
+
+  50% {
+    transform: rotateZ(-8deg) rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateZ(0deg) rotateY(0deg);
+  }
+}
+
+@keyframes heroCardUnflip {
+  0% {
+    transform: rotateZ(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateZ(-8deg) rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateZ(0deg) rotateY(180deg);
+  }
+}
+
+/** Right collection big size **/
+
+@media (min-width: 900px) {
+  .hero__container {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .hero__content {
+    order: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #card-hero {
+    order: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__card,
+  .hero__card-inner {
+    animation: none !important;
+    transition: none !important;
+  }
+}

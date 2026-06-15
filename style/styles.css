@@ -1,87 +1,87 @@
 /* --- FONT --- */
 @font-face {
   font-family: 'Bageo';
-  src: url('../assets/fonts/bageo/Bageo.otf') format('truetype');
+  src: url('../src/assets/fonts/bageo/Bageo.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arquitecta-Italic';
-  src: url('../assets/fonts/arquitecta/Arquitecta-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/Arquitecta-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'Arquitecta';
-  src: url('../assets/fonts/arquitecta/Arquitecta.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/Arquitecta.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBlack-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaBlack-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBlack-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBlack';
-  src: url('../assets/fonts/arquitecta/ArquitectaBlack.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBlack.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBold-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaBold-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBold-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBold';
-  src: url('../assets/fonts/arquitecta/ArquitectaBold.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBold.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBook-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaBook-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBook-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaBook';
-  src: url('../assets/fonts/arquitecta/ArquitectaBook.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaBook.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaHeavy-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaHeavy-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaHeavy-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaHeavy';
-  src: url('../assets/fonts/arquitecta/ArquitectaHeavy.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaHeavy.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaLight-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaLight-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaLight-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaLight';
-  src: url('../assets/fonts/arquitecta/ArquitectaLight.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaLight.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaMedium-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaMedium-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaMedium-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaMedium';
-  src: url('../assets/fonts/arquitecta/ArquitectaMedium.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaMedium.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaThin-Italic';
-  src: url('../assets/fonts/arquitecta/ArquitectaThin-Italic.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaThin-Italic.otf') format('truetype');
 }
 
 @font-face {
   font-family: 'ArquitectaThin';
-  src: url('../assets/fonts/arquitecta/ArquitectaThin.otf') format('truetype');
+  src: url('../src/assets/fonts/arquitecta/ArquitectaThin.otf') format('truetype');
 }
 
 
@@ -89,6 +89,7 @@
 
 :root {
   --white: #ffffff;
+  --whiteOpacity8: rgba(255, 255, 255, 0.8);
   --backgroundCustom: #f7f2ed;
   --black: #000;
 	--yellowCustom: #FCC96F;
@@ -97,7 +98,56 @@
 	--pinkCustom:   #B73271;
 	--blueCustom:   #0097B2;
 	--greyCustom:   #393938;
+	--greyCustomBtn:   #393938;
   --lightGreyCustom: #999999;
+  --frontProjectCardCustom: #ffff;
+  --greyOpacity35: rgba(0, 0, 0, 0.35);
+  --greyOpacity6: rgba(0, 0, 0, 0.06);
+  --strokeSubtle: rgba(57, 57, 56, 0.16);
+  --strokeBubble: rgba(57, 57, 56, 0.18);
+  --overlaySoft: rgba(57, 57, 56, 0.1);
+  --overlayBorder: rgba(57, 57, 56, 0.12);
+}
+
+html[data-theme="dark"] {
+  --white: #161a1d;
+  --whiteOpacity8: rgba(22, 26, 29, 0.86);
+  --backgroundCustom: #0f1214;
+  --black: #ffff;
+  --greyCustom: #f2f2f2;
+	--greyCustomBtn:   #393938;
+  --lightGreyCustom: #c7c7c7;
+  --greyOpacity35: rgba(255, 255, 255, 0.22);
+  --greyOpacity6:  rgba(255, 255, 255, 0.06);
+  --strokeSubtle: rgba(255, 255, 255, 0.14);
+  --strokeBubble: rgba(255, 255, 255, 0.18);
+  --overlaySoft: rgba(255, 255, 255, 0.08);
+  --overlayBorder: rgba(255, 255, 255, 0.12);
+}
+
+/* Animation change dark/light mode */
+.footer,
+.container-navbar,
+.project-card,
+.about__person,
+.about__highlight,
+.projects__bubble,
+.projects__modal-dialog {
+  transition: background-color 500ms ease, 
+              color 500ms ease, 
+              border-color 500ms ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light dark;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html {
+    overflow-x: clip;
+  }
 }
 
 * {
@@ -109,6 +159,9 @@
 body {
   font-family: 'Arquitecta';
   background-color: var(--backgroundCustom);
+  color: var(--greyCustom);
+  transition: background-color 320ms ease, color 320ms ease;
+  overflow-x: hidden;
 }
 
 a {
@@ -121,23 +174,33 @@ a {
     margin: 0 auto;
 }
 
-
 .button {
   font-size: 1.1rem;
   padding: 12px;
-  font-weight: 700px;
+  font-weight: 500;
   border-radius: 20px;
   display: inline-block;
   width: fit-content;
 }
 
 .button-primary {
-    color: var(--greyCustom);
-    background-color: var(--yellowCustom);
+  font-family: 'Bageo';
+  color: var(--greyCustomBtn);
+  background-color: var(--yellowCustom);
 }
 
 .button-primary:hover {
-    color: var(--white);
-    background-color: var(--blueCustom);
-    transition: background-color 0.3s ease-in-out;
+  color: var(--frontProjectCardCustom);
+  background-color: var(--blueCustom);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.section__tag {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--pinkCustom);
+  font-family: "Bageo";
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }

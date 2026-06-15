@@ -1,0 +1,129 @@
+@import url(../styles.css);
+
+.about {
+  position: relative;
+  overflow: hidden;
+}
+
+.about__container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: clamp(28px, 6vw, 72px);
+  align-items: center;
+}
+
+.about__content {
+  display: grid;
+  gap: 12px;
+}
+
+.about__content h2 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.about__content p {
+  max-width: 54rem;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+  line-height: 1.45;
+}
+
+.about__social {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.about__social-link {
+  min-height: 128px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--overlayBorder);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--greyCustom);
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.about__social-link:hover {
+  transform: translateY(-5px);
+  border-color: var(--orangeCustom);
+}
+
+.about__social-icon {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--lightYellowCustom);
+  color: var(--greyCustomBtn);
+  font-size: 1.65rem;
+}
+
+.about__social-link--instagram:hover .about__social-icon {
+  background: var(--pinkCustom);
+  color: var(--frontProjectCardCustom);
+}
+
+.about__social-link--whatsapp:hover .about__social-icon {
+  background: #25d366;
+  color: var(--frontProjectCardCustom);
+}
+
+.about__social-link--tiktok:hover .about__social-icon {
+  background: var(--greyCustomBtn);
+  color: var(--frontProjectCardCustom);
+}
+
+.about__social-link--mail:hover .about__social-icon {
+  background: var(--blueCustom);
+  color: var(--frontProjectCardCustom);
+}
+
+.about__social-text {
+  display: grid;
+  gap: 3px;
+}
+
+.about__social-text strong {
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.1rem;
+}
+
+.about__social-text small {
+  color: var(--lightGreyCustom);
+  font-family: "Arquitecta";
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .about__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .about__social {
+    grid-template-columns: 1fr;
+  }
+
+  .about__social-link {
+    min-height: 104px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__social-link {
+    transition: none;
+  }
+}

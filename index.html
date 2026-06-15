@@ -2,22 +2,30 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
-    <title>Dimensión Girasol</title>
+    <link rel="icon" href="src/assets/images/favicon.ico" type="image/x-icon">
+    <title>Dimension Girasol</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Styles -->
+    <script src="js/config/theme-init.js"></script>
     <link rel="stylesheet" href="style/styles.css" />
     <link rel="stylesheet" href="style/header.css" />
-    <link rel="stylesheet" href="style/hero.css" />
+    <link rel="stylesheet" href="style/hero/hero.css" />
+    <link rel="stylesheet" href="style/hero/card-hero.css" />
+    <link rel="stylesheet" href="style/how/how.css" />
+    <link rel="stylesheet" href="style/about/about.css" />
+    <link rel="stylesheet" href="style/projects/projects.css" />
+    <link rel="stylesheet" href="style/projects/card-gallery-projects.css" />
+    <link rel="stylesheet" href="style/projects/modal-detail-project.css" />
     <link rel="stylesheet" href="style/footer.css" />
-    <!-- Social media icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
   </head>
-  <body>
-    <div id="header"></div> <!-- Navbar -->
-    <div id="hero"></div> <!-- Hero index -->
-    <!-- Scripts -->
-    <script src="js/loadComponents.js"></script>
+  <body data-page="home">
+    <div id="header"></div>
+    <div id="hero"></div>
+    <div id="how-root"></div>
+    <div id="about-root"></div>
+    <div id="projects"></div>
+    <div id="footer"></div>
+    <script src="js/config/i18n.js"></script>
+    <script src="js/components/loadComponents.js"></script>
   </body>
-  <div id="footer"></div> <!-- Footer -->
 </html>

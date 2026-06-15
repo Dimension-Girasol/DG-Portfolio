@@ -1,0 +1,251 @@
+html.modal-open,
+body.modal-open {
+  overflow: hidden;
+}
+
+.projects__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.projects__modal.is-open {
+  display: flex;
+}
+
+.projects__modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(3px);
+}
+
+.projects__modal-dialog {
+  position: relative;
+  width: min(1100px, 96vw);
+  max-height: 80rem;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+}
+
+.projects__modal-dialog__header {
+  display: flex;
+  padding: 10px;
+}
+
+.projects__modal-close {
+  position: sticky;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--backgroundCustom);
+  color: var(--greyCustom);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.projects__modal-title {
+  padding: 10px;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.projects__modal-viewer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.projects__modal-stage {
+  position: relative;
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--overlayBorder);
+  background: transparent;
+  height: min(66vh, 620px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projects__modal-stage.is-loading .projects__modal-image {
+  opacity: 0.35;
+}
+
+.projects__modal-spinner {
+  position: absolute;
+  top: calc(50% - 22px);
+  left: calc(50% - 22px);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.projects__modal-stage.is-loading .projects__modal-spinner {
+  opacity: 1;
+  transform: scale(1);
+  animation: projectsModalSpin 0.8s linear infinite;
+}
+
+.projects__modal-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 300ms ease-out;
+}
+
+@keyframes projectsModalSpin {
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+
+.projects__modal-nav {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--overlaySoft);
+  color: var(--greyCustom);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.projects__modal-counter {
+  margin: 10px 0 0;
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1rem;
+  text-align: center;
+}
+
+.projects__modal-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.projects__modal-thumb {
+  flex: 0 0 90px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+}
+
+.projects__modal-thumb.is-active {
+  border-color: var(--orangeCustom);
+}
+
+.projects__modal-thumb img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects__modal-stage img,
+  .projects__modal-spinner {
+    transition: none;
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .projects__modal {
+    padding: 8px;
+  }
+
+  .projects__modal-dialog {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .projects__modal-title {
+    font-size: 1.25rem;
+  }
+
+  .projects__modal-close {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .projects__modal-viewer {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
+
+  .projects__modal-stage {
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .projects__modal-stage img {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+  }
+
+  .projects__modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .projects__modal-nav--prev {
+    left: 8px;
+  }
+
+  .projects__modal-nav--next {
+    right: 8px;
+  }
+
+  .projects__modal-thumbs {
+    gap: 8px;
+  }
+
+  .projects__modal-thumb {
+    flex: 0 0 64px;
+    border-radius: 8px;
+  }
+}

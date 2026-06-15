@@ -1,0 +1,54 @@
+<section class="projects section-space" id="projects">
+  <div class="projects__container container">
+    <div class="projects__content">
+      <span class="section__tag" data-i18n="projects.tag">Nuestros proyectos</span>
+      <h2 data-i18n="projects.title">Echa un vistazo a nuestra coleccion</h2>
+      <p data-i18n="projects.text">Filtra por artista para descubrir distintas figuras hechas en impresion 3D y pintadas a mano.</p>
+    </div>
+
+    <div class="projects__filters" role="group" aria-label="Filtrar proyectos" data-i18n-attr="aria-label:projects.filterLabel">
+      <button
+        class="projects__filter projects__filter-author"
+        data-filter="jorge"
+        aria-pressed="false"
+        aria-label="Filtrar proyectos de Jorge"
+        data-i18n-attr="aria-label:projects.filterJorge">
+        <span class="projects__icon-wrap" aria-hidden="true">
+          <img class="projects__icon projects__icon-default" src="/src/assets/images/projects/authors/jorge-icon.png" alt="proyectos de Jorge" />
+          <img class="projects__icon projects__icon-hover" src="/src/assets/images/projects/authors/jorge-icon_hover.png" alt="proyectos de Jorge" />
+        </span>
+        <span class="projects__bubble" aria-hidden="true" data-i18n="projects.bubbleJorge">Soy Jorge! Echa un vistazo a mis proyectos</span>
+      </button>
+
+      <button
+        class="projects__filter projects__filter-author is-active"
+        type="button"
+        data-filter="all"
+        aria-pressed="true"
+        aria-label="Mostrar todos los proyectos"
+        data-i18n-attr="aria-label:projects.filterAll">
+        <span class="projects__icon-wrap projects__icon-wrap-yuna" aria-hidden="true">
+          <img class="projects__icon" src="/src/assets/images/index/dg-log_hero2.png" alt="todos los proyectos" />
+        </span>
+        <span class="projects__bubble" aria-hidden="true" data-i18n="projects.bubbleAll">Ver todos</span>
+      </button>
+
+      <button
+        class="projects__filter projects__filter-author"
+        data-filter="esther"
+        aria-pressed="false"
+        aria-label="Filtrar proyectos de Esther"
+        data-i18n-attr="aria-label:projects.filterEsther">
+        <span class="projects__icon-wrap" aria-hidden="true">
+          <img class="projects__icon projects__icon-default" src="/src/assets/images/projects/authors/esther-icon.png"/>
+          <img class="projects__icon projects__icon-hover" src="/src/assets/images/projects/authors/esther-icon_hover.png"/>
+        </span>
+        <span class="projects__bubble" aria-hidden="true" data-i18n="projects.bubbleEsther">Soy Esther! Mira mis proyectos</span>
+      </button>
+    </div>
+
+    <p class="projects__loading" role="status"></p>
+    <div id="card-gallery-projects"></div>
+    <div id="modal-detail-project"></div>
+  </div>
+</section>

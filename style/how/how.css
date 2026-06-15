@@ -1,0 +1,318 @@
+.how {
+  position: relative;
+  isolation: isolate;
+  --how-icon-filter: none;
+  --how-circle-bg: var(--frontProjectCardCustom);
+  --how-circle-text: var(--greyCustomBtn);
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+html[data-theme="dark"] .how {
+  --how-icon-filter: brightness(0) invert(1);
+  --how-icon-filter-hover: brightness(0) invert(1);
+  --how-circle-bg: var(--white);
+  --how-circle-text: var(--greyCustom);
+}
+
+.how__container {
+  display: grid;
+  gap: 24px;
+}
+
+.how__content {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .how__container {
+    gap: 16px;
+  }
+}
+
+.how__content h2 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.how__content p {
+  max-width: 50rem;
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-family: 'Arquitecta';
+  font-size: 1.3rem;
+}
+
+.infoGraphic {
+  font-size: var(--font-size);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 0 5vw;
+}
+
+.infoGraphic > li {
+  position: relative;
+  width: 100%;
+  max-width: 25em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  z-index: 1;
+  transition: all 0.2s;
+  cursor: default;
+  --how-circle-left: 58%;
+  --how-circle-top: 56%;
+  --how-circle-size: clamp(13em, 78%, 21em);
+  --how-circle-origin-x: 7.2em;
+  --how-circle-origin-y: 6.5em;
+  --how-circle-duration: 420ms;
+  --how-circle-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.infoGraphic > li::after {
+  content: "";
+  position: absolute;
+  left: var(--how-circle-left);
+  top: var(--how-circle-top);
+  transform: translate(-50%, -50%) scale(0.92);
+  width: var(--how-circle-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--how-circle-bg);
+  border: 1px solid var(--strokeBubble);
+  opacity: 0;
+  pointer-events: none;
+  -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  transition: 
+    opacity 0.18s ease, 
+    transform 0.45s ease,
+    clip-path 0.45s ease, 
+    -webkit-clip-path 0.45s ease;
+  will-change: transform, clip-path, opacity, filter;
+  z-index: 1;
+}
+
+.infoGraphic > li .numberWrap {
+  position: absolute;
+  z-index: 2;
+}
+
+.infoGraphic > li .number {
+  position: relative;
+  z-index: 2;
+  font-family: "Bageo";
+  font-size: 14em;
+  font-weight: 400;
+  width: 0.9em;
+  text-align: center;
+}
+
+.infoGraphic > li .number.fontColor1 { color: var(--blueCustom); }
+.infoGraphic > li .number.fontColor2 { color: var(--pinkCustom); }
+.infoGraphic > li .number.fontColor3 { color: var(--orangeCustom); }
+.infoGraphic > li .number.fontColor4 { color: var(--yellowCustom); }
+.infoGraphic > li .number.fontColor5 { color: var(--lightYellowCustom); }
+
+.infoGraphic > li .coverWrap {
+  transform: rotate(130deg);
+  position: absolute;
+  z-index: 3;
+  width: 18em;
+  height: 15em;
+  left: -3em;
+  top: -1em;
+}
+
+.infoGraphic > li .coverWrap .numberCover {
+  position: absolute;
+  background: var(--backgroundCustom);
+  width: 18em;
+  height: 6em;
+  border-radius: 50% 50% 0 0;
+  border-bottom: 2px solid var(--frontProjectCardCustom);
+}
+
+.infoGraphic > li .content {
+  margin: 8em 3em 1em 7em;
+  position: relative;
+  z-index: 3;
+  color: inherit;
+}
+
+.infoGraphic > li .content h2 {
+  font-size: 1.6em;
+  font-family: "ArquitectaBold";
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.infoGraphic > li .content p {
+  font-family: "Arquitecta";
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .infoGraphic > li:hover .coverWrap .numberCover {
+    border-radius: 100%;
+    border-bottom-color: transparent;
+    background: transparent;
+  }
+
+  .infoGraphic > li:hover .content {
+    color: var(--how-circle-text);
+  }
+
+  .infoGraphic > li:hover .number {
+    opacity: 1;
+  }
+
+  .infoGraphic > li:hover::after {
+    opacity: 1;
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    filter: blur(0);
+    animation: howCircleReveal var(--how-circle-duration) var(--how-circle-ease) both;
+  }
+}
+
+/* Mobile: reveal the circle on scroll (instead of hover) */
+@media (hover: none) and (pointer: coarse) {
+  /* Prevent "sticky hover" on mobile taps; use .is-inview only */
+  .infoGraphic > li:hover::after {
+    opacity: 0;
+    filter: blur(6px);
+    -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    animation: none;
+  }
+
+  .infoGraphic > li.is-inview::after {
+    opacity: 1;
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    filter: blur(0);
+    animation: howCircleReveal var(--how-circle-duration) var(--how-circle-ease) both;
+  }
+
+  .infoGraphic > li.is-inview .coverWrap .numberCover {
+    border-radius: 100%;
+    border-bottom-color: transparent;
+    background: transparent;
+  }
+
+  .infoGraphic > li.is-inview .content {
+    color: var(--how-circle-text);
+  }
+
+  .infoGraphic > li.is-inview .icon {
+    filter: var(--how-icon-filter);
+  }
+}
+
+@keyframes howCircleReveal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+    filter: blur(10px);
+    -webkit-clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(0 at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+    -webkit-clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+    clip-path: circle(150% at var(--how-circle-origin-x) var(--how-circle-origin-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infoGraphic > li::after {
+    transition: none;
+    filter: none;
+  }
+
+  .infoGraphic > li:hover::after,
+  .infoGraphic > li.is-inview::after {
+    animation: none;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: -3.5rem;
+  left: 50%;
+  transform: translatex(-50%);
+  width: 2.8rem;
+  height: 2.8rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: var(--how-icon-filter);
+  transition: filter 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .infoGraphic > li:hover .icon {
+    filter: var(--how-icon-filter-hover);
+  }
+}
+
+@media (max-width: 640px) {
+  .infoGraphic {
+    padding: 0 4vw;
+  }
+
+  .infoGraphic > li {
+    max-width: 22em;
+    --how-circle-left: 60%;
+    --how-circle-top: 54%;
+    --how-circle-size: clamp(11.5em, 70%, 16em);
+    --how-circle-origin-x: 6.0em;
+    --how-circle-origin-y: 5.4em;
+  }
+
+  .infoGraphic > li .number {
+    font-size: 10em;
+  }
+
+  .infoGraphic > li .coverWrap {
+    width: 14.5em;
+    height: 12.5em;
+    left: -2.6em;
+    top: -0.7em;
+  }
+
+  .infoGraphic > li .coverWrap .numberCover {
+    width: 14em;
+    height: 5em;
+  }
+
+  .infoGraphic > li .content {
+    margin: 6.4em 1.8em 1em 5.6em;
+  }
+
+  .infoGraphic > li .content h2 {
+    font-size: 1.45em;
+  }
+
+  .icon {
+    top: -2.4em;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* ICONS */
+.iconIdea     { background-image: url("/src/assets/images/how/idea.png") }
+.iconMoney    { background-image: url("/src/assets/images/how/money.png"); }
+.iconPrepare  { background-image: url("/src/assets/images/how/print.png"); }
+.iconPaint    { background-image: url("/src/assets/images/how/paint.png"); }
+.iconSend     { background-image: url("/src/assets/images/how/send.png"); }

@@ -1,45 +1,49 @@
 <header class="header">
-    <!-- <section class="header__info">
-        <p>¡Descubre el arte digital llevado a la realidad! Impresión 3D en resina y filamento. Grabado y corte láser.</p>
-    </section> -->
     <section class="container-navbar">
         <nav class="navbar container">
             <a href="index.html" class="navbar__logo">
-                <img src="/src/assets/images/dg-logotipo.png" alt="logo Dimension Girasol">
+                <img
+                    class="themed-image"
+                    src="src/assets/images/header/dg-logo_navbar-light.svg"
+                    data-src-light="src/assets/images/header/dg-logo_navbar-light.svg"
+                    data-src-dark="src/assets/images/header/dg-logo_navbar-dark.svg"
+                    alt="logo Dimension Girasol">
             </a>
             <div class="navbar__nav">
                 <ul class="nav__list">
-                    <li class="nav__link">
-                        <a href="index.html">Inicio</a>
-                    </li>
-                    <li class="nav__link">
-                        <a href="index.html">Proyectos</a>
-                    </li>
-                    <li class="nav__link">
-                        <a href="index.html">Conócenos</a>
-                    </li>
+                    <li class="nav__link"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
+                    <li class="nav__link"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                    <li class="nav__link"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
                 </ul>
-                <a href="#" class="button button-primary button-contacto">Contacto</a>
-                <!-- Menu button: responsive and show X icon effect -->
+                <a href="contact.html" class="button button-primary navbar__cta" data-i18n="nav.contact">Contacto</a>
+                <button class="theme-toggle" type="button" aria-pressed="false">
+                    <span class="theme-toggle__bulb" aria-hidden="true">
+                        <i class="fa-regular fa-lightbulb theme-toggle__icon"></i>
+                    </span>
+                </button>
+                <button
+                    class="language-toggle"
+                    type="button"
+                    aria-label="Cambiar idioma"
+                    data-i18n-attr="aria-label:language.toggle">
+                    <span class="language-toggle__label" data-i18n="language.current">ES</span>
+                </button>
                 <button
                     class="navbar__toggle-btn"
                     type="button"
                     aria-controls="mobile-menu"
-                    data-open-icon="/src/assets/images/menu-icon.png"
-                    data-close-icon="/src/assets/images/close_menu-icon.png">
-                    <img class="navbar__toggle-icon" src="/src/assets/images/menu-icon.png" alt="Botón menú de navegación">
+                    data-open-icon-light="src/assets/images/header/menu-icon-light.svg"
+                    data-open-icon-dark="src/assets/images/header/menu-icon-dark.svg"
+                    data-close-icon-light="src/assets/images/header/close_menu-icon-light.svg"
+                    data-close-icon-dark="src/assets/images/header/close_menu-icon_dark.svg">
+                    <img class="navbar__toggle-icon" src="src/assets/images/header/menu-icon-light.svg" alt="Boton menu de navegacion">
                 </button>
                 <div class="navbar__mobile-menu" id="mobile-menu">
                     <ul class="nav__list-mobile">
-                        <li class="nav__link-mobile">
-                            <a href="index.html">Inicio</a>
-                        </li>
-                        <li class="nav__link-mobile">
-                            <a href="index.html">Proyectos</a>
-                        </li>
-                        <li class="nav__link-mobile">
-                            <a href="index.html">Conócenos</a>
-                        </li>
+                        <li class="nav__link-mobile"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
+                        <li class="nav__link-mobile"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
+                        <li class="nav__link-mobile"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
+                        <li class="nav__link-mobile"><a href="contact.html" data-i18n="nav.contact">Contacto</a></li>
                     </ul>
                 </div>
             </div>
