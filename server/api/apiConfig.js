@@ -1,5 +1,5 @@
 (function () {
   window.DGApiConfig = {
-      baseUrl: "https://dg-backend-dev.onrender.com"
+      baseUrl: "https://dg-backend-qy0a.onrender.com"
   };
 })();
