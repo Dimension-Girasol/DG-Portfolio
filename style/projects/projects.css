@@ -198,9 +198,85 @@
   color: var(--orangeCustom);
 }
 
+.projects__gallery-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.projects__gallery-content {
+  grid-column: 2;
+  min-width: 0; /* Previene que la cuadrícula se desborde */
+}
+
+.projects__pagination-btn--prev {
+  grid-column: 1;
+}
+
+.projects__pagination-btn--next {
+  grid-column: 3;
+}
+
+.projects__pagination {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.projects__pagination-btn {
+  display: inline-flex;
+  flex-shrink: 0; /* Evita que el texto de los botones se comprima de manera extraña */
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  aspect-ratio: 1;
+  border-radius: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.projects__pagination-info {
+  font-family: 'ArquitectaBold';
+  color: var(--greyCustom);
+  font-size: 1.1rem;
+  min-width: 60px;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .project-card {
     grid-column: span 12;
+  }
+  .projects__gallery-wrapper {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+      "gallery gallery gallery"
+      "prev info next";
+    gap: 20px 10px;
+  }
+  .projects__gallery-content {
+    grid-area: gallery;
+  }
+  .projects__pagination-btn--prev {
+    grid-area: prev;
+    justify-self: flex-end;
+  }
+  .projects__pagination-btn--next {
+    grid-area: next;
+    justify-self: flex-start;
+  }
+  .projects__pagination {
+    grid-area: info;
+    margin-top: 0;
   }
 }
 

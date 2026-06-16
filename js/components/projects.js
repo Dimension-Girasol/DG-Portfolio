@@ -93,6 +93,13 @@
 
     const LOADING_TIME_MS = 250;
     let loadingTimerId;
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 8;
+
+    const paginationWrap = section.querySelector("#projects-pagination");
+    const prevBtn = section.querySelector("#projects-page-prev");
+    const nextBtn = section.querySelector("#projects-page-next");
+    const pageInfo = section.querySelector("#projects-page-info");
 
     const updateActiveFilter = (selected) => {
       filters.forEach((filter) => {
@@ -103,16 +110,33 @@
     };
 
     const updateCards = (selected) => {
-      const cards = section.querySelectorAll(".gallery");
+      const cards = Array.from(section.querySelectorAll(".gallery"));
 
-      cards.forEach((card) => {
+      const matchingCards = cards.filter((card) => {
         const creators = Array.from(card.querySelectorAll(".gallery__tag-creator"))
           .map((tag) => tag.textContent.trim().toLowerCase())
           .filter(Boolean);
 
-        const show = selected === "all" || creators.includes(selected);
-        card.classList.toggle("is-hidden", !show);
+        return selected === "all" || creators.includes(selected);
       });
+
+      const totalPages = Math.max(1, Math.ceil(matchingCards.length / ITEMS_PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const visibleCards = new Set(matchingCards.slice(startIndex, endIndex));
+
+      cards.forEach((card) => {
+        card.classList.toggle("is-hidden", !visibleCards.has(card));
+      });
+
+      if (paginationWrap && prevBtn && nextBtn && pageInfo) {
+        paginationWrap.style.display = totalPages <= 1 ? "none" : "flex";
+        pageInfo.textContent = `${currentPage} de ${totalPages}`;
+        prevBtn.style.display = currentPage <= 1 ? "none" : "inline-flex";
+        nextBtn.style.display = currentPage >= totalPages ? "none" : "inline-flex";
+      }
     };
 
     const setFilterLoading = (state, selected) => {
@@ -136,6 +160,7 @@
         const alreadyActive = filter.classList.contains("is-active");
         if (alreadyActive) return;
 
+        currentPage = 1;
         updateActiveFilter(selected);
         setFilterLoading(true, selected);
 
@@ -146,6 +171,24 @@
         }, LOADING_TIME_MS);
       });
     });
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+          updateCards(selected);
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        currentPage++;
+        const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+        updateCards(selected);
+      });
+    }
 
     const initialActive = section.querySelector(".projects__filter.is-active");
     const initialSelected = (initialActive?.dataset.filter || "all").toLowerCase();

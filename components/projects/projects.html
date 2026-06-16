@@ -48,7 +48,18 @@
     </div>
 
     <p class="projects__loading" role="status"></p>
-    <div id="card-gallery-projects"></div>
+    <div class="projects__gallery-wrapper">
+      <button class="button button-primary projects__pagination-btn projects__pagination-btn--prev" id="projects-page-prev" style="display: none;" aria-label="Anterior" data-i18n-attr="aria-label:projects.pagePrev">
+        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+      </button>
+      <div id="card-gallery-projects" class="projects__gallery-content"></div>
+      <button class="button button-primary projects__pagination-btn projects__pagination-btn--next" id="projects-page-next" style="display: none;" aria-label="Siguiente" data-i18n-attr="aria-label:projects.pageNext">
+        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      </button>
+      <div class="projects__pagination" id="projects-pagination" style="display: none;">
+        <span class="projects__pagination-info" id="projects-page-info"></span>
+      </div>
+    </div>
     <div id="modal-detail-project"></div>
   </div>
 </section>
