@@ -61,7 +61,9 @@ loadComponent("how-root", "components/how/how.html", () => {
 });
 
 /**** ABOUT ****/
-loadComponent("about-root", "components/about/about.html");
+loadComponent("about-root", "components/about/about.html", () => {
+  loadScript("js/components/about.js");
+});
 
 /**** PROJECTS ****/
 loadComponent("projects", "components/projects/projects.html", () => {

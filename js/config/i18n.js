@@ -95,6 +95,8 @@
       "projects.modalNext": "Siguiente imagen",
       "projects.modalLoadingImage": "Cargando imagen",
       "projects.modalViewImage": "Ver imagen {index}",
+      "projects.pagePrev": "Anterior",
+      "projects.pageNext": "Siguiente",
 
       "footer.aboutTitle": "Sobre nosotros",
       "footer.aboutLink": "Quiénes somos",
@@ -196,6 +198,8 @@
       "projects.modalNext": "Next image",
       "projects.modalLoadingImage": "Loading image",
       "projects.modalViewImage": "View image {index}",
+      "projects.pagePrev": "Previous",
+      "projects.pageNext": "Next",
 
       "footer.aboutTitle": "About us",
       "footer.aboutLink": "Who we are",

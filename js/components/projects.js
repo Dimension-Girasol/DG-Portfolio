@@ -1,4 +1,5 @@
 (function () {
+  const FALLBACK_IMAGE = "src/assets/images/favicon.ico"; // Imagen de reemplazo si alguna falla
   const escapeHtml = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -30,7 +31,7 @@
 
     return `
       <div class="gallery__thumb ${isMore ? "gallery__thumb-more" : ""}" ${isMore ? `data-more="+${remaining}"` : ""}>
-        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" />
+        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
         ${
           isMore
             ? `<span class="gallery__more-badge" aria-hidden="true">
@@ -53,7 +54,7 @@
       <article class="gallery" data-project-id="${escapeHtml(project.id)}">
         <div class="gallery__images">
           <div class="gallery__images-cover">
-            <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" />
+            <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
             ${detailImages.map((image, index) => renderThumb(image, index + 1, project.images.length)).join("")}
@@ -91,8 +92,28 @@
     const loading = section.querySelector(".projects__loading");
     if (!filters.length) return;
 
+    // Fallback for author filter images
+    filters.forEach((filter) => {
+      filter.querySelectorAll("img.projects__icon").forEach((img) => {
+        if (img.hasAttribute("onerror")) return;
+        img.setAttribute("onerror", `this.onerror=null;this.src='${FALLBACK_IMAGE}';`);
+      });
+    });
+
     const LOADING_TIME_MS = 250;
     let loadingTimerId;
+    let currentPage = 1;
+    let itemsPerPage = window.innerWidth <= 900 ? 4 : 8;
+
+    const paginationWrap = section.querySelector("#projects-pagination");
+    const prevBtn = section.querySelector("#projects-page-prev");
+    const nextBtn = section.querySelector("#projects-page-next");
+    const pageInfo = section.querySelector("#projects-page-info");
+
+    // Agrupamos visualmente los botones y el texto en el mismo contenedor
+    if (paginationWrap && prevBtn && nextBtn && pageInfo) {
+      paginationWrap.append(prevBtn, pageInfo, nextBtn);
+    }
 
     const updateActiveFilter = (selected) => {
       filters.forEach((filter) => {
@@ -103,17 +124,44 @@
     };
 
     const updateCards = (selected) => {
-      const cards = section.querySelectorAll(".gallery");
+      const cards = Array.from(section.querySelectorAll(".gallery"));
 
-      cards.forEach((card) => {
+      const matchingCards = cards.filter((card) => {
         const creators = Array.from(card.querySelectorAll(".gallery__tag-creator"))
           .map((tag) => tag.textContent.trim().toLowerCase())
           .filter(Boolean);
 
-        const show = selected === "all" || creators.includes(selected);
-        card.classList.toggle("is-hidden", !show);
+        return selected === "all" || creators.includes(selected);
       });
+
+      const totalPages = Math.max(1, Math.ceil(matchingCards.length / itemsPerPage));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const visibleCards = new Set(matchingCards.slice(startIndex, endIndex));
+
+      cards.forEach((card) => {
+        card.classList.toggle("is-hidden", !visibleCards.has(card));
+      });
+
+      if (paginationWrap && prevBtn && nextBtn && pageInfo) {
+        paginationWrap.style.display = totalPages <= 1 ? "none" : "flex";
+        pageInfo.textContent = `${currentPage} de ${totalPages}`;
+        prevBtn.style.display = currentPage <= 1 ? "none" : "inline-flex";
+        nextBtn.style.display = currentPage >= totalPages ? "none" : "inline-flex";
+      }
     };
+
+    window.addEventListener("resize", () => {
+      const newItemsPerPage = window.innerWidth <= 900 ? 4 : 8;
+      if (newItemsPerPage !== itemsPerPage) {
+        itemsPerPage = newItemsPerPage;
+        currentPage = 1;
+        const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+        updateCards(selected);
+      }
+    });
 
     const setFilterLoading = (state, selected) => {
       section.classList.toggle("is-loading", state);
@@ -136,6 +184,7 @@
         const alreadyActive = filter.classList.contains("is-active");
         if (alreadyActive) return;
 
+        currentPage = 1;
         updateActiveFilter(selected);
         setFilterLoading(true, selected);
 
@@ -146,6 +195,33 @@
         }, LOADING_TIME_MS);
       });
     });
+
+    const scrollToProjects = () => {
+      const galleryWrap = section.querySelector("#card-gallery-projects") || section;
+      const offset = 100; // Altura del navbar + un pequeño margen de respiración
+      const top = galleryWrap.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+          updateCards(selected);
+          scrollToProjects();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        currentPage++;
+        const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+        updateCards(selected);
+        scrollToProjects();
+      });
+    }
 
     const initialActive = section.querySelector(".projects__filter.is-active");
     const initialSelected = (initialActive?.dataset.filter || "all").toLowerCase();
