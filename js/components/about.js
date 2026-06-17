@@ -75,9 +75,6 @@
     };
 
     // Preparamos los estilos iniciales para la animación
-    timelineContainer.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    timelineContainer.style.opacity = '0';
-    timelineContainer.style.transform = 'translateY(-15px)';
     timelineContainer.style.display = 'none'; // Oculto por defecto
     updateButtonText();
     placeButton();
@@ -91,11 +88,25 @@
       
       if (isVisible) {
         placeButton(); // Movemos el botón abajo antes de mostrar el cronograma
-        timelineContainer.style.display = '';
-        // Forzamos un 'reflow' para que el navegador aplique la transición desde 0
-        void timelineContainer.offsetWidth;
-        timelineContainer.style.opacity = '1';
-        timelineContainer.style.transform = 'translateY(0)';
+        
+        const timelineItems = Array.from(timelineContainer.querySelectorAll('.timeline__item'));
+        
+        // Preparamos los items para la animación de entrada
+        timelineItems.forEach(item => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(20px)';
+          item.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+        });
+
+        timelineContainer.style.display = ''; // Hacemos visible el contenedor
+        
+        // Disparamos la animación de cada item con un retraso
+        timelineItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, 100 + (index * 120)); // Pequeño delay inicial + stagger
+        });
 
         // Hacemos scroll suave hacia el cronograma solo en móviles
         if (mq.matches) {
@@ -106,8 +117,9 @@
           }, 100); // Pequeño retraso para que la animación fluya bien
         }
       } else {
+        // Animación de ocultar (fade out del contenedor)
+        timelineContainer.style.transition = 'opacity 0.3s ease';
         timelineContainer.style.opacity = '0';
-        timelineContainer.style.transform = 'translateY(-15px)';
 
         if (mq.matches) {
           // Scroll suave hacia arriba (hacia la imagen) al ocultar
@@ -122,9 +134,10 @@
         setTimeout(() => { 
           if (!isVisible) {
             timelineContainer.style.display = 'none'; 
+            timelineContainer.style.opacity = '1'; // Reset para la proxima vez
             placeButton(); // Reubicamos el botón arriba al terminar la animación
           }
-        }, 500);
+        }, 300);
       }
       
       updateButtonText();
