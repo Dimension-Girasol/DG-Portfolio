@@ -6,9 +6,10 @@
 }
 
 .hero {
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
+  padding: 40px 0;
 }
 
 .hero__container {
