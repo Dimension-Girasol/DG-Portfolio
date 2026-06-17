@@ -2,12 +2,13 @@ function initHeader() {
   const toggleBtn = document.querySelector(".navbar__toggle-btn");
   const toggleIcon = document.querySelector(".navbar__toggle-icon");
   const mobileMenu = document.querySelector(".navbar__mobile-menu");
-  const mobileLinks = document.querySelectorAll(".nav__list-mobile a");
   const themeToggleBtn = document.querySelector(".theme-toggle");
   const themeToggleIcon = themeToggleBtn?.querySelector(".theme-toggle__icon");
   const languageToggleBtn = document.querySelector(".language-toggle");
 
   if (!toggleBtn || !mobileMenu) return;
+
+  const mobileLinks = document.querySelectorAll(".nav__list-mobile a");
 
   const themeStorageKey = "dg-theme";
   const text = (key, fallback) => window.DGI18n?.t(key) || fallback;
@@ -23,9 +24,7 @@ function initHeader() {
       // ignore
     }
 
-    const prefersDark =
-      window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "light";
+    return "light";
   };
 
   const resolveMenuIcon = (kind, theme) => {

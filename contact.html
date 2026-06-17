@@ -2,7 +2,10 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/src/assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <title>Contacto - Dimension Girasol</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/config/theme-init.js"></script>
@@ -16,7 +19,32 @@
     <div id="header"></div>
 
     <main class="contact-page section-space">
-      <section class="contact-page__container container" aria-labelledby="contact-title">
+      <section class="contact-construction container" aria-labelledby="contact-construction-title">
+        <img
+          class="contact-construction__image"
+          src="/src/assets/images/projects/in-progress/in-progress.png"
+          alt="Seccion en construccion"
+          data-i18n-attr="alt:contact.constructionImageAlt">
+        <div class="contact-construction__content">
+          <span class="section__tag" data-i18n="contact.constructionTag">En construcción</span>
+          <h1 id="contact-construction-title" data-i18n="contact.constructionTitle">Estamos preparando esta sección</h1>
+          <p data-i18n="contact.constructionText">
+            Muy pronto podrás contactar con nosotros desde aquí. Mientras tanto, puedes escribirnos por Instagram o email.
+          </p>
+          <div class="contact-page__quick contact-construction__quick">
+            <a href="https://www.instagram.com/dimensiongirasol/" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+              <span>@dimensiongirasol</span>
+            </a>
+            <a href="mailto:info@dimensiongirasol.com">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <span>info@dimensiongirasol.com</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-page__container container" aria-labelledby="contact-title" hidden>
         <div class="contact-page__content">
           <span class="section__tag" data-i18n="contact.tag">Contáctanos</span>
           <h1 id="contact-title" data-i18n="contact.title">Cuéntanos tu idea</h1>

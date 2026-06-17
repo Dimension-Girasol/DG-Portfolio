@@ -31,6 +31,30 @@
   font-size: 1.3rem;
 }
 
+.projects__sorter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  font-family: "ArquitectaBold";
+  color: var(--greyCustom);
+  font-size: 1.1rem;
+}
+
+.projects__sorter-select {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--strokeBubble);
+  background-color: var(--white);
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 .projects__filters {
   display: flex;
   flex-wrap: wrap;
@@ -89,6 +113,7 @@
   height: 100%;
   object-fit: contain;
   transform-origin: center;
+  transition: opacity 0.3s ease;
   will-change: transform, opacity;
 }
 
@@ -167,6 +192,25 @@
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
+.gallery__info {
+  padding: 12px 0;
+}
+
+.gallery__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.gallery__info p {
+  font-family: "Arquitecta";
+  font-size: 1.1rem;
+  color: var(--greyCustom);
+  margin: 0;
+}
+
 .projects.is-loading {
   opacity: 1;
   transform: translateY(0);
@@ -194,9 +238,80 @@
   text-align: center;
 }
 
+.projects__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 80px;
+}
+
+.projects__loading:empty {
+  display: none;
+}
+
+.projects__loading::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--strokeBubble);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  animation: dg-spin 0.8s linear infinite;
+}
+
+@keyframes dg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .projects__error {
   color: var(--orangeCustom);
 }
+
+/* ================= SKELETON LOADER PARA IMÁGENES ================= */
+.gallery__images-cover,
+.gallery__thumb {
+  position: relative;
+  background-color: var(--greyOpacity6);
+  overflow: hidden;
+}
+
+.gallery__images-cover::before,
+.gallery__thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.5s infinite;
+  z-index: 1;
+}
+
+html[data-theme="dark"] .gallery__images-cover::before,
+html[data-theme="dark"] .gallery__thumb::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.gallery__images-cover img,
+.gallery__thumb img {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .projects__gallery-wrapper {
   width: 100%;
@@ -211,7 +326,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .projects__pagination-btn {
@@ -224,11 +339,26 @@
   min-width: 44px;
   min-height: 44px;
   padding: 0;
-  border: none;
+  border: 1px solid var(--strokeBubble);
   aspect-ratio: 1;
   border-radius: 100%;
-  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.2rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.projects__pagination-btn:hover:not(:disabled) {
+  background-color: var(--orangeCustom);
+  border-color: var(--orangeCustom);
+  color: var(--white);
+}
+
+.projects__pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .projects__pagination-info {

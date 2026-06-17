@@ -45,6 +45,30 @@
   color: var(--greyCustom);
 }
 
+/* ================= SPINNER DE CARGA ================= */
+.hero__gallery[aria-busy="true"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
+}
+
+.hero__gallery[aria-busy="true"]::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--strokeBubble);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  animation: dg-hero-spin 0.8s linear infinite;
+}
+
+@keyframes dg-hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /** Top collection small size **/
 
@@ -63,8 +87,12 @@
 
   .hero__content {
     order: 2;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .hero__actions {
+    align-self: center;
     text-align: center;
-    align-items: center;
-    padding: 20px;
   }
 }

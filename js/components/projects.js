@@ -1,5 +1,6 @@
 (function () {
   const FALLBACK_IMAGE = "src/assets/images/favicon.ico"; // Imagen de reemplazo si alguna falla
+  const PLACEHOLDER_IMAGE = "src/assets/images/projects/in-progress/in-progress.png"; // Imagen para rellenar huecos vacíos
   const escapeHtml = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -9,6 +10,7 @@
       .replace(/'/g, "&#039;");
 
   const projectStore = new Map();
+  let allProjects = [];
   const t = (key, params) => window.DGI18n?.t(key, params) || key;
 
   const setProjectsLoading = (section, state, message) => {
@@ -47,13 +49,44 @@
   const renderProjectCard = (project) => {
     const visibleImages = getVisibleImages(project);
     const detailImages = visibleImages.slice(1, 4);
+
+    // Rellenamos los huecos vacíos con la imagen por defecto si hay menos de 3 miniaturas
+    while (detailImages.length < 3) {
+      detailImages.push({
+        src: PLACEHOLDER_IMAGE,
+        thumbSrc: PLACEHOLDER_IMAGE,
+        alt: "En construcción"
+      });
+    }
+
     const authors = project.authors.length ? project.authors : ["Dimension Girasol"];
     const tags = project.tags.length ? project.tags : [t("projects.defaultTag")];
+
+    const inProgressTag = project.inProgress
+      ? `<span class="gallery__in-progress-tag">${escapeHtml(t("projects.statusInProgress"))}</span>`
+      : "";
+
+    const getYear = (dateString) => {
+      if (!dateString) return null;
+      return new Date(dateString).getFullYear();
+    };
+
+    const startYear = getYear(project.initDate);
+    const endYear = getYear(project.endDate);
+    let dateInfo = "";
+    if (startYear && endYear && startYear !== endYear) {
+      dateInfo = `${startYear}-${endYear}`;
+    } else if (startYear || endYear) {
+      dateInfo = `${startYear || endYear}`;
+    }
+
+    const designerName = project.designer?.name || (typeof project.designer === 'string' ? project.designer : null);
 
     return `
       <article class="gallery" data-project-id="${escapeHtml(project.id)}">
         <div class="gallery__images">
           <div class="gallery__images-cover">
+            ${inProgressTag}
             <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
@@ -61,9 +94,15 @@
           </div>
         </div>
         <div class="gallery__info">
-          <p>${escapeHtml(project.name)}</p>
-          <div class="gallery__creator" aria-label="Creador del proyecto">
-            ${renderTags(authors, "gallery__tag-creator")}
+          <div class="gallery__title-wrapper">
+            <p>${escapeHtml(project.name)}</p>
+            ${dateInfo ? `<span class="gallery__date">${escapeHtml(dateInfo)}</span>` : ""}
+          </div>
+          <div class="gallery__authorship">
+            ${designerName ? `<div class="gallery__designer" aria-label="Diseñador del proyecto">${renderTags([designerName], "gallery__tag-designer")}</div>` : ""}
+            <div class="gallery__creator" aria-label="Creador del proyecto">
+              ${renderTags(authors, "gallery__tag-creator")}
+            </div>
           </div>
           <div class="gallery__types" aria-label="Tipos del proyecto">
             ${renderTags(tags, "gallery__tag-type")}
@@ -89,31 +128,106 @@
     section.dataset.filterReady = "true";
 
     const filters = section.querySelectorAll(".projects__filter");
+    const filtersContainer = section.querySelector(".projects__filters");
     const loading = section.querySelector(".projects__loading");
     if (!filters.length) return;
 
     // Fallback for author filter images
-    filters.forEach((filter) => {
+    filters.forEach((filter) =>
       filter.querySelectorAll("img.projects__icon").forEach((img) => {
-        if (img.hasAttribute("onerror")) return;
-        img.setAttribute("onerror", `this.onerror=null;this.src='${FALLBACK_IMAGE}';`);
-      });
-    });
+        const wrapper = img.closest(".projects__icon-wrap");
+        if (!wrapper) return;
+
+        const handleImageLoad = () => wrapper.classList.remove("is-loading");
+
+        // If image is already loaded/cached, don't show spinner
+        if (img.complete && img.naturalHeight !== 0) {
+          handleImageLoad();
+        } else {
+          wrapper.classList.add("is-loading");
+          img.addEventListener("load", handleImageLoad, { once: true });
+          img.addEventListener("error", handleImageLoad, { once: true });
+        }
+
+        if (!img.hasAttribute("onerror"))
+          img.setAttribute("onerror", `this.onerror=null;this.src='${FALLBACK_IMAGE}';`);
+      })
+    );
 
     const LOADING_TIME_MS = 250;
     let loadingTimerId;
     let currentPage = 1;
     let itemsPerPage = window.innerWidth <= 900 ? 4 : 8;
+    let currentSort = "dateDesc";
 
-    const paginationWrap = section.querySelector("#projects-pagination");
-    const prevBtn = section.querySelector("#projects-page-prev");
-    const nextBtn = section.querySelector("#projects-page-next");
-    const pageInfo = section.querySelector("#projects-page-info");
-
-    // Agrupamos visualmente los botones y el texto en el mismo contenedor
-    if (paginationWrap && prevBtn && nextBtn && pageInfo) {
-      paginationWrap.append(prevBtn, pageInfo, nextBtn);
+    let paginationWrap = section.querySelector("#projects-pagination");
+    if (!paginationWrap) {
+      paginationWrap = document.createElement("div");
+      paginationWrap.id = "projects-pagination";
+      paginationWrap.className = "projects__pagination";
+      
+      const gallery = section.querySelector("[data-projects-gallery]") || section.querySelector("#card-gallery-projects");
+      if (gallery && gallery.parentNode) {
+        gallery.after(paginationWrap);
+      }
     }
+
+    paginationWrap.innerHTML = "";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.id = "projects-page-prev";
+    prevBtn.className = "projects__pagination-btn projects__pagination-btn--prev";
+    prevBtn.setAttribute("aria-label", t("projects.pagePrev"));
+    prevBtn.innerHTML = "&lt;";
+
+    const pageInfo = document.createElement("span");
+    pageInfo.id = "projects-page-info";
+    pageInfo.className = "projects__pagination-info";
+
+    const nextBtn = document.createElement("button");
+    nextBtn.id = "projects-page-next";
+    nextBtn.className = "projects__pagination-btn projects__pagination-btn--next";
+    nextBtn.setAttribute("aria-label", t("projects.pageNext"));
+    nextBtn.innerHTML = "&gt;";
+
+    paginationWrap.append(prevBtn, pageInfo, nextBtn);
+
+    const sorterContainer = document.createElement("div");
+    sorterContainer.className = "projects__sorter";
+    const sorterLabel = document.createElement("label");
+    sorterLabel.htmlFor = "project-sorter";
+    sorterLabel.dataset.i18n = "projects.sortByLabel";
+    const sorterSelect = document.createElement("select");
+    sorterSelect.id = "project-sorter";
+    sorterSelect.className = "projects__sorter-select";
+    
+    const sortOptions = {
+      dateDesc: "projects.sort.dateDesc",
+      nameAsc: "projects.sort.nameAsc",
+      inProgress: "projects.sort.inProgress",
+      finished: "projects.sort.finished",
+    };
+    Object.entries(sortOptions).forEach(([value, key]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.dataset.i18n = key;
+      if (value === currentSort) option.selected = true;
+      sorterSelect.appendChild(option);
+    });
+    sorterContainer.append(sorterLabel, sorterSelect);
+    if (loading) {
+      loading.after(sorterContainer);
+    } else {
+      filtersContainer.after(sorterContainer);
+    }
+    window.DGI18n?.apply(sorterContainer);
+
+    sorterSelect.addEventListener("change", (event) => {
+      currentSort = event.target.value;
+      currentPage = 1;
+      const selectedFilter = (section.querySelector(".projects__filter.is-active")?.dataset.filter || "all").toLowerCase();
+      updateCards(selectedFilter);
+    });
 
     const updateActiveFilter = (selected) => {
       filters.forEach((filter) => {
@@ -124,33 +238,46 @@
     };
 
     const updateCards = (selected) => {
-      const cards = Array.from(section.querySelectorAll(".gallery"));
+      const gallery = section.querySelector("[data-projects-gallery]") || section.querySelector("#card-gallery-projects");
+      if (!gallery) return;
 
-      const matchingCards = cards.filter((card) => {
-        const creators = Array.from(card.querySelectorAll(".gallery__tag-creator"))
-          .map((tag) => tag.textContent.trim().toLowerCase())
-          .filter(Boolean);
+      // 1. Filter
+      let filteredProjects =
+        selected === "all"
+          ? [...allProjects]
+          : allProjects.filter((p) => p.authors.some((a) => a.toLowerCase() === selected));
 
-        return selected === "all" || creators.includes(selected);
-      });
+      // 1.5 Filter by Status
+      if (currentSort === "inProgress") {
+        filteredProjects = filteredProjects.filter((p) => p.inProgress);
+      } else if (currentSort === "finished") {
+        filteredProjects = filteredProjects.filter((p) => !p.inProgress);
+      }
 
-      const totalPages = Math.max(1, Math.ceil(matchingCards.length / itemsPerPage));
+      // 2. Sort
+      switch (currentSort) {
+        case "nameAsc":
+          filteredProjects.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case "dateDesc":
+          filteredProjects.sort((a, b) => new Date(b.initDate || b.createdAt || 0).getTime() - new Date(a.initDate || a.createdAt || 0).getTime());
+          break;
+        default:
+          // Al no haber nada seleccionado, se respeta el orden original del backend
+          break;
+      }
+
+      // 3. Paginate
+      const totalPages = Math.max(1, Math.ceil(filteredProjects.length / itemsPerPage));
       if (currentPage > totalPages) currentPage = totalPages;
-
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
-      const visibleCards = new Set(matchingCards.slice(startIndex, endIndex));
+      const projectsToRender = filteredProjects.slice(startIndex, endIndex);
 
-      cards.forEach((card) => {
-        card.classList.toggle("is-hidden", !visibleCards.has(card));
-      });
-
-      if (paginationWrap && prevBtn && nextBtn && pageInfo) {
-        paginationWrap.style.display = totalPages <= 1 ? "none" : "flex";
-        pageInfo.textContent = `${currentPage} de ${totalPages}`;
-        prevBtn.style.display = currentPage <= 1 ? "none" : "inline-flex";
-        nextBtn.style.display = currentPage >= totalPages ? "none" : "inline-flex";
-      }
+      // 4. Render
+      gallery.innerHTML = projectsToRender.length ? projectsToRender.map(renderProjectCard).join("") : `<p class="projects__empty">${escapeHtml(t("projects.empty"))}</p>`;
+      prepareCardsAccessibility(gallery.parentElement);
+      updatePaginationUI(totalPages);
     };
 
     window.addEventListener("resize", () => {
@@ -162,6 +289,17 @@
         updateCards(selected);
       }
     });
+
+    const updatePaginationUI = (totalPages) => {
+      if (!paginationWrap || !prevBtn || !nextBtn || !pageInfo) return;
+      const hasPagination = totalPages > 1;
+      paginationWrap.style.display = hasPagination ? "flex" : "none";      
+      if (hasPagination) {
+        pageInfo.textContent = t("projects.pageInfo", { currentPage, totalPages });
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+      }
+    };
 
     const setFilterLoading = (state, selected) => {
       section.classList.toggle("is-loading", state);
@@ -207,7 +345,7 @@
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
-          const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+          const selected = (section.querySelector(".projects__filter.is-active")?.dataset.filter || "all").toLowerCase();
           updateCards(selected);
           scrollToProjects();
         }
@@ -217,7 +355,7 @@
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
         currentPage++;
-        const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+        const selected = (section.querySelector(".projects__filter.is-active")?.dataset.filter || "all").toLowerCase();
         updateCards(selected);
         scrollToProjects();
       });
@@ -227,7 +365,6 @@
     const initialSelected = (initialActive?.dataset.filter || "all").toLowerCase();
     updateActiveFilter(initialSelected);
     updateCards(initialSelected);
-    if (loading) loading.textContent = "";
   }
 
   function initProjectsModal() {
@@ -550,19 +687,13 @@
     try {
       setProjectsLoading(section, true, t("projects.loading"));
       const projectsDto = await window.DGProjectsService.getProjects();
-      const projects = window.DGProjectMapper.mapProjects(projectsDto);
+      allProjects = window.DGProjectMapper.mapProjects(projectsDto);
+      allProjects.forEach((project) => projectStore.set(String(project.id), project));
 
-      projectStore.clear();
-      projects.forEach((project) => projectStore.set(String(project.id), project));
-
-      gallery.innerHTML = projects.length
-        ? projects.map(renderProjectCard).join("")
-        : `<p class="projects__empty">${escapeHtml(t("projects.empty"))}</p>`;
+      initProjectsFilter();
 
       setProjectsLoading(section, false);
-      initProjectsFilter();
       initProjectsModal();
-      prepareCardsAccessibility(galleriesWrap);
     } catch (error) {
       console.error("No se pudieron cargar los proyectos", error);
       gallery.innerHTML = `<p class="projects__error">${escapeHtml(t("projects.error"))}</p>`;

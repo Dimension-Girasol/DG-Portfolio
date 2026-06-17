@@ -246,10 +246,24 @@ html[data-theme="dark"] .theme-toggle {
         white-space: nowrap;
     }
 
-    .theme-toggle,
-    .language-toggle {
+    .theme-toggle {
         width: 40px;
         height: 40px;
+    }
+
+    .language-toggle {
+        position: fixed;
+        right: max(18px, env(safe-area-inset-right));
+        bottom: max(18px, env(safe-area-inset-bottom));
+        z-index: 50;
+        width: 48px;
+        height: 48px;
+        background-color: var(--white);
+        border-color: var(--strokeSubtle);
+    }
+
+    html[data-theme="dark"] .language-toggle {
+        background-color: var(--greyOpacity6);
     }
 
     .navbar__mobile-menu {
@@ -374,10 +388,16 @@ html[data-theme="dark"] .theme-toggle {
         border-radius: 16px;
     }
 
-    .theme-toggle,
-    .language-toggle {
+    .theme-toggle {
         width: 36px;
         height: 36px;
+    }
+
+    .language-toggle {
+        width: 46px;
+        height: 46px;
+        right: max(14px, env(safe-area-inset-right));
+        bottom: max(14px, env(safe-area-inset-bottom));
     }
 
     .theme-toggle__icon {

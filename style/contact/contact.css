@@ -3,6 +3,52 @@
 .contact-page {
   min-height: calc(100vh - 5rem);
   padding-top: clamp(72px, 9vw, 128px);
+  padding-bottom: 2rem;
+}
+
+.contact-construction {
+  min-height: calc(100vh - 18rem);
+  display: grid;
+  grid-template-columns: minmax(240px, 0.78fr) minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 76px);
+  align-items: center;
+}
+
+.contact-construction__image {
+  width: min(100%, 420px);
+  justify-self: center;
+  height: auto;
+  object-fit: contain;
+}
+
+.contact-construction__content {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-construction__content h1 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+}
+
+.contact-construction__content p {
+  max-width: 42rem;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+.contact-construction__quick {
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.contact-construction__quick a {
+  width: 100%;
+  max-width: 280px;
 }
 
 .contact-page__container {
@@ -10,6 +56,10 @@
   grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1fr);
   gap: clamp(28px, 6vw, 72px);
   align-items: start;
+}
+
+.contact-page__container[hidden] {
+  display: none;
 }
 
 .contact-page__content {
@@ -128,6 +178,16 @@
 }
 
 @media (max-width: 900px) {
+  .contact-construction {
+    min-height: calc(100vh - 14rem);
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .contact-construction__image {
+    width: min(74vw, 320px);
+  }
+
   .contact-page__container {
     grid-template-columns: 1fr;
   }

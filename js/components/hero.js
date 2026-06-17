@@ -110,6 +110,7 @@ async function loadHeroCardsFromApi() {
   try {
     const projectsDto = await window.DGProjectsService.getProjects();
     const heroCards = window.DGProjectMapper.mapProjects(projectsDto)
+      .filter(project => !project.inProgress)
       .slice(0, HERO_CARD_CLASSES.length)
       .map(mapProjectToHeroCard);
 

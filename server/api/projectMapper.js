@@ -21,12 +21,12 @@
     return imageDates[0] || project.initDate || null;
   };
 
-  const sortProjectsByCreatedAtDesc = (projects) =>
+  const sortProjectsByDateDesc = (projects) =>
     asArray(projects)
       .slice()
       .sort((a, b) => {
-        const dateA = new Date(a.createdAt || 0).getTime();
-        const dateB = new Date(b.createdAt || 0).getTime();
+        const dateA = new Date(a.initDate || a.createdAt || 0).getTime();
+        const dateB = new Date(b.initDate || b.createdAt || 0).getTime();
         return dateB - dateA;
       });
 
@@ -86,6 +86,6 @@
 
   window.DGProjectMapper = {
     mapProject,
-    mapProjects: (projects) => sortProjectsByCreatedAtDesc(asArray(projects).map(mapProject))
+    mapProjects: (projects) => sortProjectsByDateDesc(asArray(projects).map(mapProject))
   };
 })();

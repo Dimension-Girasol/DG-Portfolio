@@ -22,6 +22,7 @@ html[data-theme="dark"] .how {
 
 .how__content {
   width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 640px) {
@@ -38,7 +39,7 @@ html[data-theme="dark"] .how {
 
 .how__content p {
   max-width: 50rem;
-  margin-top: 10px;
+  margin: 10px auto 0;
   color: var(--greyCustom);
   font-family: 'Arquitecta';
   font-size: 1.3rem;
