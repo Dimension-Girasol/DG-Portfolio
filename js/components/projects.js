@@ -1,4 +1,5 @@
 (function () {
+  const FALLBACK_IMAGE = "src/assets/images/favicon.ico"; // Imagen de reemplazo si alguna falla
   const escapeHtml = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -30,7 +31,7 @@
 
     return `
       <div class="gallery__thumb ${isMore ? "gallery__thumb-more" : ""}" ${isMore ? `data-more="+${remaining}"` : ""}>
-        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" />
+        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
         ${
           isMore
             ? `<span class="gallery__more-badge" aria-hidden="true">
@@ -53,7 +54,7 @@
       <article class="gallery" data-project-id="${escapeHtml(project.id)}">
         <div class="gallery__images">
           <div class="gallery__images-cover">
-            <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" />
+            <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
             ${detailImages.map((image, index) => renderThumb(image, index + 1, project.images.length)).join("")}
@@ -91,6 +92,14 @@
     const loading = section.querySelector(".projects__loading");
     if (!filters.length) return;
 
+    // Fallback for author filter images
+    filters.forEach((filter) => {
+      filter.querySelectorAll("img.projects__icon").forEach((img) => {
+        if (img.hasAttribute("onerror")) return;
+        img.setAttribute("onerror", `this.onerror=null;this.src='${FALLBACK_IMAGE}';`);
+      });
+    });
+
     const LOADING_TIME_MS = 250;
     let loadingTimerId;
     let currentPage = 1;
@@ -100,6 +109,11 @@
     const prevBtn = section.querySelector("#projects-page-prev");
     const nextBtn = section.querySelector("#projects-page-next");
     const pageInfo = section.querySelector("#projects-page-info");
+
+    // Agrupamos visualmente los botones y el texto en el mismo contenedor
+    if (paginationWrap && prevBtn && nextBtn && pageInfo) {
+      paginationWrap.append(prevBtn, pageInfo, nextBtn);
+    }
 
     const updateActiveFilter = (selected) => {
       filters.forEach((filter) => {
@@ -182,16 +196,20 @@
       });
     });
 
+    const scrollToProjects = () => {
+      const galleryWrap = section.querySelector("#card-gallery-projects") || section;
+      const offset = 100; // Altura del navbar + un pequeño margen de respiración
+      const top = galleryWrap.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
           const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
           updateCards(selected);
-          // Scroll top for mobile devices
-          if (window.innerWidth <= 900) {
-              section.scrollIntoView({ behavior: "smooth" });
-          }
+          scrollToProjects();
         }
       });
     }
@@ -201,10 +219,7 @@
         currentPage++;
         const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
         updateCards(selected);
-        // Scroll top for mobile devices
-        if (window.innerWidth <= 900) {
-            section.scrollIntoView({ behavior: "smooth" });
-          }
+        scrollToProjects();
       });
     }
 
