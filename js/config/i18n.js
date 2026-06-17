@@ -53,6 +53,8 @@
       "about.timeline.2023.text": "Incorporamos el grabado láser a nuestro taller y empezamos a asistir a nuestros primeros eventos y ferias locales.",
       "about.timeline.2024.title": "Dimensión Girasol",
       "about.timeline.2024.text": "Nos consolidamos como marca y ampliamos nuestro catálogo, poniendo el mismo mimo y cariño en cada nuevo proyecto.",
+      "about.timeline.show": "Mostrar cronograma",
+      "about.timeline.hide": "Ocultar cronograma",
 
       "contact.tag": "Contáctanos",
       "contact.title": "Cuéntanos tu idea",
@@ -156,6 +158,8 @@
       "about.timeline.2023.text": "We added laser engraving to our workshop and started attending our first local events and fairs.",
       "about.timeline.2024.title": "Dimension Girasol",
       "about.timeline.2024.text": "We established ourselves as a brand and expanded our catalog, putting the same care and love into every new project.",
+      "about.timeline.show": "Show timeline",
+      "about.timeline.hide": "Hide timeline",
 
       "contact.tag": "Contact us",
       "contact.title": "Tell us your idea",
