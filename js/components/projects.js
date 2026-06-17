@@ -94,7 +94,7 @@
     const LOADING_TIME_MS = 250;
     let loadingTimerId;
     let currentPage = 1;
-    const ITEMS_PER_PAGE = 8;
+    let itemsPerPage = window.innerWidth <= 900 ? 4 : 8;
 
     const paginationWrap = section.querySelector("#projects-pagination");
     const prevBtn = section.querySelector("#projects-page-prev");
@@ -120,11 +120,11 @@
         return selected === "all" || creators.includes(selected);
       });
 
-      const totalPages = Math.max(1, Math.ceil(matchingCards.length / ITEMS_PER_PAGE));
+      const totalPages = Math.max(1, Math.ceil(matchingCards.length / itemsPerPage));
       if (currentPage > totalPages) currentPage = totalPages;
 
-      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
       const visibleCards = new Set(matchingCards.slice(startIndex, endIndex));
 
       cards.forEach((card) => {
@@ -138,6 +138,16 @@
         nextBtn.style.display = currentPage >= totalPages ? "none" : "inline-flex";
       }
     };
+
+    window.addEventListener("resize", () => {
+      const newItemsPerPage = window.innerWidth <= 900 ? 4 : 8;
+      if (newItemsPerPage !== itemsPerPage) {
+        itemsPerPage = newItemsPerPage;
+        currentPage = 1;
+        const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
+        updateCards(selected);
+      }
+    });
 
     const setFilterLoading = (state, selected) => {
       section.classList.toggle("is-loading", state);
@@ -178,6 +188,10 @@
           currentPage--;
           const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
           updateCards(selected);
+          // Scroll top for mobile devices
+          if (window.innerWidth <= 900) {
+              section.scrollIntoView({ behavior: "smooth" });
+          }
         }
       });
     }
@@ -187,6 +201,10 @@
         currentPage++;
         const selected = section.querySelector(".projects__filter.is-active")?.dataset.filter || "all";
         updateCards(selected);
+        // Scroll top for mobile devices
+        if (window.innerWidth <= 900) {
+            section.scrollIntoView({ behavior: "smooth" });
+          }
       });
     }
 
