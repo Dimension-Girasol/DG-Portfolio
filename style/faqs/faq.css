@@ -1,0 +1,208 @@
+@import url(../styles.css);
+
+.faq-page {
+  color: var(--greyCustom);
+  padding: clamp(40px, 5vw, 64px) 0;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.faq-header h1 {
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-top: 8px;
+}
+
+.faq-subtitle {
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+  max-width: 60ch;
+  margin: 16px auto 0;
+}
+
+.faq-subtitle a {
+  color: var(--orangeCustom);
+  text-decoration: none;
+  font-family: "ArquitectaBold";
+}
+
+.faq-subtitle a:hover {
+  text-decoration: underline;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.faq-item {
+  background-color: var(--white);
+  border: 1px solid var(--strokeBubble);
+  border-radius: 10px;
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.faq-item.active {
+  background-color: var(--white);
+}
+
+.faq-item.active::before,
+.faq-item.active::after {
+  content: "";
+  background-image: url('/src/assets/images/faq/faq.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0.1;
+  z-index: 0;
+  transition: opacity 0.3s ease, transform 0.4s ease, width 0.4s ease,
+    height 0.4s ease;
+}
+
+/* Combinación 1 (1, 4, 7...) */
+.faq-item:nth-of-type(3n + 1).active::before {
+  width: 200px; /* Mediano */
+  height: 200px;
+  bottom: 0;
+  left: 0;
+  transform: translate(-50%, 40%) rotate(-20deg);
+}
+.faq-item:nth-of-type(3n + 1).active::after {
+  width: 150px; /* Pequeño */
+  height: 150px;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%) rotate(15deg);
+}
+
+/* Combinación 2 (2, 5, 8...) */
+.faq-item:nth-of-type(3n + 2).active::before {
+  width: 150px; /* Pequeño */
+  height: 150px;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%) rotate(5deg);
+}
+.faq-item:nth-of-type(3n + 2).active::after {
+  width: 200px; /* Mediano */
+  height: 200px;
+  top: 10%;
+  right: 0;
+  transform: translate(20%, -15%) rotate(25deg);
+}
+
+/* Combinación 3 (3, 6, 9...) */
+.faq-item:nth-of-type(3n).active::before {
+  width: 200px; /* Mediano */
+  height: 200px;
+  bottom: 0;
+  right: 50%;
+  transform: translate(50%, 45%) rotate(-5deg);
+}
+.faq-item:nth-of-type(3n).active::after {
+  width: 150px; /* Pequeño */
+  height: 150px;
+  top: 0;
+  left: 10%;
+  transform: translate(-30%, -40%) rotate(10deg);
+}
+
+
+.faq-question {
+  font-family: "ArquitectaBold";
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 0 35px 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.faq-answer {
+  max-height: 0;
+  opacity: 0;
+  font-family: "Arquitecta";
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 90%;
+  margin: 0;
+  padding-top: 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, padding-top 0.4s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.faq-item.active .faq-answer {
+  opacity: 1;
+  max-height: 300px; /* Altura máxima para la animación */
+  padding-top: 30px;
+}
+
+.faq-toggle {
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  padding: 0;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 30px;
+  width: 30px;
+  pointer-events: none; /* Evita que el botón intercepte el clic */
+  transition: background-color 0.3s ease;
+}
+
+.faq-toggle:focus {
+  outline: 0;
+}
+
+.faq-toggle .fa-chevron-down {
+  color: var(--greyCustom);
+  transition: color 0.3s ease, transform 0.4s ease-in-out;
+}
+
+.faq-toggle .fa-times {
+  display: none;
+}
+
+.faq-item.active .faq-toggle .fa-times {
+  display: none;
+}
+
+.faq-item.active .faq-toggle .fa-chevron-down {
+  color: var(--white);
+  display: block;
+  transform: rotate(180deg);
+}
+
+.faq-item.active .faq-toggle {
+  background-color: var(--lightGreyCustom);
+}
+
+@media (max-width: 640px) {
+  .faq-item.active::before,
+  .faq-item:nth-of-type(3n + 2).active::after {
+    width: 120px;
+    height: 120px;
+  }
+
+  .faq-item.active::after,
+  .faq-item:nth-of-type(3n + 2).active::before {
+    width: 90px;
+    height: 90px;
+  }
+}
