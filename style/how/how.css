@@ -114,8 +114,8 @@ html[data-theme="dark"] .how {
 .infoGraphic > li .number.fontColor1 { color: var(--blueCustom); }
 .infoGraphic > li .number.fontColor2 { color: var(--pinkCustom); }
 .infoGraphic > li .number.fontColor3 { color: var(--orangeCustom); }
-.infoGraphic > li .number.fontColor4 { color: var(--yellowCustom); }
-.infoGraphic > li .number.fontColor5 { color: var(--lightYellowCustom); }
+.infoGraphic > li .number.fontColor4 { color: var(--yellowTextCustom); }
+.infoGraphic > li .number.fontColor5 { color: var(--lightYellowTextCustom); }
 
 .infoGraphic > li .coverWrap {
   transform: rotate(130deg);
@@ -143,7 +143,7 @@ html[data-theme="dark"] .how {
   color: inherit;
 }
 
-.infoGraphic > li .content h2 {
+.infoGraphic > li .content h3 {
   font-size: 1.6em;
   font-family: "ArquitectaBold";
   font-weight: 500;
@@ -300,7 +300,7 @@ html[data-theme="dark"] .how {
     margin: 6.4em 1.8em 1em 5.6em;
   }
 
-  .infoGraphic > li .content h2 {
+  .infoGraphic > li .content h3 {
     font-size: 1.45em;
   }
 

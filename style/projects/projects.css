@@ -1,5 +1,3 @@
-@import url(styles.css);
-
 .section-space {
   padding: clamp(40px, 5vw, 64px) 0;
 }

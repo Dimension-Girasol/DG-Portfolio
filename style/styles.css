@@ -2,86 +2,103 @@
 @font-face {
   font-family: 'Bageo';
   src: url('../src/assets/fonts/bageo/Bageo.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Arquitecta-Italic';
   src: url('../src/assets/fonts/arquitecta/Arquitecta-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Arquitecta';
   src: url('../src/assets/fonts/arquitecta/Arquitecta.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBlack-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBlack-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBlack';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBlack.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBold-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBold-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBold';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBold.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBook-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBook-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaBook';
   src: url('../src/assets/fonts/arquitecta/ArquitectaBook.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaHeavy-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaHeavy-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaHeavy';
   src: url('../src/assets/fonts/arquitecta/ArquitectaHeavy.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaLight-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaLight-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaLight';
   src: url('../src/assets/fonts/arquitecta/ArquitectaLight.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaMedium-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaMedium-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaMedium';
   src: url('../src/assets/fonts/arquitecta/ArquitectaMedium.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaThin-Italic';
   src: url('../src/assets/fonts/arquitecta/ArquitectaThin-Italic.otf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'ArquitectaThin';
   src: url('../src/assets/fonts/arquitecta/ArquitectaThin.otf') format('truetype');
+  font-display: swap;
 }
 
 
@@ -94,12 +111,14 @@
   --black: #000;
 	--yellowCustom: #FCC96F;
   --lightYellowCustom: #ffe1ad;
-	--orangeCustom: #FEA758;
+  --yellowTextCustom: #8A5A00;
+  --lightYellowTextCustom: #715000;
+	--orangeCustom: #9A4B0A;
 	--pinkCustom:   #B73271;
-	--blueCustom:   #0097B2;
+	--blueCustom:   #007C92;
 	--greyCustom:   #393938;
 	--greyCustomBtn:   #393938;
-  --lightGreyCustom: #999999;
+  --lightGreyCustom: #666666;
   --frontProjectCardCustom: #ffff;
   --greyOpacity35: rgba(0, 0, 0, 0.35);
   --greyOpacity6: rgba(0, 0, 0, 0.06);
@@ -193,6 +212,54 @@ a {
   color: var(--frontProjectCardCustom);
   background-color: var(--blueCustom);
   transition: background-color 0.3s ease-in-out;
+}
+
+.fa-solid,
+.fa-regular,
+.fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  line-height: 1;
+}
+
+.theme-toggle__icon::before,
+.fa-lightbulb::before {
+  content: "☼";
+}
+
+html[data-theme="dark"] .theme-toggle__icon::before,
+html[data-theme="dark"] .fa-lightbulb::before {
+  content: "●";
+}
+
+.fa-chevron-left::before {
+  content: "<";
+}
+
+.fa-chevron-right::before {
+  content: ">";
+}
+
+.fa-envelope::before {
+  content: "@";
+}
+
+.fa-paper-plane::before {
+  content: ">";
+}
+
+.fa-instagram::before {
+  content: "IG";
+}
+
+.fa-whatsapp::before {
+  content: "WA";
+}
+
+.fa-tiktok::before {
+  content: "TT";
 }
 
 .section__tag {

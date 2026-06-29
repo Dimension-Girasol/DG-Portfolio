@@ -8,20 +8,6 @@ const HERO_CARD_CLASSES = [
 
 const escapeCssUrl = (value) => String(value || "").replace(/["\\]/g, "\\$&");
 
-function preloadHeroImage(src) {
-  return new Promise((resolve) => {
-    if (!src) {
-      resolve();
-      return;
-    }
-
-    const image = new Image();
-    image.onload = resolve;
-    image.onerror = resolve;
-    image.src = src;
-  });
-}
-
 function createHeroCard(card) {
   const article = document.createElement('article');
   article.className = `hero__card ${card.idCSS}`;
@@ -36,7 +22,8 @@ function createHeroCard(card) {
 
   const backIcon = document.createElement('img');
   backIcon.className = 'hero__card-back-mark';
-  backIcon.src = 'src/assets/images/favicon.ico';
+  backIcon.src = 'src/assets/images/icon-192x192.png';
+  backIcon.alt = '';
 
   const backTitle = document.createElement('span');
   backTitle.className = 'hero__card-title';
@@ -88,7 +75,7 @@ function mapProjectToHeroCard(project, index) {
     ariaLabel: project.name,
     detailsHref: '#projects-modal',
     projectId: project.id,
-    imageSrc: project.cover.src || project.cover.fullSrc
+    imageSrc: project.cover.thumbSrc || project.cover.src || project.cover.fullSrc
   };
 }
 
@@ -114,7 +101,6 @@ async function loadHeroCardsFromApi() {
       .slice(0, HERO_CARD_CLASSES.length)
       .map(mapProjectToHeroCard);
 
-    await Promise.all(heroCards.map((card) => preloadHeroImage(card.imageSrc)));
     loadHeroCards(heroCards);
     window.DGI18n?.apply(gallery);
     initHeroCardFlip();

@@ -1,6 +1,6 @@
 (function () {
-  const FALLBACK_IMAGE = "src/assets/images/favicon.ico"; // Imagen de reemplazo si alguna falla
-  const PLACEHOLDER_IMAGE = "src/assets/images/projects/in-progress/in-progress.png"; // Imagen para rellenar huecos vacíos
+  const FALLBACK_IMAGE = "src/assets/images/icon-192x192.png"; // Imagen de reemplazo si alguna falla
+  const PLACEHOLDER_IMAGE = "src/assets/images/projects/in-progress/in-progress-480.jpg"; // Imagen para rellenar huecos vacíos
   const escapeHtml = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -27,13 +27,16 @@
   const renderTags = (tags, className) =>
     tags.map((tag) => `<span class="gallery__tag ${className}">${escapeHtml(tag)}</span>`).join("");
 
+  const renderImageSizeAttrs = (image) =>
+    image.width && image.height ? ` width="${escapeHtml(image.width)}" height="${escapeHtml(image.height)}"` : "";
+
   const renderThumb = (image, index, total) => {
     const remaining = Math.max(total - 4, 0);
     const isMore = index === 3 && remaining > 0;
 
     return `
       <div class="gallery__thumb ${isMore ? "gallery__thumb-more" : ""}" ${isMore ? `data-more="+${remaining}"` : ""}>
-        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
+        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}"${renderImageSizeAttrs(image)} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
         ${
           isMore
             ? `<span class="gallery__more-badge" aria-hidden="true">
@@ -87,7 +90,7 @@
         <div class="gallery__images">
           <div class="gallery__images-cover">
             ${inProgressTag}
-            <img src="${escapeHtml(project.cover.src)}" alt="${escapeHtml(project.cover.alt)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
+            <img src="${escapeHtml(project.cover.thumbSrc || project.cover.src)}" alt="${escapeHtml(project.cover.alt)}"${renderImageSizeAttrs(project.cover)} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
             ${detailImages.map((image, index) => renderThumb(image, index + 1, project.images.length)).join("")}

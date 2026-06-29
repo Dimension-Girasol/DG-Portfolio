@@ -1,5 +1,5 @@
 (function () {
-  const fallbackCover = window.DGProjectModel?.fallbackCover || "/src/assets/images/index/dg-log_hero2.png";
+  const fallbackCover = window.DGProjectModel?.fallbackCover || "/src/assets/images/icon-192x192.png";
 
   const asArray = (value) => (Array.isArray(value) ? value : []);
 
