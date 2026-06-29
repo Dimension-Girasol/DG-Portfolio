@@ -80,9 +80,8 @@ function initHeader() {
     }
 
     if (themeToggleIcon) {
-      const isDark = theme === "dark";
-      themeToggleIcon.classList.toggle("fa-solid", isDark);
-      themeToggleIcon.classList.toggle("fa-regular", !isDark);
+      themeToggleIcon.classList.add("fa-regular", "fa-lightbulb");
+      themeToggleIcon.classList.remove("fa-solid");
     }
 
     syncThemeAssets(theme);
