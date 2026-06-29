@@ -30,13 +30,19 @@
   const renderImageSizeAttrs = (image) =>
     image.width && image.height ? ` width="${escapeHtml(image.width)}" height="${escapeHtml(image.height)}"` : "";
 
+  const renderImageLoadingAttrs = (isPriority = false) =>
+    isPriority ? ' loading="eager" fetchpriority="high"' : ' loading="lazy"';
+
+  const renderCardImageAttrs = (image, isPriority = false) =>
+    `${renderImageSizeAttrs(image)}${renderImageLoadingAttrs(isPriority)} decoding="async" sizes="(max-width: 980px) 90vw, 22vw"`;
+
   const renderThumb = (image, index, total) => {
     const remaining = Math.max(total - 4, 0);
     const isMore = index === 3 && remaining > 0;
 
     return `
       <div class="gallery__thumb ${isMore ? "gallery__thumb-more" : ""}" ${isMore ? `data-more="+${remaining}"` : ""}>
-        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}"${renderImageSizeAttrs(image)} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
+        <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}"${renderCardImageAttrs(image)} onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
         ${
           isMore
             ? `<span class="gallery__more-badge" aria-hidden="true">
@@ -49,7 +55,7 @@
     `;
   };
 
-  const renderProjectCard = (project) => {
+  const renderProjectCard = (project, index = 0) => {
     const visibleImages = getVisibleImages(project);
     const detailImages = visibleImages.slice(1, 4);
 
@@ -86,11 +92,12 @@
     const designerName = project.designer?.name || (typeof project.designer === 'string' ? project.designer : null);
 
     return `
-      <article class="gallery" data-project-id="${escapeHtml(project.id)}">
+      <article class="gallery-card">
+        <a class="gallery" data-project-id="${escapeHtml(project.id)}" href="#projects-modal">
         <div class="gallery__images">
           <div class="gallery__images-cover">
             ${inProgressTag}
-            <img src="${escapeHtml(project.cover.thumbSrc || project.cover.src)}" alt="${escapeHtml(project.cover.alt)}"${renderImageSizeAttrs(project.cover)} loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
+            <img src="${escapeHtml(project.cover.thumbSrc || project.cover.src)}" alt="${escapeHtml(project.cover.alt)}"${renderCardImageAttrs(project.cover, index === 0)} onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
             ${detailImages.map((image, index) => renderThumb(image, index + 1, project.images.length)).join("")}
@@ -111,14 +118,13 @@
             ${renderTags(tags, "gallery__tag-type")}
           </div>
         </div>
+        </a>
       </article>
     `;
   };
 
   const prepareCardsAccessibility = (galleriesWrap) => {
     galleriesWrap.querySelectorAll(".gallery").forEach((card) => {
-      card.setAttribute("tabindex", "0");
-      card.setAttribute("role", "button");
       const title = card.querySelector(".gallery__info p")?.textContent?.trim() || t("projects.modalTitle");
       card.setAttribute("aria-label", t("projects.openGallery", { title }));
     });
