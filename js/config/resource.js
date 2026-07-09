@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const storageKey = "dg-language";
   const defaultLanguage = "es";
 
@@ -81,15 +81,15 @@
 
       "faq.tag": "Ayuda",
       "faq.title": "Preguntas Frecuentes",
-      "faq.subtitle": "Aquí encontrarás respuestas a las dudas más comunes sobre nuestros servicios y productos. Si no encuentras lo que buscas, no dudes en <a href=\"contact.html\">contactarnos</a>.",
-      "faq.q1.question": "¿Qué tipo de archivos 3D aceptáis?",
-      "faq.q1.answer": "Aceptamos principalmente archivos en formato STL, que es el estándar para impresión 3D. También podemos trabajar con OBJ y otros formatos comunes. Si tienes dudas sobre tu archivo, ¡consúltanos!",
+      "faq.subtitle": "Aquí encontrarás respuestas a las dudas más comunes sobre nuestros servicios y productos. Si no encuentras lo que buscas, no dudes en <a href=\"/contact.html\">contactarnos</a>.",
+      "faq.q1.question": "¿Qué tipo de archivos 3D imprimis?",
+      "faq.q1.answer": "Tenemos unos cuantos estudios en patreon, cada mes suben modelos nuevos que el que más nos guste solemos hacerlo.",
       "faq.q2.question": "¿Cuál es la diferencia entre impresión de resina y de filamento (FDM)?",
       "faq.q2.answer": "La impresión de resina (SLA/DLP) ofrece un nivel de detalle altísimo, ideal para miniaturas y figuras complejas. La impresión de filamento (FDM) es más robusta y económica, perfecta para prototipos, piezas funcionales y objetos más grandes con menos detalle.",
-      "faq.q3.question": "¿Hacéis envíos?",
-      "faq.q3.answer": "Sí, realizamos envíos a toda España (Península y Baleares). Todos los productos se empaquetan con el máximo cuidado para garantizar que lleguen en perfectas condiciones. Los gastos y tiempos de envío varían según el destino y el tamaño del pedido.",
-      "faq.q4.question": "¿Puedo pediros una figura que no está en vuestro catálogo?",
-      "faq.q4.answer": "¡Por supuesto! Nos encantan los retos. Si tienes un modelo 3D que quieres imprimir o una idea para una figura personalizada, cuéntanosla. Podemos buscar el modelo o ayudarte a encontrar un diseñador si es necesario.",
+      "faq.q3.question": "¿Cómo es el proceso de impresión y pintura?",
+      "faq.q3.answer": "Una vez elegido el diseño, lo preparamos para imprimir, luego una vez impreso, lo limpiamos con alcohol y curamos. Lijamos todo y corregimos algún posible defecto de impresion y lo dejamos imprimado y listo para pintar.",
+      "faq.q4.question": "¿Soleís hacer siempre el mismo tipo de figura?",
+      "faq.q4.answer": "Variamos casi siempre, desde miniaturas, escultura, dioramas o 75 mm",
 
       "projects.tag": "Nuestros proyectos",
       "projects.title": "Echa un vistazo a nuestra colección",
@@ -213,15 +213,15 @@
 
       "faq.tag": "Help",
       "faq.title": "Frequently Asked Questions",
-      "faq.subtitle": "Here you will find answers to the most common questions about our services and products. If you can't find what you're looking for, don't hesitate to <a href=\"contact.html\">contact us</a>.",
-      "faq.q1.question": "What kind of 3D files do you accept?",
-      "faq.q1.answer": "We primarily accept files in STL format, which is the standard for 3D printing. We can also work with OBJ and other common formats. If you have doubts about your file, just ask us!",
+      "faq.subtitle": "Here you will find answers to the most common questions about our services and products. If you can't find what you're looking for, don't hesitate to <a href=\"/contact.html\">contact us</a>.",
+      "faq.q1.question": "What kind of 3D files do you print?",
+      "faq.q1.answer": "We follow several studios on Patreon; every month they release new models, and we usually make the ones we like the most.",
       "faq.q2.question": "What is the difference between resin and filament (FDM) printing?",
       "faq.q2.answer": "Resin printing (SLA/DLP) offers a very high level of detail, ideal for miniatures and complex figures. Filament printing (FDM) is more robust and cost-effective, perfect for prototypes, functional parts, and larger objects with less detail.",
-      "faq.q3.question": "Do you ship?",
-      "faq.q3.answer": "Yes, we ship throughout Spain (Peninsula and Balearic Islands). All products are packaged with the utmost care to ensure they arrive in perfect condition. Shipping costs and times vary depending on the destination and order size.",
-      "faq.q4.question": "Can I order a figure that is not in your catalog?",
-      "faq.q4.answer": "Of course! We love a challenge. If you have a 3D model you want to print or an idea for a custom figure, let us know. We can look for the model or help you find a designer if needed.",
+      "faq.q3.question": "What is the printing and painting process like?",
+      "faq.q3.answer": "Once the design has been chosen, we prepare it for printing. After it is printed, we clean it with alcohol and cure it. We sand everything, fix any possible printing defects, and leave it primed and ready to paint.",
+      "faq.q4.question": "Do you usually make the same type of figure?",
+      "faq.q4.answer": "We almost always vary what we make, from miniatures and sculptures to dioramas or 75 mm figures.",
 
       "projects.tag": "Our projects",
       "projects.title": "Take a look at our collection",
