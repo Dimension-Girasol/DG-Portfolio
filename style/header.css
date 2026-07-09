@@ -241,6 +241,9 @@ html[data-theme="dark"] .theme-toggle {
         padding: 0 14px;
         font-size: 1rem;
         border-radius: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         white-space: nowrap;
     }
 
@@ -405,5 +408,15 @@ html[data-theme="dark"] .theme-toggle {
     .navbar__toggle-btn img {
         width: 32px;
         height: 32px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .navbar__nav {
+        gap: 10px;
+    }
+
+    .navbar__cta {
+        display: none;
     }
 }
