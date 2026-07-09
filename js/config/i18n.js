@@ -16,6 +16,7 @@
       "language.current": "ES",
       "document.title.home": "Dimensión Girasol",
       "document.title.contact": "Contacto - Dimensión Girasol",
+      "document.title.faq": "Preguntas Frecuentes - Dimensión Girasol",
 
       "hero.title": "Arte digital convertido en realidad",
       "hero.tag": "Impresión 3D - Figuras - Miniaturas - Grabado Láser",
@@ -78,6 +79,18 @@
       "contact.constructionText": "Muy pronto podrás contactar con nosotros desde aquí. Mientras tanto, puedes escribirnos por Instagram o email.",
       "contact.constructionImageAlt": "Sección de contacto en construcción",
 
+      "faq.tag": "Ayuda",
+      "faq.title": "Preguntas Frecuentes",
+      "faq.subtitle": "Aquí encontrarás respuestas a las dudas más comunes sobre nuestros servicios y productos. Si no encuentras lo que buscas, no dudes en <a href=\"contact.html\">contactarnos</a>.",
+      "faq.q1.question": "¿Qué tipo de archivos 3D aceptáis?",
+      "faq.q1.answer": "Aceptamos principalmente archivos en formato STL, que es el estándar para impresión 3D. También podemos trabajar con OBJ y otros formatos comunes. Si tienes dudas sobre tu archivo, ¡consúltanos!",
+      "faq.q2.question": "¿Cuál es la diferencia entre impresión de resina y de filamento (FDM)?",
+      "faq.q2.answer": "La impresión de resina (SLA/DLP) ofrece un nivel de detalle altísimo, ideal para miniaturas y figuras complejas. La impresión de filamento (FDM) es más robusta y económica, perfecta para prototipos, piezas funcionales y objetos más grandes con menos detalle.",
+      "faq.q3.question": "¿Hacéis envíos?",
+      "faq.q3.answer": "Sí, realizamos envíos a toda España (Península y Baleares). Todos los productos se empaquetan con el máximo cuidado para garantizar que lleguen en perfectas condiciones. Los gastos y tiempos de envío varían según el destino y el tamaño del pedido.",
+      "faq.q4.question": "¿Puedo pediros una figura que no está en vuestro catálogo?",
+      "faq.q4.answer": "¡Por supuesto! Nos encantan los retos. Si tienes un modelo 3D que quieres imprimir o una idea para una figura personalizada, cuéntanosla. Podemos buscar el modelo o ayudarte a encontrar un diseñador si es necesario.",
+
       "projects.tag": "Nuestros proyectos",
       "projects.title": "Echa un vistazo a nuestra colección",
       "projects.text": "Filtra por artista para descubrir distintas figuras hechas en impresion 3D y pintadas a mano.",
@@ -120,6 +133,7 @@
       "footer.shopping": "Compras",
       "footer.shipping": "Envíos",
       "footer.contactTitle": "Contacto",
+      "footer.copy": "(c) 2026 Dimension Girasol. Todos los derechos reservados."
     },
     en: {
       "nav.home": "Home",
@@ -134,6 +148,7 @@
       "language.current": "EN",
       "document.title.home": "Dimension Girasol",
       "document.title.contact": "Contact - Dimension Girasol",
+      "document.title.faq": "Frequently Asked Questions - Dimension Girasol",
 
       "hero.title": "Digital art brought to life",
       "hero.tag": "3D Printing - Figures - Miniatures - Laser Engraving",
@@ -195,6 +210,18 @@
       "contact.constructionTitle": "We are preparing this section",
       "contact.constructionText": "Soon you will be able to contact us from here. In the meantime, you can write to us on Instagram or by email.",
       "contact.constructionImageAlt": "Contact section under construction",
+
+      "faq.tag": "Help",
+      "faq.title": "Frequently Asked Questions",
+      "faq.subtitle": "Here you will find answers to the most common questions about our services and products. If you can't find what you're looking for, don't hesitate to <a href=\"contact.html\">contact us</a>.",
+      "faq.q1.question": "What kind of 3D files do you accept?",
+      "faq.q1.answer": "We primarily accept files in STL format, which is the standard for 3D printing. We can also work with OBJ and other common formats. If you have doubts about your file, just ask us!",
+      "faq.q2.question": "What is the difference between resin and filament (FDM) printing?",
+      "faq.q2.answer": "Resin printing (SLA/DLP) offers a very high level of detail, ideal for miniatures and complex figures. Filament printing (FDM) is more robust and cost-effective, perfect for prototypes, functional parts, and larger objects with less detail.",
+      "faq.q3.question": "Do you ship?",
+      "faq.q3.answer": "Yes, we ship throughout Spain (Peninsula and Balearic Islands). All products are packaged with the utmost care to ensure they arrive in perfect condition. Shipping costs and times vary depending on the destination and order size.",
+      "faq.q4.question": "Can I order a figure that is not in your catalog?",
+      "faq.q4.answer": "Of course! We love a challenge. If you have a 3D model you want to print or an idea for a custom figure, let us know. We can look for the model or help you find a designer if needed.",
 
       "projects.tag": "Our projects",
       "projects.title": "Take a look at our collection",
