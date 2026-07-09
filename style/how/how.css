@@ -114,8 +114,8 @@ html[data-theme="dark"] .how {
 .infoGraphic > li .number.fontColor1 { color: var(--blueCustom); }
 .infoGraphic > li .number.fontColor2 { color: var(--pinkCustom); }
 .infoGraphic > li .number.fontColor3 { color: var(--orangeCustom); }
-.infoGraphic > li .number.fontColor4 { color: var(--yellowTextCustom); }
-.infoGraphic > li .number.fontColor5 { color: var(--lightYellowTextCustom); }
+.infoGraphic > li .number.fontColor4 { color: var(--yellowCustom); }
+.infoGraphic > li .number.fontColor5 { color: var(--lightYellowCustom); }
 
 .infoGraphic > li .coverWrap {
   transform: rotate(130deg);
