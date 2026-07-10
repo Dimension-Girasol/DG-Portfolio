@@ -74,6 +74,12 @@ loadComponent("projects", "components/projects/projects.html", () => {
   });
 });
 
+/**** FAQs ****/
+// Si estamos en la página de FAQ, el contenido ya está en el HTML, solo cargamos el script.
+if (document.body.dataset.page === 'faq') {
+  loadScript("js/components/faq.js");
+}
+
 /**** Footer ****/
 loadComponent("footer", "components/footer.html", () => {
   if (window.dgSyncThemeAssets) window.dgSyncThemeAssets();
