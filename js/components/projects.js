@@ -42,6 +42,7 @@
 
     return `
       <div class="gallery__thumb ${isMore ? "gallery__thumb-more" : ""}" ${isMore ? `data-more="+${remaining}"` : ""}>
+        <span class="gallery__img-spinner" aria-hidden="true"></span>
         <img src="${escapeHtml(image.thumbSrc || image.src)}" alt="${escapeHtml(image.alt)}"${renderCardImageAttrs(image)} onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
         ${
           isMore
@@ -97,6 +98,7 @@
         <div class="gallery__images">
           <div class="gallery__images-cover">
             ${inProgressTag}
+            <span class="gallery__img-spinner" aria-hidden="true"></span>
             <img src="${escapeHtml(project.cover.thumbSrc || project.cover.src)}" alt="${escapeHtml(project.cover.alt)}"${renderCardImageAttrs(project.cover, index === 0)} onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
           </div>
           <div class="gallery__images-more">
@@ -127,6 +129,23 @@
     galleriesWrap.querySelectorAll(".gallery").forEach((card) => {
       const title = card.querySelector(".gallery__info p")?.textContent?.trim() || t("projects.modalTitle");
       card.setAttribute("aria-label", t("projects.openGallery", { title }));
+    });
+  };
+
+  const initCardImageSpinners = (galleriesWrap) => {
+    galleriesWrap.querySelectorAll(".gallery__images-cover, .gallery__thumb").forEach((wrap) => {
+      const img = wrap.querySelector("img");
+      if (!img) return;
+
+      const clearLoading = () => wrap.classList.remove("is-img-loading");
+
+      if (img.complete && img.naturalWidth !== 0) {
+        clearLoading();
+      } else {
+        wrap.classList.add("is-img-loading");
+        img.addEventListener("load", clearLoading, { once: true });
+        img.addEventListener("error", clearLoading, { once: true });
+      }
     });
   };
 
@@ -286,6 +305,7 @@
       // 4. Render
       gallery.innerHTML = projectsToRender.length ? projectsToRender.map(renderProjectCard).join("") : `<p class="projects__empty">${escapeHtml(t("projects.empty"))}</p>`;
       prepareCardsAccessibility(gallery.parentElement);
+      initCardImageSpinners(gallery);
       updatePaginationUI(totalPages);
     };
 

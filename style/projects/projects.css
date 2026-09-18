@@ -288,8 +288,14 @@
     transparent
   );
   transform: translateX(-100%);
-  animation: skeleton-shimmer 1.5s infinite;
   z-index: 1;
+  opacity: 0;
+}
+
+.gallery__images-cover.is-img-loading::before,
+.gallery__thumb.is-img-loading::before {
+  opacity: 1;
+  animation: skeleton-shimmer 1.5s infinite;
 }
 
 html[data-theme="dark"] .gallery__images-cover::before,
@@ -308,6 +314,36 @@ html[data-theme="dark"] .gallery__thumb::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ================= SPINNER DE CARGA PARA IMÁGENES DE LAS CARDS ================= */
+.gallery__img-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.gallery__thumb .gallery__img-spinner {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-width: 2px;
+}
+
+.gallery__images-cover.is-img-loading .gallery__img-spinner,
+.gallery__thumb.is-img-loading .gallery__img-spinner {
+  opacity: 1;
+  animation: dg-spin 0.8s linear infinite;
 }
 
 
@@ -411,5 +447,12 @@ html[data-theme="dark"] .gallery__thumb::before {
   .projects__grid,
   .project-card {
     transition: none;
+  }
+
+  .gallery__images-cover.is-img-loading::before,
+  .gallery__thumb.is-img-loading::before,
+  .gallery__images-cover.is-img-loading .gallery__img-spinner,
+  .gallery__thumb.is-img-loading .gallery__img-spinner {
+    animation: none;
   }
 }

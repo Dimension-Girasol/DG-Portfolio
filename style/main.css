@@ -480,7 +480,7 @@ html[data-theme="dark"] .theme-toggle {
         top: calc(100% + 8px);
         right: 0;
         background-color: var(--white);
-        width: min(86vw, 360px); /* tamaÃ±o */
+        width: min(86vw, 360px); /* tamaño */
         border-radius: 20px;
         z-index: 20; /* mostrar delante del icono */
         opacity: 0;
@@ -616,7 +616,6 @@ html[data-theme="dark"] .theme-toggle {
         height: 32px;
     }
 }
-
 /* Source: style/hero/hero.css */
 /* ================= HERO ================= */
 .main {
@@ -1244,7 +1243,7 @@ body.modal-open .hero__image {
   color: var(--orangeCustom);
 }
 
-/* ================= SKELETON LOADER PARA IMÃGENES ================= */
+/* ================= SKELETON LOADER PARA IMÁGENES ================= */
 .gallery__images-cover,
 .gallery__thumb {
   position: relative;
@@ -1264,8 +1263,14 @@ body.modal-open .hero__image {
     transparent
   );
   transform: translateX(-100%);
-  animation: skeleton-shimmer 1.5s infinite;
   z-index: 1;
+  opacity: 0;
+}
+
+.gallery__images-cover.is-img-loading::before,
+.gallery__thumb.is-img-loading::before {
+  opacity: 1;
+  animation: skeleton-shimmer 1.5s infinite;
 }
 
 html[data-theme="dark"] .gallery__images-cover::before,
@@ -1286,13 +1291,43 @@ html[data-theme="dark"] .gallery__thumb::before {
   object-fit: cover;
 }
 
+/* ================= SPINNER DE CARGA PARA IMÁGENES DE LAS CARDS ================= */
+.gallery__img-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.gallery__thumb .gallery__img-spinner {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-width: 2px;
+}
+
+.gallery__images-cover.is-img-loading .gallery__img-spinner,
+.gallery__thumb.is-img-loading .gallery__img-spinner {
+  opacity: 1;
+  animation: dg-spin 0.8s linear infinite;
+}
+
 
 .projects__gallery-wrapper {
   width: 100%;
 }
 
 .projects__gallery-content {
-  min-width: 0; /* Previene que la cuadrÃ­cula se desborde */
+  min-width: 0; /* Previene que la cuadrícula se desborde */
 }
 
 .projects__pagination {
@@ -1305,7 +1340,7 @@ html[data-theme="dark"] .gallery__thumb::before {
 
 .projects__pagination-btn {
   display: inline-flex;
-  flex-shrink: 0; /* Evita que el texto de los botones se comprima de manera extraÃ±a */
+  flex-shrink: 0; /* Evita que el texto de los botones se comprima de manera extraña */
   align-items: center;
   justify-content: center;
   width: 44px;
@@ -1387,6 +1422,13 @@ html[data-theme="dark"] .gallery__thumb::before {
   .projects__grid,
   .project-card {
     transition: none;
+  }
+
+  .gallery__images-cover.is-img-loading::before,
+  .gallery__thumb.is-img-loading::before,
+  .gallery__images-cover.is-img-loading .gallery__img-spinner,
+  .gallery__thumb.is-img-loading .gallery__img-spinner {
+    animation: none;
   }
 }
 /* Source: style/projects/card-gallery-projects.css */
@@ -1892,7 +1934,7 @@ body.modal-open {
 .about__timeline::before {
   content: '';
   position: absolute;
-  top: calc(2rem + 19px); /* Alineado al centro del aÃ±o */
+  top: calc(2rem + 19px); /* Alineado al centro del año */
   left: 10%;
   right: 10%;
   height: 2px;
@@ -2582,7 +2624,7 @@ html[data-theme="dark"] .how {
     color: var(--greyCustom);
     letter-spacing: 2px;
     text-transform: uppercase;
-    /* display: inline-block;*/ /* Corta la lÃ­nea segÃºn el tamaÃ±o de la palabra */
+    /* display: inline-block;*/ /* Corta la línea según el tamaño de la palabra */
 }
 
 .footer__links ul li a {
