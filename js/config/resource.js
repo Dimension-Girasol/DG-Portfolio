@@ -6,6 +6,9 @@
     es: {
       "nav.home": "Inicio",
       "nav.projects": "Proyectos",
+      "nav.projects3d": "Impresión 3D",
+      "nav.laser": "Láser",
+      "nav.merch": "Merchandising",
       "nav.about": "Conócenos",
       "nav.contact": "Contacto",
       "nav.openMenu": "Abrir menú de navegación",
@@ -94,6 +97,9 @@
       "projects.tag": "Nuestros proyectos",
       "projects.title": "Echa un vistazo a nuestra colección",
       "projects.text": "Filtra por artista para descubrir distintas figuras hechas en impresion 3D y pintadas a mano.",
+      "projects.modeLabel": "Tipo de proyecto",
+      "projects.mode3d": "Impresión 3D",
+      "projects.modeLaser": "Láser",
       "projects.filterLabel": "Filtrar proyectos",
       "projects.filterJorge": "Filtrar proyectos de Jorge",
       "projects.filterAll": "Mostrar todos los proyectos",
@@ -126,6 +132,22 @@
       "projects.sort.inProgress": "En progreso",
       "projects.sort.finished": "Finalizados",
 
+      "laser.tag": "Grabado láser",
+      "laser.title": "Nuestras cosillas grabadas a láser",
+      "laser.text": "Pequeños detalles y piezas que grabamos y cortamos a láser: cajitas, llaveros y regalos personalizados con un toque único.",
+      "laser.item1": "Marcasitios",
+      "laser.item2": "Llaveros",
+      "laser.item3": "Pin",
+      "laser.item4": "Grabado plato en madera",
+
+      "merch.tag": "Nuestro Merchandising",
+      "merch.title": "Detallitos que regalamos",
+      "merch.text": "Llaveros de girasol con NFC, un pin de madera con nuestro logo grabado y cortado a láser, y pegatinas. No están a la venta: los repartimos en ferias, colaboraciones y como regalo para quien nos conoce.",
+      "merch.cta": "Síguenos para conseguir el tuyo",
+      "merch.item1": "Llavero girasol con NFC",
+      "merch.item2": "Pin de madera grabado",
+      "merch.item3": "Pegatinas",
+
       "footer.aboutTitle": "Sobre nosotros",
       "footer.aboutLink": "Quiénes somos",
       "footer.helpTitle": "Ayuda",
@@ -138,6 +160,9 @@
     en: {
       "nav.home": "Home",
       "nav.projects": "Projects",
+      "nav.projects3d": "3D Printing",
+      "nav.laser": "Laser",
+      "nav.merch": "Merchandising",
       "nav.about": "About us",
       "nav.contact": "Contact",
       "nav.openMenu": "Open navigation menu",
@@ -226,6 +251,9 @@
       "projects.tag": "Our projects",
       "projects.title": "Take a look at our collection",
       "projects.text": "Filter by artist to discover different 3D-printed and hand-painted figures.",
+      "projects.modeLabel": "Project type",
+      "projects.mode3d": "3D Printing",
+      "projects.modeLaser": "Laser",
       "projects.filterLabel": "Filter projects",
       "projects.filterJorge": "Filter Jorge projects",
       "projects.filterAll": "Show all projects",
@@ -257,6 +285,24 @@
       "projects.sort.dateDesc": "Most recent",
       "projects.sort.inProgress": "In progress",
       "projects.sort.finished": "Finished",
+
+      "laser.tag": "Laser engraving",
+      "laser.title": "Our laser-engraved little things",
+      "laser.text": "Small details and pieces we engrave and cut with the laser: coasters, keychains, plaques and personalized gifts with a unique touch.",
+      "laser.item1": "Personalized coasters",
+      "laser.item2": "Engraved keychain",
+      "laser.item3": "Decorative plaque",
+      "laser.item4": "Wooden box",
+      "laser.item5": "Acrylic detail",
+      "laser.item6": "Personalized gift",
+
+      "merch.tag": "Our Merchandising",
+      "merch.title": "Little things we give away",
+      "merch.text": "NFC sunflower keychains, a wooden pin with our logo laser-engraved and cut, and stickers. Not for sale — we hand them out at fairs, collaborations and as gifts for the people who get to know us.",
+      "merch.cta": "Follow us to get yours",
+      "merch.item1": "NFC sunflower keychain",
+      "merch.item2": "Engraved wooden pin",
+      "merch.item3": "Stickers",
 
       "footer.aboutTitle": "About us",
       "footer.aboutLink": "Who we are",
@@ -306,8 +352,6 @@
         if (attr && key) element.setAttribute(attr, t(key));
       });
     });
-
-    document.dispatchEvent(new CustomEvent("dg:languagechange", { detail: { language: currentLanguage } }));
   };
 
   const setLanguage = (language) => {
@@ -319,6 +363,10 @@
       // ignore
     }
     apply(document);
+    // Solo se dispara cuando el idioma cambia de verdad (no en cada apply()
+    // parcial tras cargar un componente), que si no cerraba menús y
+    // reseteaba estados en cuanto cualquier trozo de la página se traducía.
+    document.dispatchEvent(new CustomEvent("dg:languagechange", { detail: { language: currentLanguage } }));
   };
 
   const toggleLanguage = () => setLanguage(currentLanguage === "es" ? "en" : "es");

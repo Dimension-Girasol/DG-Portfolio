@@ -227,6 +227,11 @@ a {
 
 /* ================= NAVBAR ================= */
 
+.header {
+    position: relative;
+    z-index: 100;
+}
+
 .container-navbar {
     background-color: var(--white);
     display: flex;
@@ -381,12 +386,12 @@ html[data-theme="dark"] .theme-toggle {
     font-family: 'Bageo';
 }
 
-.nav__link a {
+.nav__link > a {
     color: var(--greyCustom);
     position: relative;
 }
 
-.nav__link a::after {
+.nav__link > a::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -398,8 +403,111 @@ html[data-theme="dark"] .theme-toggle {
     transition: opacity 0.3s ease-in-out;
 }
 
-.nav__link:hover a::after {
+.nav__link:hover > a::after {
     opacity: 1;
+}
+
+/* ================= DROPDOWN "PROYECTOS" ================= */
+.nav__link--dropdown {
+    position: relative;
+}
+
+.nav__dropdown-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--greyCustom);
+    cursor: pointer;
+}
+
+.nav__dropdown-caret {
+    width: 0;
+    height: 0;
+    margin-top: 2px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    transition: transform 0.2s ease;
+}
+
+.nav__link--dropdown.is-open .nav__dropdown-caret {
+    transform: rotate(180deg);
+}
+
+.nav__dropdown-trigger::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--greyCustom);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.nav__dropdown-trigger:hover::after,
+.nav__dropdown-trigger:focus-visible::after {
+    opacity: 1;
+}
+
+.nav__dropdown {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 180px;
+    background-color: var(--white);
+    border: 1px solid var(--strokeSubtle);
+    border-radius: 14px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16);
+    padding: 8px;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 30;
+}
+
+.nav__link--dropdown.is-open .nav__dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.nav__dropdown li + li {
+    margin-top: 2px;
+}
+
+.nav__dropdown a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--greyCustom);
+    font-family: "Bageo";
+    font-size: 1rem;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav__dropdown a:hover,
+.nav__dropdown a:focus-visible {
+    background-color: var(--greyOpacity6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav__dropdown,
+    .nav__dropdown-caret {
+        transition: none;
+    }
 }
 
 .navbar__toggle-btn {
@@ -430,7 +538,7 @@ html[data-theme="dark"] .theme-toggle {
     }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1100px) {
     .navbar {
         position: relative;
         margin: 14px 0;
@@ -533,6 +641,10 @@ html[data-theme="dark"] .theme-toggle {
 
     .navbar__mobile-menu.active .nav__link-mobile:nth-child(4) {
         transition-delay: 0.22s;
+    }
+
+    .navbar__mobile-menu.active .nav__link-mobile:nth-child(5) {
+        transition-delay: 0.28s;
     }
 
     .nav__list-mobile {
@@ -996,12 +1108,13 @@ body.modal-open .hero__image {
   font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
-.projects__content p {
-  max-width: 50rem;
+.projects__content p,
+.projects__mode-panel > p {
   font-family: "Arquitecta";
   margin-top: 10px;
   color: var(--greyCustom);
   font-size: 1.3rem;
+  text-align: center;
 }
 
 .projects__sorter {
@@ -1863,6 +1976,558 @@ body.modal-open {
   .projects__modal-thumb {
     flex: 0 0 64px;
     border-radius: 8px;
+  }
+}
+/* Source: style/laser/laser.css */
+/* ================= TOGGLE "IMPRESIÓN 3D" / "LÁSER" ================= */
+.projects__mode-toggle {
+  position: relative;
+  justify-self: center;
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background-color: var(--greyOpacity6);
+}
+
+.projects__mode-indicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background-color: var(--white);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.projects__mode-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-family: "ArquitectaBold";
+  font-size: 1.05rem;
+  color: var(--lightGreyCustom);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.projects__mode-btn.is-active {
+  color: var(--greyCustom);
+}
+
+.projects__mode-btn:hover:not(.is-active) {
+  color: var(--orangeCustom);
+}
+
+.projects__mode-btn:focus-visible {
+  outline: 3px solid var(--blueCustom);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .projects__mode-toggle {
+    width: 100%;
+  }
+
+  .projects__mode-btn {
+    flex: 1;
+    padding: 10px 16px;
+  }
+}
+
+.projects__mode-panel {
+  display: grid;
+  gap: 24px;
+}
+
+.projects__mode-panel[hidden] {
+  display: none;
+}
+
+/* ================= CONTENIDO DEL PANEL "LÁSER" ================= */
+.laser__content h3 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+}
+
+.laser__content p {
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.laser__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.laser__card {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  transition: transform 0.3s ease;
+}
+
+.laser__card:hover {
+  transform: scale(1.03) translateY(-2px);
+}
+
+.laser__card img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.laser__card figcaption {
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0 0;
+  padding: 20px 12px 10px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent);
+  color: var(--frontProjectCardCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.9rem;
+}
+
+/* ================= SKELETON + SPINNER MIENTRAS CARGA LA IMAGEN ================= */
+.laser__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.laser__card.is-img-loading::before {
+  opacity: 1;
+  animation: dg-laser-shimmer 1.5s infinite;
+}
+
+html[data-theme="dark"] .laser__card::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.laser__img-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.laser__card.is-img-loading .laser__img-spinner {
+  opacity: 1;
+  animation: dg-laser-spin 0.8s linear infinite;
+}
+
+@keyframes dg-laser-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes dg-laser-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .laser__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .laser__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laser__card,
+  .laser__card::before,
+  .laser__img-spinner,
+  .projects__mode-indicator {
+    transition: none;
+    animation: none;
+  }
+}
+/* Source: style/merch/merch.css */
+.merch {
+  position: relative;
+  isolation: isolate;
+}
+
+.merch__container {
+  display: grid;
+  gap: 32px;
+}
+
+.merch__content h2 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.merch__content p {
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+}
+
+/* ================= TABLERO DE PINS ================= */
+.merch__pins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px 28px;
+  list-style: none;
+  padding: 12px 0 4px;
+}
+
+.merch__pin {
+  --pin-rotate: 0deg;
+  display: flex;
+  width: 152px;
+}
+
+.merch__pin:nth-child(6n + 1) { --pin-rotate: -5deg; }
+.merch__pin:nth-child(6n + 2) { --pin-rotate: 4deg; }
+.merch__pin:nth-child(6n + 3) { --pin-rotate: -3deg; }
+.merch__pin:nth-child(6n + 4) { --pin-rotate: 5deg; }
+.merch__pin:nth-child(6n + 5) { --pin-rotate: -4deg; }
+.merch__pin:nth-child(6n + 6) { --pin-rotate: 3deg; }
+
+.merch__pin-trigger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  transform: rotate(var(--pin-rotate));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), z-index 0s;
+  cursor: zoom-in;
+  outline: none;
+}
+
+.merch__pin-trigger:hover,
+.merch__pin-trigger:focus-visible {
+  transform: rotate(0deg) translateY(-8px);
+}
+
+.merch__pin-trigger.is-source {
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.merch__pin-badge {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 0.3s ease;
+}
+
+.merch__pin-trigger:hover .merch__pin-badge,
+.merch__pin-trigger:focus-visible .merch__pin-badge {
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.2);
+}
+
+.merch__pin-badge img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.merch__pin-label {
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.merch__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.merch__cta .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.merch__disclaimer {
+  color: var(--lightGreyCustom);
+  font-family: "Arquitecta";
+  font-size: 0.9rem;
+}
+
+/* ================= ZOOM: EL PIN VUELA AL CENTRO Y SE HACE GRANDE ================= */
+.merch__zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  visibility: hidden;
+}
+
+.merch__zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 16, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-backdrop {
+  opacity: 1;
+}
+
+.merch__zoom-circle {
+  position: fixed;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s ease,
+    transform 0.32s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-circle {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.merch__zoom-image-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.merch__zoom-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.merch__zoom-label {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  translate: -50% 0;
+  white-space: nowrap;
+  color: var(--frontProjectCardCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.15rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-label {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.merch__zoom-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--greyCustom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "ArquitectaBold";
+  font-size: 1.2rem;
+  line-height: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-close {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.15s;
+}
+
+.merch__zoom-close:hover {
+  background-color: var(--orangeCustom);
+  color: var(--white);
+}
+
+@media (max-width: 600px) {
+  .merch__zoom-close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* ================= SKELETON + SPINNER MIENTRAS CARGA LA IMAGEN ================= */
+.merch__pin-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.merch__pin-badge.is-img-loading::before {
+  opacity: 1;
+  animation: dg-merch-shimmer 1.5s infinite;
+}
+
+html[data-theme="dark"] .merch__pin-badge::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.merch__pin-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.merch__pin-badge.is-img-loading .merch__pin-spinner {
+  opacity: 1;
+  animation: dg-merch-spin 0.8s linear infinite;
+}
+
+@keyframes dg-merch-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes dg-merch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .merch__pins {
+    gap: 28px 18px;
+  }
+
+  .merch__pin {
+    width: 124px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merch__pin-trigger,
+  .merch__pin-badge,
+  .merch__pin-badge::before,
+  .merch__pin-spinner,
+  .merch__zoom-backdrop,
+  .merch__zoom-circle,
+  .merch__zoom-label,
+  .merch__zoom-close {
+    transition: none;
+    animation: none;
   }
 }
 /* Source: style/about/about.css */

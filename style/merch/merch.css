@@ -1,0 +1,334 @@
+.merch {
+  position: relative;
+  isolation: isolate;
+}
+
+.merch__container {
+  display: grid;
+  gap: 32px;
+}
+
+.merch__content h2 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.merch__content p {
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+}
+
+/* ================= TABLERO DE PINS ================= */
+.merch__pins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px 28px;
+  list-style: none;
+  padding: 12px 0 4px;
+}
+
+.merch__pin {
+  --pin-rotate: 0deg;
+  display: flex;
+  width: 152px;
+}
+
+.merch__pin:nth-child(6n + 1) { --pin-rotate: -5deg; }
+.merch__pin:nth-child(6n + 2) { --pin-rotate: 4deg; }
+.merch__pin:nth-child(6n + 3) { --pin-rotate: -3deg; }
+.merch__pin:nth-child(6n + 4) { --pin-rotate: 5deg; }
+.merch__pin:nth-child(6n + 5) { --pin-rotate: -4deg; }
+.merch__pin:nth-child(6n + 6) { --pin-rotate: 3deg; }
+
+.merch__pin-trigger {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  transform: rotate(var(--pin-rotate));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), z-index 0s;
+  cursor: zoom-in;
+  outline: none;
+}
+
+.merch__pin-trigger:hover,
+.merch__pin-trigger:focus-visible {
+  transform: rotate(0deg) translateY(-8px);
+}
+
+.merch__pin-trigger.is-source {
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.merch__pin-badge {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 0.3s ease;
+}
+
+.merch__pin-trigger:hover .merch__pin-badge,
+.merch__pin-trigger:focus-visible .merch__pin-badge {
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.2);
+}
+
+.merch__pin-badge img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.merch__pin-label {
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.merch__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.merch__cta .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.merch__disclaimer {
+  color: var(--lightGreyCustom);
+  font-family: "Arquitecta";
+  font-size: 0.9rem;
+}
+
+/* ================= ZOOM: EL PIN VUELA AL CENTRO Y SE HACE GRANDE ================= */
+.merch__zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  visibility: hidden;
+}
+
+.merch__zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 16, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-backdrop {
+  opacity: 1;
+}
+
+.merch__zoom-circle {
+  position: fixed;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s ease,
+    transform 0.32s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-circle {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.merch__zoom-image-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.merch__zoom-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.merch__zoom-label {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  translate: -50% 0;
+  white-space: nowrap;
+  color: var(--frontProjectCardCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.15rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-label {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+.merch__zoom-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--greyCustom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "ArquitectaBold";
+  font-size: 1.2rem;
+  line-height: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.merch__zoom.is-open .merch__zoom-close {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.15s;
+}
+
+.merch__zoom-close:hover {
+  background-color: var(--orangeCustom);
+  color: var(--white);
+}
+
+@media (max-width: 600px) {
+  .merch__zoom-close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+/* ================= SKELETON + SPINNER MIENTRAS CARGA LA IMAGEN ================= */
+.merch__pin-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.merch__pin-badge.is-img-loading::before {
+  opacity: 1;
+  animation: dg-merch-shimmer 1.5s infinite;
+}
+
+html[data-theme="dark"] .merch__pin-badge::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.merch__pin-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.merch__pin-badge.is-img-loading .merch__pin-spinner {
+  opacity: 1;
+  animation: dg-merch-spin 0.8s linear infinite;
+}
+
+@keyframes dg-merch-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes dg-merch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .merch__pins {
+    gap: 28px 18px;
+  }
+
+  .merch__pin {
+    width: 124px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merch__pin-trigger,
+  .merch__pin-badge,
+  .merch__pin-badge::before,
+  .merch__pin-spinner,
+  .merch__zoom-backdrop,
+  .merch__zoom-circle,
+  .merch__zoom-label,
+  .merch__zoom-close {
+    transition: none;
+    animation: none;
+  }
+}

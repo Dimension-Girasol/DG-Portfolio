@@ -18,6 +18,11 @@
 
 /* ================= NAVBAR ================= */
 
+.header {
+    position: relative;
+    z-index: 100;
+}
+
 .container-navbar {
     background-color: var(--white);
     display: flex;
@@ -172,12 +177,12 @@ html[data-theme="dark"] .theme-toggle {
     font-family: 'Bageo';
 }
 
-.nav__link a {
+.nav__link > a {
     color: var(--greyCustom);
     position: relative;
 }
 
-.nav__link a::after {
+.nav__link > a::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -189,8 +194,111 @@ html[data-theme="dark"] .theme-toggle {
     transition: opacity 0.3s ease-in-out;
 }
 
-.nav__link:hover a::after {
+.nav__link:hover > a::after {
     opacity: 1;
+}
+
+/* ================= DROPDOWN "PROYECTOS" ================= */
+.nav__link--dropdown {
+    position: relative;
+}
+
+.nav__dropdown-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--greyCustom);
+    cursor: pointer;
+}
+
+.nav__dropdown-caret {
+    width: 0;
+    height: 0;
+    margin-top: 2px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    transition: transform 0.2s ease;
+}
+
+.nav__link--dropdown.is-open .nav__dropdown-caret {
+    transform: rotate(180deg);
+}
+
+.nav__dropdown-trigger::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--greyCustom);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.nav__dropdown-trigger:hover::after,
+.nav__dropdown-trigger:focus-visible::after {
+    opacity: 1;
+}
+
+.nav__dropdown {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 180px;
+    background-color: var(--white);
+    border: 1px solid var(--strokeSubtle);
+    border-radius: 14px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16);
+    padding: 8px;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    z-index: 30;
+}
+
+.nav__link--dropdown.is-open .nav__dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.nav__dropdown li + li {
+    margin-top: 2px;
+}
+
+.nav__dropdown a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--greyCustom);
+    font-family: "Bageo";
+    font-size: 1rem;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav__dropdown a:hover,
+.nav__dropdown a:focus-visible {
+    background-color: var(--greyOpacity6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav__dropdown,
+    .nav__dropdown-caret {
+        transition: none;
+    }
 }
 
 .navbar__toggle-btn {
@@ -221,7 +329,7 @@ html[data-theme="dark"] .theme-toggle {
     }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1100px) {
     .navbar {
         position: relative;
         margin: 14px 0;
@@ -324,6 +432,10 @@ html[data-theme="dark"] .theme-toggle {
 
     .navbar__mobile-menu.active .nav__link-mobile:nth-child(4) {
         transition-delay: 0.22s;
+    }
+
+    .navbar__mobile-menu.active .nav__link-mobile:nth-child(5) {
+        transition-delay: 0.28s;
     }
 
     .nav__list-mobile {

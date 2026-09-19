@@ -149,6 +149,114 @@
     });
   };
 
+  // El panel de grabado láser es contenido fijo (no se re-renderiza al
+  // filtrar/paginar los proyectos), así que sus spinners se inicializan
+  // una sola vez.
+  const initLaserGallerySpinners = () => {
+    document.querySelectorAll(".laser__card").forEach((card) => {
+      const img = card.querySelector("img");
+      if (!img) return;
+
+      const clearLoading = () => card.classList.remove("is-img-loading");
+
+      if (img.complete && img.naturalWidth !== 0) {
+        clearLoading();
+      } else {
+        card.classList.add("is-img-loading");
+        img.addEventListener("load", clearLoading, { once: true });
+        img.addEventListener("error", clearLoading, { once: true });
+      }
+    });
+  };
+
+  // Alterna entre el panel "Impresión 3D" (el de siempre) y el panel
+  // "Láser" (galería fija) dentro de la sección de Proyectos.
+  const initProjectsModeToggle = () => {
+    const section = document.querySelector("#projects");
+    if (!section) return;
+
+    const tablist = section.querySelector(".projects__mode-toggle");
+    const tabs = Array.from(section.querySelectorAll(".projects__mode-btn"));
+    const panels = Array.from(section.querySelectorAll("[data-mode-panel]"));
+    const indicator = section.querySelector(".projects__mode-indicator");
+    if (!tablist || !tabs.length || !panels.length) return;
+
+    // El fondo blanco de selección es un único elemento compartido que se
+    // desliza (y se redimensiona, ya que los botones no miden lo mismo)
+    // hasta cubrir la pestaña activa, en vez de aparecer/desaparecer suelto
+    // en cada botón.
+    const moveIndicatorToTab = (tab) => {
+      if (!indicator || !tab) return;
+      const toggleRect = tablist.getBoundingClientRect();
+      const tabRect = tab.getBoundingClientRect();
+      indicator.style.width = `${tabRect.width}px`;
+      indicator.style.transform = `translateX(${tabRect.left - toggleRect.left}px)`;
+    };
+
+    const setMode = (mode) => {
+      let activeTab = null;
+      tabs.forEach((tab) => {
+        const isActive = tab.dataset.mode === mode;
+        tab.classList.toggle("is-active", isActive);
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.setAttribute("tabindex", isActive ? "0" : "-1");
+        if (isActive) activeTab = tab;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.modePanel !== mode;
+      });
+      moveIndicatorToTab(activeTab);
+    };
+
+    window.addEventListener("resize", () => {
+      moveIndicatorToTab(tablist.querySelector(".projects__mode-btn.is-active"));
+    });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => setMode(tab.dataset.mode));
+    });
+
+    // Navegación por teclado siguiendo el patrón ARIA de pestañas:
+    // flechas para moverse entre pestañas y activarlas, Inicio/Fin para saltar.
+    tablist.addEventListener("keydown", (event) => {
+      const currentIndex = tabs.indexOf(document.activeElement);
+      if (currentIndex === -1) return;
+
+      let nextIndex = null;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        nextIndex = (currentIndex + 1) % tabs.length;
+      } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (event.key === "Home") {
+        nextIndex = 0;
+      } else if (event.key === "End") {
+        nextIndex = tabs.length - 1;
+      }
+
+      if (nextIndex === null) return;
+      event.preventDefault();
+      const nextTab = tabs[nextIndex];
+      setMode(nextTab.dataset.mode);
+      nextTab.focus();
+    });
+
+    const syncWithHash = () => {
+      if (window.location.hash === "#laser") setMode("laser");
+      else if (window.location.hash === "#projects") setMode("3d");
+    };
+
+    // Fija el estado inicial (por defecto "Impresión 3D") para que el
+    // indicador arranque bien colocado aunque no haya hash en la URL.
+    setMode(window.location.hash === "#laser" ? "laser" : "3d");
+    window.addEventListener("hashchange", syncWithHash);
+
+    // La tipografía de los botones carga de forma asíncrona; si cambia el
+    // ancho del texto una vez cargada, recoloca el indicador.
+    document.fonts?.ready?.then(() => {
+      moveIndicatorToTab(tablist.querySelector(".projects__mode-btn.is-active"));
+    });
+  };
+
   function initProjectsFilter() {
     const section = document.querySelector("#projects");
 
@@ -738,5 +846,7 @@
     if (galleriesWrap) prepareCardsAccessibility(galleriesWrap);
   });
 
+  initLaserGallerySpinners();
+  initProjectsModeToggle();
   renderProjectsFromApi();
 })();

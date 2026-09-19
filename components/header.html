@@ -11,9 +11,19 @@
             </a>
             <div class="navbar__nav">
                 <ul class="nav__list">
-                    <li class="nav__link"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
-                    <li class="nav__link"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
-                    <li class="nav__link"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
+                    <li class="nav__link" data-nav-target="hero"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
+                    <li class="nav__link nav__link--dropdown" data-nav-target="projects laser">
+                        <button type="button" class="nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+                            <span data-i18n="nav.projects">Proyectos</span>
+                            <span class="nav__dropdown-caret" aria-hidden="true"></span>
+                        </button>
+                        <ul class="nav__dropdown">
+                            <li data-nav-target="projects"><a href="index.html#projects" data-i18n="nav.projects3d">Impresión 3D</a></li>
+                            <li data-nav-target="laser"><a href="index.html#laser" data-i18n="nav.laser">Láser</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav__link" data-nav-target="about"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
+                    <li class="nav__link" data-nav-target="merch"><a href="index.html#merch" data-i18n="nav.merch">Merch</a></li>
                 </ul>
                 <a href="contact.html" class="button button-primary navbar__cta" data-i18n="nav.contact">Contacto</a>
                 <button class="theme-toggle" type="button" aria-pressed="false">
@@ -40,10 +50,12 @@
                 </button>
                 <div class="navbar__mobile-menu" id="mobile-menu">
                     <ul class="nav__list-mobile">
-                        <li class="nav__link-mobile"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
-                        <li class="nav__link-mobile"><a href="index.html#projects" data-i18n="nav.projects">Proyectos</a></li>
-                        <li class="nav__link-mobile"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
-                <!--    <li class="nav__link-mobile"><a href="contact.html" data-i18n="nav.contact">Contacto</a></li>   --> 
+                        <li class="nav__link-mobile" data-nav-target="hero"><a href="index.html" data-i18n="nav.home">Inicio</a></li>
+                        <li class="nav__link-mobile" data-nav-target="projects"><a href="index.html#projects" data-i18n="nav.projects3d">Impresión 3D</a></li>
+                        <li class="nav__link-mobile" data-nav-target="laser"><a href="index.html#laser" data-i18n="nav.laser">Láser</a></li>
+                        <li class="nav__link-mobile" data-nav-target="about"><a href="index.html#about" data-i18n="nav.about">Conocenos</a></li>
+                        <li class="nav__link-mobile" data-nav-target="merch"><a href="index.html#merch" data-i18n="nav.merch">Merch</a></li>
+                <!--    <li class="nav__link-mobile"><a href="contact.html" data-i18n="nav.contact">Contacto</a></li>   -->
                     </ul>
                 </div>
             </div>

@@ -65,13 +65,20 @@ loadComponent("about-root", "components/about/about.html", () => {
   loadScript("js/components/about.js");
 });
 
-/**** PROJECTS ****/
+/**** PROJECTS (incluye el grabado láser, integrado dentro de la sección) ****/
 loadComponent("projects", "components/projects/projects.html", () => {
   loadComponent("card-gallery-projects", "components/projects/card-gallery-projects.html", () => {
-    loadComponent("modal-detail-project", "components/projects/modal-detail-project.html", () => {
-      loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/components/projects.js"]);
+    loadComponent("laser-inline", "components/laser/laser.html", () => {
+      loadComponent("modal-detail-project", "components/projects/modal-detail-project.html", () => {
+        loadScripts([...DG_SHARED_PROJECT_SCRIPTS, "js/components/projects.js"]);
+      });
     });
   });
+});
+
+/**** MERCH ****/
+loadComponent("merch-root", "components/merch/merch.html", () => {
+  loadScript("js/components/merch.js");
 });
 
 /**** FAQs ****/
