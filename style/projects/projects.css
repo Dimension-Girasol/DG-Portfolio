@@ -21,12 +21,13 @@
   font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
-.projects__content p {
-  max-width: 50rem;
+.projects__content p,
+.projects__mode-panel > p {
   font-family: "Arquitecta";
   margin-top: 10px;
   color: var(--greyCustom);
   font-size: 1.3rem;
+  text-align: center;
 }
 
 .projects__sorter {

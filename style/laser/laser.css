@@ -1,0 +1,216 @@
+/* ================= TOGGLE "IMPRESIÓN 3D" / "LÁSER" ================= */
+.projects__mode-toggle {
+  position: relative;
+  justify-self: center;
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background-color: var(--greyOpacity6);
+}
+
+.projects__mode-indicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background-color: var(--white);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.projects__mode-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-family: "ArquitectaBold";
+  font-size: 1.05rem;
+  color: var(--lightGreyCustom);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.projects__mode-btn.is-active {
+  color: var(--greyCustom);
+}
+
+.projects__mode-btn:hover:not(.is-active) {
+  color: var(--orangeCustom);
+}
+
+.projects__mode-btn:focus-visible {
+  outline: 3px solid var(--blueCustom);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .projects__mode-toggle {
+    width: 100%;
+  }
+
+  .projects__mode-btn {
+    flex: 1;
+    padding: 10px 16px;
+  }
+}
+
+.projects__mode-panel {
+  display: grid;
+  gap: 24px;
+}
+
+.projects__mode-panel[hidden] {
+  display: none;
+}
+
+/* ================= CONTENIDO DEL PANEL "LÁSER" ================= */
+.laser__content h3 {
+  color: var(--greyCustom);
+  font-family: "ArquitectaMedium";
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+}
+
+.laser__content p {
+  margin-top: 10px;
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.laser__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.laser__card {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--greyOpacity6);
+  transition: transform 0.3s ease;
+}
+
+.laser__card:hover {
+  transform: scale(1.03) translateY(-2px);
+}
+
+.laser__card img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.laser__card figcaption {
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0 0;
+  padding: 20px 12px 10px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent);
+  color: var(--frontProjectCardCustom);
+  font-family: "ArquitectaBold";
+  font-size: 0.9rem;
+}
+
+/* ================= SKELETON + SPINNER MIENTRAS CARGA LA IMAGEN ================= */
+.laser__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.laser__card.is-img-loading::before {
+  opacity: 1;
+  animation: dg-laser-shimmer 1.5s infinite;
+}
+
+html[data-theme="dark"] .laser__card::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.laser__img-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.laser__card.is-img-loading .laser__img-spinner {
+  opacity: 1;
+  animation: dg-laser-spin 0.8s linear infinite;
+}
+
+@keyframes dg-laser-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes dg-laser-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .laser__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .laser__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laser__card,
+  .laser__card::before,
+  .laser__img-spinner,
+  .projects__mode-indicator {
+    transition: none;
+    animation: none;
+  }
+}
