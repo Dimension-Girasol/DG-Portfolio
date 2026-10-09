@@ -31,7 +31,7 @@
    * @property {string[]} tags
    */
 
-  const fallbackCover = "/src/assets/images/index/dg-log_hero2.png";
+  const fallbackCover = "/src/assets/images/icon-192x192.png";
 
   const createFallbackImage = (projectName) => ({
     id: "fallback",

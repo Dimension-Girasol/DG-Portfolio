@@ -2,21 +2,55 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/src/assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <title>Contacto - Dimension Girasol</title>
+    <meta
+      name="description"
+      content="Contacta con Dimension Girasol para proyectos de impresion 3D, pintura de figuras, miniaturas y grabado laser personalizados." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/config/theme-init.js"></script>
-    <link rel="stylesheet" href="/style/styles.css" />
+    <link rel="stylesheet" href="/style/main.css" />
     <link rel="stylesheet" href="/style/header.css" />
-    <link rel="stylesheet" href="/style/contact/contact.css" />
+    <link rel="stylesheet" href="/style/faqs/faq.css" />
     <link rel="stylesheet" href="/style/footer.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
   </head>
   <body data-page="contact">
     <div id="header"></div>
 
     <main class="contact-page section-space">
-      <section class="contact-page__container container" aria-labelledby="contact-title">
+      <section class="contact-construction container" aria-labelledby="contact-construction-title">
+        <img
+          class="contact-construction__image"
+          src="/src/assets/images/projects/in-progress/in-progress.png"
+          width="480"
+          height="320"
+          alt="Seccion en construccion"
+          loading="eager"
+          decoding="async"
+          data-i18n-attr="alt:contact.constructionImageAlt">
+        <div class="contact-construction__content">
+          <span class="section__tag" data-i18n="contact.constructionTag">En construcción</span>
+          <h1 id="contact-construction-title" data-i18n="contact.constructionTitle">Estamos preparando esta sección</h1>
+          <p data-i18n="contact.constructionText">
+            Muy pronto podrás contactar con nosotros desde aquí. Mientras tanto, puedes escribirnos por Instagram o email.
+          </p>
+          <div class="contact-page__quick contact-construction__quick">
+            <a href="https://www.instagram.com/dimensiongirasol/" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+              <span>@dimensiongirasol</span>
+            </a>
+            <a href="mailto:info@dimensiongirasol.com">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <span>info@dimensiongirasol.com</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-page__container container" aria-labelledby="contact-title" hidden>
         <div class="contact-page__content">
           <span class="section__tag" data-i18n="contact.tag">Contáctanos</span>
           <h1 id="contact-title" data-i18n="contact.title">Cuéntanos tu idea</h1>
@@ -75,7 +109,7 @@
     </main>
 
     <div id="footer"></div>
-    <script src="/js/config/i18n.js"></script>
+    <script src="/js/config/resource.js"></script>
     <script src="/js/components/loadComponents.js"></script>
   </body>
 </html>

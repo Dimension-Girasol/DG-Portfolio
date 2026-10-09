@@ -2,12 +2,13 @@ function initHeader() {
   const toggleBtn = document.querySelector(".navbar__toggle-btn");
   const toggleIcon = document.querySelector(".navbar__toggle-icon");
   const mobileMenu = document.querySelector(".navbar__mobile-menu");
-  const mobileLinks = document.querySelectorAll(".nav__list-mobile a");
   const themeToggleBtn = document.querySelector(".theme-toggle");
   const themeToggleIcon = themeToggleBtn?.querySelector(".theme-toggle__icon");
   const languageToggleBtn = document.querySelector(".language-toggle");
 
   if (!toggleBtn || !mobileMenu) return;
+
+  const mobileLinks = document.querySelectorAll(".nav__list-mobile a");
 
   const themeStorageKey = "dg-theme";
   const text = (key, fallback) => window.DGI18n?.t(key) || fallback;
@@ -23,9 +24,7 @@ function initHeader() {
       // ignore
     }
 
-    const prefersDark =
-      window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "light";
+    return "light";
   };
 
   const resolveMenuIcon = (kind, theme) => {
@@ -81,9 +80,8 @@ function initHeader() {
     }
 
     if (themeToggleIcon) {
-      const isDark = theme === "dark";
-      themeToggleIcon.classList.toggle("fa-solid", isDark);
-      themeToggleIcon.classList.toggle("fa-regular", !isDark);
+      themeToggleIcon.classList.add("fa-regular", "fa-lightbulb");
+      themeToggleIcon.classList.remove("fa-solid");
     }
 
     syncThemeAssets(theme);
@@ -163,4 +161,51 @@ function initHeader() {
   });
 }
 
+// Menú desplegable de "Proyectos" (Impresión 3D / Láser) en el nav de escritorio.
+function initNavDropdowns() {
+  const dropdowns = Array.from(document.querySelectorAll(".nav__link--dropdown"));
+  if (!dropdowns.length) return;
+
+  const closeAll = (except) => {
+    dropdowns.forEach((item) => {
+      if (item === except) return;
+      item.classList.remove("is-open");
+      item.querySelector(".nav__dropdown-trigger")?.setAttribute("aria-expanded", "false");
+    });
+  };
+
+  dropdowns.forEach((item) => {
+    const trigger = item.querySelector(".nav__dropdown-trigger");
+    if (!trigger) return;
+
+    trigger.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = item.classList.toggle("is-open");
+      trigger.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) closeAll(item);
+    });
+
+    item.querySelectorAll(".nav__dropdown a").forEach((link) => {
+      link.addEventListener("click", () => closeAll());
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!dropdowns.some((item) => item.contains(event.target))) closeAll();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeAll();
+  });
+}
+
+// Marca el CTA de "Contacto" como página actual cuando ya estamos en ella
+// (solo a efectos de accesibilidad; no cambia el aspecto del botón).
+function markCurrentPageLink() {
+  if (document.body.dataset.page !== "contact") return;
+  document.querySelector(".navbar__cta")?.setAttribute("aria-current", "page");
+}
+
 initHeader();
+initNavDropdowns();
+markCurrentPageLink();

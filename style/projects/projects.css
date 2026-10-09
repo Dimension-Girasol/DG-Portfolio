@@ -1,5 +1,3 @@
-@import url(styles.css);
-
 .section-space {
   padding: clamp(40px, 5vw, 64px) 0;
 }
@@ -23,12 +21,37 @@
   font-size: clamp(2rem, 5vw, 3.5rem);
 }
 
-.projects__content p {
-  max-width: 50rem;
+.projects__content p,
+.projects__mode-panel > p {
   font-family: "Arquitecta";
   margin-top: 10px;
   color: var(--greyCustom);
   font-size: 1.3rem;
+  text-align: center;
+}
+
+.projects__sorter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  font-family: "ArquitectaBold";
+  color: var(--greyCustom);
+  font-size: 1.1rem;
+}
+
+.projects__sorter-select {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--strokeBubble);
+  background-color: var(--white);
+  color: var(--greyCustom);
+  font-family: "Arquitecta";
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .projects__filters {
@@ -89,6 +112,7 @@
   height: 100%;
   object-fit: contain;
   transform-origin: center;
+  transition: opacity 0.3s ease;
   will-change: transform, opacity;
 }
 
@@ -167,6 +191,25 @@
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
+.gallery__info {
+  padding: 12px 0;
+}
+
+.gallery__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.gallery__info p {
+  font-family: "Arquitecta";
+  font-size: 1.1rem;
+  color: var(--greyCustom);
+  margin: 0;
+}
+
 .projects.is-loading {
   opacity: 1;
   transform: translateY(0);
@@ -194,36 +237,130 @@
   text-align: center;
 }
 
+.projects__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 80px;
+}
+
+.projects__loading:empty {
+  display: none;
+}
+
+.projects__loading::before {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--strokeBubble);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  animation: dg-spin 0.8s linear infinite;
+}
+
+@keyframes dg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .projects__error {
   color: var(--orangeCustom);
 }
 
+/* ================= SKELETON LOADER PARA IMÁGENES ================= */
+.gallery__images-cover,
+.gallery__thumb {
+  position: relative;
+  background-color: var(--greyOpacity6);
+  overflow: hidden;
+}
+
+.gallery__images-cover::before,
+.gallery__thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-100%);
+  z-index: 1;
+  opacity: 0;
+}
+
+.gallery__images-cover.is-img-loading::before,
+.gallery__thumb.is-img-loading::before {
+  opacity: 1;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+html[data-theme="dark"] .gallery__images-cover::before,
+html[data-theme="dark"] .gallery__thumb::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+.gallery__images-cover img,
+.gallery__thumb img {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= SPINNER DE CARGA PARA IMÁGENES DE LAS CARDS ================= */
+.gallery__img-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid var(--overlaySoft);
+  border-top-color: var(--orangeCustom);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.gallery__thumb .gallery__img-spinner {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-width: 2px;
+}
+
+.gallery__images-cover.is-img-loading .gallery__img-spinner,
+.gallery__thumb.is-img-loading .gallery__img-spinner {
+  opacity: 1;
+  animation: dg-spin 0.8s linear infinite;
+}
+
+
 .projects__gallery-wrapper {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
   width: 100%;
 }
 
 .projects__gallery-content {
-  grid-column: 2;
   min-width: 0; /* Previene que la cuadrícula se desborde */
 }
 
-.projects__pagination-btn--prev {
-  grid-column: 1;
-}
-
-.projects__pagination-btn--next {
-  grid-column: 3;
-}
-
 .projects__pagination {
-  grid-column: 2;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 16px;
   margin-top: 30px;
 }
 
@@ -237,11 +374,26 @@
   min-width: 44px;
   min-height: 44px;
   padding: 0;
-  border: none;
+  border: 1px solid var(--strokeBubble);
   aspect-ratio: 1;
   border-radius: 100%;
-  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--greyCustom);
+  font-family: "ArquitectaBold";
+  font-size: 1.2rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.projects__pagination-btn:hover:not(:disabled) {
+  background-color: var(--orangeCustom);
+  border-color: var(--orangeCustom);
+  color: var(--white);
+}
+
+.projects__pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .projects__pagination-info {
@@ -256,27 +408,9 @@
   .project-card {
     grid-column: span 12;
   }
-  .projects__gallery-wrapper {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-areas:
-      "gallery gallery gallery"
-      "prev info next";
-    gap: 20px 10px;
-  }
-  .projects__gallery-content {
-    grid-area: gallery;
-  }
-  .projects__pagination-btn--prev {
-    grid-area: prev;
-    justify-self: flex-end;
-  }
-  .projects__pagination-btn--next {
-    grid-area: next;
-    justify-self: flex-start;
-  }
   .projects__pagination {
-    grid-area: info;
-    margin-top: 0;
+    justify-content: center;
+    margin-top: 30px;
   }
 }
 
@@ -314,5 +448,12 @@
   .projects__grid,
   .project-card {
     transition: none;
+  }
+
+  .gallery__images-cover.is-img-loading::before,
+  .gallery__thumb.is-img-loading::before,
+  .gallery__images-cover.is-img-loading .gallery__img-spinner,
+  .gallery__thumb.is-img-loading .gallery__img-spinner {
+    animation: none;
   }
 }
