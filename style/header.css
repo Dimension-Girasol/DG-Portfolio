@@ -302,17 +302,59 @@ html[data-theme="dark"] .theme-toggle {
 }
 
 .navbar__toggle-btn {
+    --toggle-size: 34px;
+    --toggle-bar-width: 22px;
+    --toggle-bar-gap: 8px;
+    position: relative;
+    width: var(--toggle-size);
+    height: var(--toggle-size);
     background-color: transparent;
     border: none;
+    padding: 0;
     cursor: pointer;
     display: none;
-    transition: transform 0.25s ease;
 }
 
-.navbar__toggle-icon {
+.navbar__toggle-bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--toggle-bar-width);
+    height: 3px;
+    border-radius: 999px;
+    background-color: var(--greyCustom);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+}
 
-    width: 32px;
-    height: 32px;
+.navbar__toggle-bar:nth-child(1) {
+    transform: translate(-50%, calc(-50% - var(--toggle-bar-gap)));
+}
+
+.navbar__toggle-bar:nth-child(2) {
+    transform: translate(-50%, -50%);
+}
+
+.navbar__toggle-bar:nth-child(3) {
+    transform: translate(-50%, calc(-50% + var(--toggle-bar-gap)));
+}
+
+.navbar__toggle-btn.active .navbar__toggle-bar:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.navbar__toggle-btn.active .navbar__toggle-bar:nth-child(2) {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+}
+
+.navbar__toggle-btn.active .navbar__toggle-bar:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar__toggle-bar {
+        transition: none;
+    }
 }
 
 .navbar__mobile-menu {
@@ -469,16 +511,6 @@ html[data-theme="dark"] .theme-toggle {
         display: block;
         margin: 0;
     }
-
-    .navbar__toggle-btn.active {
-        transform: rotate(90deg);
-    }
-
-    .navbar__toggle-btn img {
-        width: 34px;
-        height: 34px;
-        margin: 0;
-    }
 }
 
 @media only screen and (max-width: 640px) {
@@ -514,8 +546,9 @@ html[data-theme="dark"] .theme-toggle {
         font-size: 1.15rem;
     }
 
-    .navbar__toggle-btn img {
-        width: 32px;
-        height: 32px;
+    .navbar__toggle-btn {
+        --toggle-size: 32px;
+        --toggle-bar-width: 20px;
+        --toggle-bar-gap: 7px;
     }
 }

@@ -1,6 +1,5 @@
 function initHeader() {
   const toggleBtn = document.querySelector(".navbar__toggle-btn");
-  const toggleIcon = document.querySelector(".navbar__toggle-icon");
   const mobileMenu = document.querySelector(".navbar__mobile-menu");
   const themeToggleBtn = document.querySelector(".theme-toggle");
   const themeToggleIcon = themeToggleBtn?.querySelector(".theme-toggle__icon");
@@ -27,30 +26,6 @@ function initHeader() {
     return "light";
   };
 
-  const resolveMenuIcon = (kind, theme) => {
-    const isOpenIcon = kind === "open";
-    const lightAttr = isOpenIcon ? "openIconLight" : "closeIconLight";
-    const darkAttr = isOpenIcon ? "openIconDark" : "closeIconDark";
-    const lightFallback = isOpenIcon
-      ? "src/assets/images/header/menu-icon-light.svg"
-      : "src/assets/images/header/close_menu-icon-light.svg";
-    const darkFallback = isOpenIcon
-      ? "src/assets/images/header/menu-icon-dark.svg"
-      : "src/assets/images/header/close_menu-icon_dark.svg";
-
-    const legacyAttr = isOpenIcon ? "openIcon" : "closeIcon";
-    const light = toggleBtn.dataset[lightAttr] || toggleBtn.dataset[legacyAttr] || lightFallback;
-    const dark = toggleBtn.dataset[darkAttr] || toggleBtn.dataset[legacyAttr] || darkFallback;
-
-    return theme === "dark" ? dark : light;
-  };
-
-  const updateToggleIcon = (isOpen) => {
-    if (!toggleIcon) return;
-    const theme = getTheme();
-    toggleIcon.src = isOpen ? resolveMenuIcon("close", theme) : resolveMenuIcon("open", theme);
-  };
-
   const syncThemedImages = (theme) => {
     document.querySelectorAll("img.themed-image").forEach((img) => {
       const light = img.dataset.srcLight;
@@ -62,7 +37,6 @@ function initHeader() {
 
   const syncThemeAssets = (theme = getTheme()) => {
     syncThemedImages(theme);
-    updateToggleIcon(mobileMenu.classList.contains("active"));
   };
 
   window.dgSyncThemeAssets = () => syncThemeAssets(getTheme());
@@ -99,7 +73,6 @@ function initHeader() {
     toggleBtn.classList.remove("active");
     toggleBtn.setAttribute("aria-expanded", "false");
     toggleBtn.setAttribute("aria-label", text("nav.openMenu", "Abrir menu de navegacion"));
-    updateToggleIcon(false);
   };
 
   const toggleMenu = () => {
@@ -110,7 +83,6 @@ function initHeader() {
       "aria-label",
       isOpen ? text("nav.closeMenu", "Cerrar menu de navegacion") : text("nav.openMenu", "Abrir menu de navegacion")
     );
-    updateToggleIcon(isOpen);
   };
 
   if (themeToggleBtn) {
