@@ -1193,9 +1193,8 @@ body.modal-open .hero__image {
   display: none;
 }
 
-.projects__sorter-select:focus-visible {
-  outline: 2px solid var(--orangeCustom);
-  outline-offset: 2px;
+.projects__sorter-select:focus {
+  outline: none;
 }
 
 .projects__results {
