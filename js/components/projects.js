@@ -19,6 +19,26 @@
     if (loading) loading.textContent = message || "";
   };
 
+  // Años en los que un proyecto ha estado activo (de initDate a endDate).
+  // Si sigue en progreso y no tiene fecha de fin, se extiende hasta el año actual.
+  const getProjectYears = (project) => {
+    const toYear = (value) => {
+      if (!value) return null;
+      const year = new Date(value).getFullYear();
+      return Number.isNaN(year) ? null : year;
+    };
+
+    const start = toYear(project.initDate) ?? toYear(project.createdAt);
+    const end = toYear(project.endDate) ?? (project.inProgress ? new Date().getFullYear() : start);
+    if (start === null && end === null) return [];
+
+    const from = Math.min(start ?? end, end ?? start);
+    const to = Math.max(start ?? end, end ?? start);
+    const years = [];
+    for (let year = from; year <= to; year += 1) years.push(year);
+    return years;
+  };
+
   const getVisibleImages = (project) => {
     const images = project.images.length ? project.images : [project.cover];
     return images.slice(0, 4);
@@ -295,6 +315,7 @@
     let currentPage = 1;
     let itemsPerPage = window.innerWidth <= 900 ? 4 : 8;
     let currentSort = "dateDesc";
+    let currentYear = "all";
 
     let paginationWrap = section.querySelector("#projects-pagination");
     if (!paginationWrap) {
@@ -351,12 +372,102 @@
       sorterSelect.appendChild(option);
     });
     sorterContainer.append(sorterLabel, sorterSelect);
+
+    // Filtro por año: mismo componente que "Ordenar por". Los años se generan
+    // a partir de los datos, así que los años nuevos aparecen solos.
+    const yearContainer = document.createElement("div");
+    yearContainer.className = "projects__sorter projects__year-filter";
+    const yearLabel = document.createElement("label");
+    yearLabel.htmlFor = "project-year";
+    yearLabel.dataset.i18n = "projects.yearLabel";
+    const yearSelect = document.createElement("select");
+    yearSelect.id = "project-year";
+    yearSelect.className = "projects__sorter-select";
+    yearContainer.append(yearLabel, yearSelect);
+
+    const resultsInfo = document.createElement("p");
+    resultsInfo.className = "projects__results";
+    resultsInfo.setAttribute("role", "status");
+    resultsInfo.setAttribute("aria-live", "polite");
+
+    const toolbar = document.createElement("div");
+    toolbar.className = "projects__toolbar";
+    toolbar.append(sorterContainer, yearContainer, resultsInfo);
+
     if (loading) {
-      loading.after(sorterContainer);
+      loading.after(toolbar);
     } else {
-      filtersContainer.after(sorterContainer);
+      filtersContainer.after(toolbar);
     }
-    window.DGI18n?.apply(sorterContainer);
+    window.DGI18n?.apply(toolbar);
+
+    const availableYears = Array.from(new Set(allProjects.flatMap(getProjectYears))).sort((a, b) => b - a);
+    // Con un único año (o ninguno) el filtro no aporta nada
+    yearContainer.hidden = availableYears.length < 2;
+
+    const getSelectedAuthor = () =>
+      (section.querySelector(".projects__filter.is-active")?.dataset.filter || "all").toLowerCase();
+
+    // Filtros de autor y estado (sin el año), para poder calcular los contadores por año
+    const getProjectsByAuthorAndStatus = (selected) => {
+      let projects =
+        selected === "all"
+          ? [...allProjects]
+          : allProjects.filter((p) => p.authors.some((a) => a.toLowerCase() === selected));
+
+      if (currentSort === "inProgress") {
+        projects = projects.filter((p) => p.inProgress);
+      } else if (currentSort === "finished") {
+        projects = projects.filter((p) => !p.inProgress);
+      }
+      return projects;
+    };
+
+    // Las opciones se crean una vez y luego solo se actualiza su estado
+    // para no perder el foco ni la selección del desplegable.
+    const yearOptions = ["all", ...availableYears.map(String)].map((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.selected = value === currentYear;
+      yearSelect.appendChild(option);
+      return option;
+    });
+
+    const renderYearFilters = (baseProjects) => {
+      if (yearContainer.hidden) return;
+
+      const counts = new Map(availableYears.map((year) => [String(year), 0]));
+      baseProjects.forEach((project) => {
+        getProjectYears(project).forEach((year) => {
+          const key = String(year);
+          if (counts.has(key)) counts.set(key, counts.get(key) + 1);
+        });
+      });
+
+      yearOptions.forEach((option) => {
+        const isAll = option.value === "all";
+        const count = isAll ? baseProjects.length : counts.get(option.value);
+        option.textContent = isAll ? t("projects.yearAll") : option.value;
+        // Un año sin proyectos con los filtros actuales no se puede elegir
+        option.disabled = count === 0 && option.value !== currentYear;
+      });
+      yearSelect.value = currentYear;
+    };
+
+    // "12 finalizados", "3 en progreso"... según la opción de "Ordenar por"
+    const renderResultsInfo = (count) => {
+      resultsInfo.textContent = t(`projects.results.${currentSort}${count === 1 ? "One" : ""}`, { count });
+    };
+
+    yearSelect.addEventListener("change", (event) => {
+      currentYear = event.target.value || "all";
+      currentPage = 1;
+      updateCards(getSelectedAuthor());
+    });
+
+    document.addEventListener("dg:languagechange", () => {
+      updateCards(getSelectedAuthor());
+    });
 
     sorterSelect.addEventListener("change", (event) => {
       currentSort = event.target.value;
@@ -377,18 +488,16 @@
       const gallery = section.querySelector("[data-projects-gallery]") || section.querySelector("#card-gallery-projects");
       if (!gallery) return;
 
-      // 1. Filter
-      let filteredProjects =
-        selected === "all"
-          ? [...allProjects]
-          : allProjects.filter((p) => p.authors.some((a) => a.toLowerCase() === selected));
+      // 1. Filter by author and status
+      const baseProjects = getProjectsByAuthorAndStatus(selected);
 
-      // 1.5 Filter by Status
-      if (currentSort === "inProgress") {
-        filteredProjects = filteredProjects.filter((p) => p.inProgress);
-      } else if (currentSort === "finished") {
-        filteredProjects = filteredProjects.filter((p) => !p.inProgress);
-      }
+      // 1.5 Filter by year
+      let filteredProjects =
+        currentYear === "all"
+          ? baseProjects
+          : baseProjects.filter((p) => getProjectYears(p).includes(Number(currentYear)));
+      renderYearFilters(baseProjects);
+      renderResultsInfo(filteredProjects.length);
 
       // 2. Sort
       switch (currentSort) {
@@ -411,7 +520,7 @@
       const projectsToRender = filteredProjects.slice(startIndex, endIndex);
 
       // 4. Render
-      gallery.innerHTML = projectsToRender.length ? projectsToRender.map(renderProjectCard).join("") : `<p class="projects__empty">${escapeHtml(t("projects.empty"))}</p>`;
+      gallery.innerHTML = projectsToRender.length ? projectsToRender.map(renderProjectCard).join("") : `<p class="projects__empty">${escapeHtml(t(allProjects.length ? "projects.emptyFiltered" : "projects.empty"))}</p>`;
       prepareCardsAccessibility(gallery.parentElement);
       initCardImageSpinners(gallery);
       updatePaginationUI(totalPages);

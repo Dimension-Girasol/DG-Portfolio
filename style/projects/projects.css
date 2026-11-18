@@ -54,6 +54,43 @@
   cursor: pointer;
 }
 
+/* ===== Toolbar: ordenar + filtro por año + nº de resultados ===== */
+.projects__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 24px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.projects__toolbar .projects__sorter {
+  margin: 0;
+}
+
+.projects__year-filter[hidden] {
+  display: none;
+}
+
+.projects__sorter-select:focus-visible {
+  outline: 2px solid var(--orangeCustom);
+  outline-offset: 2px;
+}
+
+.projects__results {
+  margin: 0;
+  font-family: "Arquitecta";
+  color: var(--greyCustom);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
+.projects__results:empty {
+  display: none;
+}
+
 .projects__filters {
   display: flex;
   flex-wrap: wrap;
@@ -415,6 +452,11 @@ html[data-theme="dark"] .gallery__thumb::before {
 }
 
 @media (max-width: 620px) {
+  .projects__toolbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .projects__filters {
     gap: 18px;
   }
