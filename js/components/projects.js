@@ -631,6 +631,13 @@
       return;
     }
 
+    // Mover la modal a <body>: `.projects` usa `isolation: isolate`, que encierra
+    // el z-index de la modal dentro de la sección y deja que el menú de la web
+    // y el botón de idioma se pinten encima de ella.
+    if (modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
     let lastFocusedElement = null;
     let currentImages = [];
     let currentIndex = 0;
@@ -639,7 +646,7 @@
     let isZoomActive = false;
     const ZOOM_SCALE = 2.4;
 
-    const modalStage = section.querySelector(".projects__modal-stage");
+    const modalStage = modal.querySelector(".projects__modal-stage");
     const canHoverFinePointer =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;

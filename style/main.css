@@ -1787,13 +1787,23 @@ body.modal-open {
 }
 
 .projects__modal {
+  --modal-gap: 20px;
+  --modal-viewport-h: 100vh;
+
   position: fixed;
   inset: 0;
   z-index: 2147483000;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--modal-gap);
+}
+
+/* dvh descuenta las barras del navegador en móvil */
+@supports (height: 100dvh) {
+  .projects__modal {
+    --modal-viewport-h: 100dvh;
+  }
 }
 
 .projects__modal.is-open {
@@ -1807,30 +1817,40 @@ body.modal-open {
   backdrop-filter: blur(3px);
 }
 
+/* Columna flexible: la imagen se encoge para que cabecera, contador y
+   miniaturas quepan siempre en pantalla */
 .projects__modal-dialog {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(1100px, 96vw);
-  max-height: min(80rem, calc(100vh - 40px));
-  overflow-y: auto;
-  padding: 20px;
+  max-height: calc(var(--modal-viewport-h) - (var(--modal-gap) * 2));
+  overflow-x: hidden;
+  overflow-y: auto; /* solo como último recurso en pantallas muy bajas */
+  overscroll-behavior: contain;
+  padding: 0 20px 20px;
   border-radius: 18px;
   background: var(--white);
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
 }
 
+/* Sin position: sticky: la ventana ya no hace scroll y el sticky provocaba
+   repintados (parpadeo de título y botón de cerrar) al cambiar de foto */
 .projects__modal-dialog__header {
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  position: relative;
+  z-index: 3;
+  flex: none;
   display: flex;
   align-items: center;
+  min-width: 0;
   padding: 12px 20px;
-  margin: -20px -20px 0;
+  margin: 0 -20px;
   border-radius: 18px 18px 0 0;
   background: var(--white);
 }
 
 .projects__modal-close {
+  flex: none;
   width: 44px;
   height: 44px;
   border: 1px solid var(--strokeBubble);
@@ -1849,28 +1869,47 @@ body.modal-open {
 }
 
 .projects__modal-title {
+  min-width: 0;
   padding: 10px;
   color: var(--greyCustom);
   font-family: "ArquitectaBold";
   font-size: 1.5rem;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .projects__modal-viewer {
+  position: relative;
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
   gap: 10px;
+  /* Tamaño preferido; se reduce (hasta min-height) si la pantalla es baja */
+  height: min(66vh, 620px);
+  min-height: 160px;
 }
 
 .projects__modal-stage {
   position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 0;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid var(--overlayBorder);
   background: transparent;
-  height: min(66vh, 620px);
+  /* Aísla las capas animadas (spinner, zoom, opacidad de carga) dentro del
+     visor para que no obliguen a repintar la cabecera; translateZ fija el
+     recorte con border-radius en Safari */
+  isolation: isolate;
+  contain: paint;
+  transform: translateZ(0);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1922,6 +1961,7 @@ body.modal-open {
 
 
 .projects__modal-nav {
+  align-self: center;
   width: 44px;
   height: 44px;
   border: 1px solid var(--strokeBubble);
@@ -1947,6 +1987,7 @@ body.modal-open {
 }
 
 .projects__modal-counter {
+  flex: none;
   margin: 10px 0 0;
   color: var(--greyCustom);
   font-family: "ArquitectaBold";
@@ -1954,25 +1995,41 @@ body.modal-open {
   text-align: center;
 }
 
+/* Una sola fila con scroll horizontal: con muchas imágenes ya no crece
+   en varias filas empujando la imagen fuera de la pantalla */
 .projects__modal-thumbs {
+  flex: none;
   display: flex;
-  flex-wrap: wrap;
-  width: fit-content;
-  max-width: 100%;
-  margin-inline: auto;
+  flex-wrap: nowrap;
   gap: 8px;
+  max-width: 100%;
   margin-top: 12px;
-  justify-content: center;
+  padding: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
 }
 
 .projects__modal-thumb {
   flex: 0 0 90px;
+  scroll-snap-align: center;
   border: 2px solid transparent;
   border-radius: 10px;
   padding: 0;
   overflow: hidden;
   background: transparent;
   cursor: pointer;
+}
+
+/* Centra la fila cuando cabe, sin recortar las primeras si desborda */
+.projects__modal-thumb:first-child {
+  margin-left: auto;
+}
+
+.projects__modal-thumb:last-child {
+  margin-right: auto;
 }
 
 .projects__modal-thumb.is-active {
@@ -1996,17 +2053,17 @@ body.modal-open {
 
 @media (max-width: 620px) {
   .projects__modal {
-    padding: 8px;
+    --modal-gap: 8px;
   }
 
   .projects__modal-dialog {
-    max-height: calc(100vh - 16px);
-    padding: 20px 16px;
+    width: 100%;
+    padding: 0 16px 16px;
     border-radius: 16px;
   }
 
   .projects__modal-dialog__header {
-    margin: -20px -16px 0;
+    margin: 0 -16px;
     padding: 10px 16px;
     border-radius: 16px 16px 0 0;
   }
@@ -2022,19 +2079,13 @@ body.modal-open {
   }
 
   .projects__modal-viewer {
-    grid-template-columns: 1fr;
-    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    height: min(60vh, 520px);
   }
 
   .projects__modal-stage {
-    height: auto;
+    grid-column: 1;
     border-radius: 10px;
-  }
-
-  .projects__modal-stage img {
-    width: 100%;
-    height: auto;
-    max-height: 60vh;
   }
 
   .projects__modal-nav {
@@ -2063,6 +2114,52 @@ body.modal-open {
   .projects__modal-thumb {
     flex: 0 0 64px;
     border-radius: 8px;
+  }
+}
+
+/* Pantallas bajas (móvil en horizontal, ventanas pequeñas) */
+@media (max-height: 560px) {
+  .projects__modal {
+    --modal-gap: 8px;
+  }
+
+  .projects__modal-dialog {
+    /* Altura fija para que la imagen ocupe todo el hueco libre */
+    height: calc(var(--modal-viewport-h) - (var(--modal-gap) * 2));
+    padding-bottom: 10px;
+  }
+
+  .projects__modal-dialog__header {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .projects__modal-close {
+    width: 36px;
+    height: 36px;
+  }
+
+  .projects__modal-title {
+    padding: 4px 10px;
+    font-size: 1.1rem;
+  }
+
+  .projects__modal-viewer {
+    height: auto;
+    min-height: 120px;
+  }
+
+  .projects__modal-counter {
+    margin-top: 4px;
+    font-size: 0.9rem;
+  }
+
+  .projects__modal-thumbs {
+    margin-top: 6px;
+  }
+
+  .projects__modal-thumb {
+    flex-basis: 56px;
   }
 }
 /* Source: style/laser/laser.css */
