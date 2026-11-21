@@ -20,6 +20,7 @@
       "document.title.home": "Dimensión Girasol",
       "document.title.contact": "Contacto - Dimensión Girasol",
       "document.title.faq": "Preguntas Frecuentes - Dimensión Girasol",
+      "document.title.notFound": "Página no encontrada - Dimensión Girasol",
 
       "hero.title": "Arte digital convertido en realidad",
       "hero.tag": "Impresión 3D - Figuras - Miniaturas - Grabado Láser",
@@ -81,6 +82,12 @@
       "contact.constructionTitle": "Estamos preparando esta sección",
       "contact.constructionText": "Muy pronto podrás contactar con nosotros desde aquí. Mientras tanto, puedes escribirnos por Instagram o email.",
       "contact.constructionImageAlt": "Sección de contacto en construcción",
+
+      "notFound.tag": "Error 404",
+      "notFound.title": "Esta página se ha perdido por el taller",
+      "notFound.text": "Puede que el enlace esté mal escrito o que la página ya no exista. Te llevamos de vuelta a lo bueno.",
+      "notFound.home": "Volver al inicio",
+      "notFound.projects": "Ver proyectos",
 
       "faq.tag": "Ayuda",
       "faq.title": "Preguntas Frecuentes",
@@ -185,6 +192,7 @@
       "document.title.home": "Dimension Girasol",
       "document.title.contact": "Contact - Dimension Girasol",
       "document.title.faq": "Frequently Asked Questions - Dimension Girasol",
+      "document.title.notFound": "Page not found - Dimension Girasol",
 
       "hero.title": "Digital art brought to life",
       "hero.tag": "3D Printing - Figures - Miniatures - Laser Engraving",
@@ -246,6 +254,12 @@
       "contact.constructionTitle": "We are preparing this section",
       "contact.constructionText": "Soon you will be able to contact us from here. In the meantime, you can write to us on Instagram or by email.",
       "contact.constructionImageAlt": "Contact section under construction",
+
+      "notFound.tag": "Error 404",
+      "notFound.title": "This page got lost in the workshop",
+      "notFound.text": "The link may be mistyped or the page may no longer exist. Let us take you back to the good stuff.",
+      "notFound.home": "Back to home",
+      "notFound.projects": "See projects",
 
       "faq.tag": "Help",
       "faq.title": "Frequently Asked Questions",

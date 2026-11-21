@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Esta página se sirve en cualquier URL que no exista (también en rutas
+         anidadas como /algo/que/no/existe): base href hace que todas las rutas
+         relativas (componentes, scripts, imágenes) se resuelvan desde la raíz -->
+    <base href="/" />
+    <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/src/assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Página no encontrada - Dimensión Girasol</title>
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/config/theme-init.js"></script>
+    <link rel="stylesheet" href="/style/main.css" />
+  </head>
+  <body data-page="notFound">
+    <div id="header"></div>
+
+    <main class="not-found section-space">
+      <section class="not-found__container container" aria-labelledby="not-found-title">
+        <div class="not-found__code" aria-hidden="true">
+          <span>4</span>
+          <img
+            class="not-found__mascot"
+            src="/src/assets/images/icon-512x512.png"
+            width="512"
+            height="512"
+            alt=""
+            loading="eager"
+            decoding="async">
+          <span>4</span>
+        </div>
+
+        <span class="section__tag" data-i18n="notFound.tag">Error 404</span>
+        <h1 id="not-found-title" data-i18n="notFound.title">Esta página se ha perdido por el taller</h1>
+        <p data-i18n="notFound.text">
+          Puede que el enlace esté mal escrito o que la página ya no exista. Te llevamos de vuelta a lo bueno.
+        </p>
+
+        <div class="not-found__actions">
+          <a href="/index.html" class="button button-primary" data-i18n="notFound.home">Volver al inicio</a>
+          <a href="/index.html#projects" class="not-found__link" data-i18n="notFound.projects">Ver proyectos</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+    <script src="/js/config/resource.js"></script>
+    <script src="/js/components/loadComponents.js"></script>
+  </body>
+</html>
