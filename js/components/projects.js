@@ -1,6 +1,6 @@
 (function () {
   const FALLBACK_IMAGE = "src/assets/images/icon-192x192.png"; // Imagen de reemplazo si alguna falla
-  const PLACEHOLDER_IMAGE = "src/assets/images/projects/in-progress/in-progress-480.jpg"; // Imagen para rellenar huecos vacíos
+  const PLACEHOLDER_IMAGE = "src/assets/images/projects/in-progress/in-progress.svg"; // Imagen para rellenar huecos vacíos
   const escapeHtml = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
