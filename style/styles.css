@@ -105,6 +105,14 @@ body {
   overflow-x: hidden;
 }
 
+/* clip (a diferencia de hidden) no convierte el body en un contenedor de
+   scroll, así que position: sticky sigue funcionando (menú fijo) */
+@supports (overflow: clip) {
+  body {
+    overflow-x: clip;
+  }
+}
+
 a {
     text-decoration: none;
 }

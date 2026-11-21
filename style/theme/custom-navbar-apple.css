@@ -1,0 +1,159 @@
+/* =====================================================================
+   MENÚ ESTILO APPLE
+   Menú fijo y translúcido con desenfoque, más fino, y menú lateral en
+   móvil. Se carga después de header.css en main.scss.
+   ===================================================================== */
+
+:root {
+  --pr-nav-h: 64px;
+  --pr-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --pr-nav-h: 60px;
+  }
+}
+
+html[data-theme="dark"] {
+  --pr-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Los anclajes (#projects, #about...) no quedan tapados por el menú fijo */
+main [id],
+section[id] {
+  scroll-margin-top: calc(var(--pr-nav-h) + 1px);
+}
+
+/* ================= MENÚ: fijo, translúcido y más fino ================= */
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* El desenfoque va en un pseudo-elemento: un backdrop-filter en la propia
+   barra la convertiría en contenedor de los position: fixed de dentro (el
+   botón flotante de idioma en móvil acabaría pegado a la barra) */
+.container-navbar {
+  position: relative;
+  isolation: isolate;
+  background-color: transparent;
+  border-bottom: 1px solid var(--strokeSubtle);
+}
+
+.container-navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: color-mix(in srgb, var(--white) 72%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .container-navbar::before {
+    background-color: var(--white);
+  }
+}
+
+.navbar {
+  height: var(--pr-nav-h);
+  margin: 0;
+}
+
+.navbar__logo img {
+  height: calc(var(--pr-nav-h) - 14px);
+  max-width: 190px;
+}
+
+.nav__link {
+  margin-left: 32px;
+  font-size: 0.95rem;
+}
+
+.nav__link > a,
+.nav__dropdown-trigger {
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.nav__link > a:hover,
+.nav__dropdown-trigger:hover {
+  opacity: 1;
+}
+
+/* Subrayado fino en lugar de la barra de 2px */
+.nav__link > a::after,
+.nav__dropdown-trigger::after {
+  height: 1px;
+}
+
+.nav__dropdown {
+  top: calc(100% + 14px);
+  border-radius: 16px;
+  background-color: color-mix(in srgb, var(--white) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+}
+
+@media (min-width: 1101px) {
+  .language-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .navbar__mobile-menu {
+    background-color: color-mix(in srgb, var(--white) 92%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  /* Fondo oscurecido detrás del menú lateral; al tocarlo se cierra
+     (header.js cierra el menú con cualquier clic fuera) */
+  .container-navbar::after {
+    content: "";
+    position: fixed;
+    inset: calc(var(--pr-nav-h) + 1px) 0 0 0;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.32);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .container-navbar:has(.navbar__mobile-menu.active)::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .navbar__logo img {
+    height: calc(var(--pr-nav-h) - 16px);
+    max-width: min(46vw, 180px);
+  }
+
+  .navbar__cta {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 0.85rem;
+  }
+}
